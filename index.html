@@ -511,7 +511,6 @@
         border-radius: 12px;
       }
 
-      /* 避免 iOS Safari 輸入框聚焦時自動放大 (必須 >= 16px) */
       input[type="text"],
       input[type="password"] {
         font-size: 16px;
@@ -635,7 +634,7 @@
       <input 
         type="text" 
         id="username" 
-        placeholder="請輸入帳號 (例如: client01)" 
+        placeholder="請輸入帳號 (例如: jainnher)" 
         autocomplete="username" 
         required
       />
@@ -670,7 +669,7 @@
     <!-- 模組 A：檢驗數據報表表格 (結構化數據) -->
     <div class="module-card">
       <div class="module-header">
-        <div class="module-title">📊 進育 2026 檢驗報表</div>
+        <div class="module-title" id="reportModuleTitle">📊 客戶專屬檢驗報表</div>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <input type="file" id="excelImportInput" accept=".xlsx, .xls, .csv" style="display: none;" />
           <button id="importExcelBtn" class="btn-refresh" style="border-color: #34d399; color: #34d399;">📥 匯入 Excel 連動</button>
@@ -747,7 +746,6 @@
     const SUPABASE_URL = 'https://admaccvexnsedcawifsd.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_94TFG3LvJ904VE35qyFhmg_now-EM8X';
     const BUCKET_NAME = 'INSPECTION DATA BASE';
-    const REPORT_TABLE_NAME = 'chin-yuh2026'; // 客戶專屬報表資料表名稱
 
     const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -760,6 +758,7 @@
     const logoutBtn = document.getElementById('logoutBtn');
     const statusMessage = document.getElementById('statusMessage');
     const userBadge = document.getElementById('userBadge');
+    const reportModuleTitle = document.getElementById('reportModuleTitle');
     const inspectionTableHead = document.getElementById('inspectionTableHead');
     const inspectionTableBody = document.getElementById('inspectionTableBody');
     const fileListBody = document.getElementById('fileListBody');
@@ -771,6 +770,23 @@
     const uploadStatusText = document.getElementById('uploadStatusText');
 
     let currentUsername = '';
+    let currentUserId = '';
+    let activeTableName = '';
+
+    // 動態取得資料表可能候選名稱清單（容錯支援帶連字號、無連字號等各種命名）
+    function getCandidateTableNames() {
+      if (!currentUsername) return [];
+      const clean = currentUsername.toLowerCase().trim();
+      const list = [
+        `${clean}2026`,                        // 優先如 jainnher2026, chin-yuh2026
+        clean,                                 // 如 jainnher
+        `${clean.replace(/[-_]/g, '')}2026`,   // 如 chinyuh2026
+        `${clean.replace(/_/g, '-')}2026`,     // 如 chin-yuh2026
+        `${clean.replace(/-/g, '_')}2026`      // 如 chin_yuh2026
+      ];
+      // 去重
+      return [...new Set(list)];
+    }
 
     function showStatus(text, type = 'info') {
       statusMessage.style.display = 'block';
@@ -783,41 +799,49 @@
       statusMessage.innerText = '';
     }
 
-    // 3. 檢查登入 Session 與依角色 (Admin / Client) 控制功能
+    // 3. 檢查登入 Session 與身分權限
     let currentUserRole = 'client';
 
     async function checkAuthSession() {
-      const { data: { user } } = await client.auth.getUser();
-      if (user) {
-        currentUsername = user.email.split('@')[0];
-        loginContainer.style.display = 'none';
-        dashboardContainer.style.display = 'block';
+      try {
+        const { data: { user }, error: userError } = await client.auth.getUser();
+        if (user) {
+          currentUserId = user.id;
+          currentUsername = user.email.split('@')[0];
+          loginContainer.style.display = 'none';
+          dashboardContainer.style.display = 'block';
 
-        try {
-          const { data: roleData, error: roleError } = await client
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', user.id)
-            .maybeSingle();
+          // 查詢使用者角色
+          try {
+            const { data: roleData, error: roleError } = await client
+              .from('user_roles')
+              .select('role')
+              .eq('user_id', user.id)
+              .maybeSingle();
 
-          if (!roleError && roleData && roleData.role) {
-            currentUserRole = roleData.role;
-          } else {
+            if (!roleError && roleData && roleData.role) {
+              currentUserRole = roleData.role;
+            } else {
+              currentUserRole = 'client';
+            }
+          } catch (err) {
+            console.warn('角色權限查詢跳過，預設為客戶模式:', err);
             currentUserRole = 'client';
           }
-        } catch (err) {
-          console.warn('角色權限查詢失敗，預設為客戶模式:', err);
-          currentUserRole = 'client';
-        }
 
-        applyRolePermissions(currentUserRole, currentUsername);
-        loadInspectionData();
-        loadCustomerFiles();
-      } else {
-        currentUsername = '';
-        currentUserRole = 'client';
-        loginContainer.style.display = 'block';
-        dashboardContainer.style.display = 'none';
+          applyRolePermissions(currentUserRole, currentUsername);
+          loadInspectionData();
+          loadCustomerFiles();
+        } else {
+          currentUsername = '';
+          currentUserId = '';
+          currentUserRole = 'client';
+          activeTableName = '';
+          loginContainer.style.display = 'block';
+          dashboardContainer.style.display = 'none';
+        }
+      } catch (err) {
+        console.error('Session 驗證異常:', err);
       }
     }
 
@@ -828,12 +852,14 @@
         userBadge.style.borderColor = 'rgba(52, 211, 153, 0.4)';
         userBadge.style.background = 'rgba(16, 185, 129, 0.15)';
         if (importExcelBtn) importExcelBtn.style.display = 'inline-block';
+        if (reportModuleTitle) reportModuleTitle.innerText = `📊 管理員總覽：${username} 檢驗報表`;
       } else {
         userBadge.innerText = '登入身分：' + username + ' (專屬客戶)';
         userBadge.style.color = '#38bdf8';
         userBadge.style.borderColor = 'rgba(56, 189, 248, 0.35)';
         userBadge.style.background = 'rgba(56, 189, 248, 0.15)';
         if (importExcelBtn) importExcelBtn.style.display = 'none';
+        if (reportModuleTitle) reportModuleTitle.innerText = `📊 ${username} 專屬檢驗報表`;
       }
     }
 
@@ -905,6 +931,7 @@
       currentTableHeaders = headers;
       currentInspectionData = dataList;
 
+      // 1. 動態表頭
       let headHtml = '<tr>';
       headers.forEach(h => {
         headHtml += `<th>${h.label || h.key || h}</th>`;
@@ -912,63 +939,136 @@
       headHtml += '</tr>';
       inspectionTableHead.innerHTML = headHtml;
 
+      // 2. 動態資料列
       let bodyHtml = '';
       dataList.forEach(item => {
         bodyHtml += '<tr>';
         headers.forEach(h => {
-          const key = typeof h === 'object' ? h.key : h;
-          const val = (item[key] !== undefined && item[key] !== null) ? item[key] : '-';
+            const key = typeof h === 'object' ? h.key : h;
+      // 若為 null、undefined 或是純空白字元，皆轉為空字串 ''
+            const rawVal = item[key];
+            const val = (rawVal !== undefined && rawVal !== null) ? String(rawVal).trim() : '';
           
           const lowerKey = String(key).toLowerCase();
-          const lowerLabel = String(h.label || '').toLowerCase();
-          if (lowerKey.includes('result') || lowerKey.includes('判定') || lowerLabel.includes('判定') || lowerLabel.includes('結果')) {
-            const isPass = String(val).toUpperCase().includes('PASS') || String(val).includes('合格') || String(val).includes('OK');
-            const isFail = String(val).toUpperCase().includes('FAIL') || String(val).includes('不合格') || String(val).includes('NG');
-            const badgeClass = isPass ? 'status-pass' : (isFail ? 'status-fail' : 'status-info');
-            bodyHtml += `<td><span class="badge-status ${badgeClass}">${val}</span></td>`;
-          } else if (lowerKey.includes('code') || lowerKey.includes('編號') || lowerLabel.includes('編號') || lowerKey === 'id') {
-            bodyHtml += `<td><strong style="color: #38bdf8;">${val}</strong></td>`;
-          } else {
-            bodyHtml += `<td>${val}</td>`;
-          }
+  const lowerLabel = String(h.label || '').toLowerCase();
+
+  // 若值為空白，直接渲染空儲存格
+  if (val === '') {
+    bodyHtml += `<td></td>`;
+  } else if (lowerKey.includes('result') || lowerKey.includes('判定') || lowerLabel.includes('判定') || lowerLabel.includes('結果')) {
+    const isPass = String(val).toUpperCase().includes('PASS') || String(val).includes('合格') || String(val).includes('OK');
+    const isFail = String(val).toUpperCase().includes('FAIL') || String(val).includes('不合格') || String(val).includes('NG');
+    const badgeClass = isPass ? 'status-pass' : (isFail ? 'status-fail' : 'status-info');
+    bodyHtml += `<td><span class="badge-status ${badgeClass}">${val}</span></td>`;
+  } else if (lowerKey.includes('code') || lowerKey.includes('編號') || lowerLabel.includes('編號') || lowerKey === '機台名稱') {
+    bodyHtml += `<td><strong style="color: #38bdf8;">${val}</strong></td>`;
+  } else {
+    bodyHtml += `<td>${val}</td>`;
+  }
         });
         bodyHtml += '</tr>';
       });
       inspectionTableBody.innerHTML = bodyHtml;
     }
 
-    // 載入 Supabase 專屬報表資料 (chin-yuh2026)
+    // =========================================================================
+    // 核心修復：載入報表數據 (自動排除表名不符、RLS阻擋與空資料問題)
+    // =========================================================================
     async function loadInspectionData() {
-      inspectionTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">正在讀取 ${REPORT_TABLE_NAME} 報表數據...</td></tr>`;
-
-      try {
-        const { data, error } = await client
-          .from(REPORT_TABLE_NAME)
-          .select('*');
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          inspectionTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">目前尚無專屬報表資料</td></tr>`;
-          currentInspectionData = [];
-          return;
-        }
-
-        const ignoredColumns = ['assigned_user_id', 'created_at'];
-        const sampleRow = data[0];
-        const dynamicHeaders = Object.keys(sampleRow)
-          .filter(col => !ignoredColumns.includes(col))
-          .map(col => ({
-            key: col,
-            label: col
-          }));
-
-        renderDynamicInspectionTable(dynamicHeaders, data);
-
-      } catch (err) {
-        console.error(`讀取 ${REPORT_TABLE_NAME} 失敗:`, err);
-        inspectionTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #f87171; padding: 20px;">載入報表失敗：${err.message}</td></tr>`;
+      if (!currentUsername) {
+        console.warn('[報表除錯] 尚未取得使用者帳號名稱，暫緩查詢報表');
+        return;
       }
+
+      const candidates = getCandidateTableNames();
+      inspectionTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 24px;">正在連線讀取客戶專屬報表資料...</td></tr>`;
+
+      let querySuccess = false;
+      let finalData = null;
+      let usedTableName = '';
+      let lastErrorMessage = '';
+
+      // 1. 自動遍歷可能的資料表名稱 (避免大小寫或連字號差異)
+      for (const tName of candidates) {
+        try {
+          console.log(`[報表除錯] 嘗試查詢資料表: public."${tName}"`);
+          const { data, error } = await client
+            .from(tName)
+            .select('*');
+
+          if (!error) {
+            querySuccess = true;
+            usedTableName = tName;
+            finalData = data;
+            activeTableName = tName;
+            console.log(`[報表除錯] 成功命中資料表 "${tName}"，取得筆數:`, data?.length);
+            break;
+          } else {
+            // 如果是資料表不存在的錯誤 (PGRST200 等)，繼續嘗試下一個候選表名
+            console.warn(`[報表除錯] 資料表 "${tName}" 查詢跳過:`, error.message);
+            lastErrorMessage = error.message;
+          }
+        } catch (e) {
+          lastErrorMessage = e.message;
+        }
+      }
+
+      // 2. 所有候選表名皆查詢失敗
+      if (!querySuccess) {
+        console.error('[報表除錯] 所有候選資料表均無法連線:', lastErrorMessage);
+        inspectionTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; color: #f87171; padding: 24px;">
+              <div style="font-weight: 600; margin-bottom: 6px;">❌ 載入專屬報表失敗</div>
+              <div style="font-size: 12px; color: #cbd5e1; margin-bottom: 6px;">錯誤訊息：${lastErrorMessage}</div>
+              <div style="font-size: 11px; color: #94a3b8;">
+                請確認 Supabase 後台是否已建立名稱為 <code>${candidates[0]}</code> 的資料表。
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      // 更新模組標題
+      if (reportModuleTitle) {
+        reportModuleTitle.innerText = currentUserRole === 'admin' 
+          ? `📊 管理員總覽：${usedTableName} 檢驗報表` 
+          : `📊 ${currentUsername} 專屬檢驗報表 (${usedTableName})`;
+      }
+
+      // 3. 資料庫回傳為空陣列 (0 筆資料) - 提供明確的 RLS 與指派提示
+      if (!finalData || finalData.length === 0) {
+        console.warn(`[報表除錯] 資料表 "${usedTableName}" 存在，但回傳 0 筆資料。`);
+        inspectionTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; color: #94a3b8; padding: 28px 16px;">
+              <div style="font-size: 15px; color: #fbbf24; margin-bottom: 8px;">⚠️ 目前尚無符合權限的專屬報表資料</div>
+              <div style="font-size: 12px; color: #94a3b8; max-width: 600px; margin: 0 auto; line-height: 1.6;">
+                資料表 <code>${usedTableName}</code> 已連線成功，但未讀取到資料列。<br />
+                <strong>可能原因：</strong>資料表啟用了 RLS (Row Level Security)，而現有資料尚未將 <code>assigned_user_id</code> 綁定為當前帳號 UID (<code style="color: #38bdf8;">${currentUserId || '未取得'}</code>)。<br />
+                <span style="color: #64748b; font-size: 11px;">(若剛匯入 Excel，請於 Supabase 執行 UPDATE 綁定客戶 UID 即可立即顯示)</span>
+              </div>
+            </td>
+          </tr>
+        `;
+        currentInspectionData = [];
+        return;
+      }
+
+      // 4. 成功讀取到資料列 -> 動態偵測第一列欄位作為表頭並渲染
+      // 自動排除系統內部與無關欄位 (即使沒有 id 也不會報錯)
+      const ignoredColumns = ['id', 'assigned_user_id', 'created_at', 'updated_at'];
+      const sampleRow = finalData[0];
+      const dynamicHeaders = Object.keys(sampleRow)
+        .filter(col => !ignoredColumns.includes(col))
+        .map(col => ({
+          key: col,
+          label: col
+        }));
+
+      console.log('[報表除錯] 解析動態表頭成功:', dynamicHeaders.map(h => h.key));
+      renderDynamicInspectionTable(dynamicHeaders, finalData);
     }
 
     refreshTableBtn.addEventListener('click', loadInspectionData);
@@ -1227,7 +1327,7 @@
     });
 
     // ==========================================
-    // 功能 4：Excel 匯出與管理員匯入 (寫入 chin-yuh2026)
+    // 功能 4：Excel 匯出與管理員匯入 (寫入當前活耀資料表)
     // ==========================================
     const downloadExcelBtn = document.getElementById('downloadExcelBtn');
     const importExcelBtn = document.getElementById('importExcelBtn');
@@ -1259,7 +1359,8 @@
       XLSX.utils.book_append_sheet(workbook, worksheet, "專屬檢驗報表");
 
       const todayStr = new Date().toISOString().split('T')[0];
-      const filename = `專屬報表_${REPORT_TABLE_NAME}_${currentUsername}_${todayStr}.xlsx`;
+      const targetTable = activeTableName || (getCandidateTableNames()[0]);
+      const filename = `專屬報表_${targetTable}_${todayStr}.xlsx`;
       XLSX.writeFile(workbook, filename);
     });
 
@@ -1270,6 +1371,12 @@
     excelImportInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+
+      const targetTable = activeTableName || (getCandidateTableNames()[0]);
+      if (!targetTable) {
+        alert('尚未取得目標資料表名稱，請先確認登入狀態');
+        return;
+      }
 
       const reader = new FileReader();
       reader.onload = async (evt) => {
@@ -1289,7 +1396,7 @@
           importExcelBtn.disabled = true;
 
           const { data: insertedData, error: insertError } = await client
-            .from(REPORT_TABLE_NAME)
+            .from(targetTable)
             .insert(jsonData);
 
           if (insertError) {
@@ -1299,7 +1406,7 @@
             renderDynamicInspectionTable(dynamicHeaders, jsonData);
             alert(`已在前端預覽 ${jsonData.length} 筆資料。（寫入 Supabase 提醒：${insertError.message}）`);
           } else {
-            alert(`🎉 成功匯入 ${jsonData.length} 筆數據至 ${REPORT_TABLE_NAME}！`);
+            alert(`🎉 成功匯入 ${jsonData.length} 筆數據至 ${targetTable}！`);
             loadInspectionData();
           }
 
