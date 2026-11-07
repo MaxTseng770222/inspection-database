@@ -6,6 +6,8 @@
   <title>星際數據終端 - 客戶專屬終端系統</title>
   <!-- Supabase JS SDK CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- SheetJS for Excel Import/Export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -166,6 +168,10 @@
     /* 數據表格設計 */
     .table-container {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(56, 189, 248, 0.4) rgba(15, 23, 42, 0.6);
+      border-radius: 8px;
     }
 
     table {
@@ -465,9 +471,153 @@
       color: #cbd5e1;
       border: 1px solid rgba(148, 163, 184, 0.35);
     }
+
+    /* =========================================================
+       響應式設計 (RWD) 與手機 / 電腦雙端體驗深度優化
+       ========================================================= */
+
+    /* 滾動條美化 */
+    .table-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    .table-container::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 4px;
+    }
+    .table-container::-webkit-scrollbar-thumb {
+      background: rgba(56, 189, 248, 0.35);
+      border-radius: 4px;
+    }
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(56, 189, 248, 0.6);
+    }
+
+    /* 手機端斷點 (<= 768px) */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px 6px;
+        align-items: flex-start;
+      }
+
+      .login-container {
+        padding: 28px 18px;
+        max-width: 100%;
+        margin-top: 20px;
+      }
+
+      .dashboard-container {
+        padding: 16px 12px;
+        max-width: 100%;
+        border-radius: 12px;
+      }
+
+      /* 避免 iOS Safari 輸入框聚焦時自動放大 (必須 >= 16px) */
+      input[type="text"],
+      input[type="password"] {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding-bottom: 14px;
+        margin-bottom: 18px;
+      }
+
+      .user-info {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .btn-logout {
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+      }
+
+      .module-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .module-header > div:last-child {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        width: 100%;
+      }
+
+      .module-header > div:last-child button {
+        flex: 1 1 calc(50% - 6px);
+        min-height: 40px;
+        justify-content: center;
+      }
+
+      .btn-action, .btn-refresh {
+        padding: 8px 12px;
+        min-height: 40px;
+        justify-content: center;
+      }
+
+      .module-card {
+        padding: 14px 10px;
+        margin-bottom: 16px;
+      }
+
+      .module-title {
+        font-size: 15px;
+      }
+
+      th, td {
+        padding: 10px 8px;
+        font-size: 12px;
+      }
+
+      .file-name-cell {
+        padding-left: 20px !important;
+        max-width: 180px;
+        word-break: break-all;
+      }
+
+      .upload-zone {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .upload-zone input[type="file"] {
+        width: 100%;
+      }
+
+      .upload-zone .btn-action {
+        width: 100%;
+        padding: 11px 0;
+        text-align: center;
+      }
+    }
+
+    /* 平板及小型筆電 (769px ~ 1024px) */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .dashboard-container {
+        padding: 24px 20px;
+        max-width: 95%;
+      }
+    }
+
+    /* 電腦滑鼠懸停回饋 */
+    @media (hover: hover) and (pointer: fine) {
+      .btn-action:hover, .btn-submit:hover {
+        cursor: pointer;
+        filter: brightness(1.1);
+      }
+      .folder-row:hover {
+        background: rgba(56, 189, 248, 0.18) !important;
+      }
+    }
   </style>
-  <!-- SheetJS for Excel Import/Export -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 
@@ -643,7 +793,6 @@
         loginContainer.style.display = 'none';
         dashboardContainer.style.display = 'block';
 
-        // 查詢該使用者的角色權限 (public.user_roles)
         try {
           const { data: roleData, error: roleError } = await client
             .from('user_roles')
@@ -661,10 +810,7 @@
           currentUserRole = 'client';
         }
 
-        // 根據身分角色動態控制介面
         applyRolePermissions(currentUserRole, currentUsername);
-
-        // 載入儀表板各項功能數據 (串接專屬報表與檔案)
         loadInspectionData();
         loadCustomerFiles();
       } else {
@@ -830,7 +976,6 @@
     // =======================================================
     // 功能 2：可展開式資料夾樹狀清單與 PDF/多檔案格式精準辨識
     // =======================================================
-    // 依副檔名解析檔案類型與專屬標籤
     function getFileFormatMeta(filename) {
       const ext = filename.split('.').pop().toLowerCase();
       if (ext === 'pdf') {
@@ -849,7 +994,6 @@
       return { type: ext.toUpperCase() || 'FILE', icon: '📄', badgeClass: 'format-other', label: ext.toUpperCase() || '一般檔案' };
     }
 
-    // 遞迴/批次讀取特定資料夾內所有檔案
     async function listAllFilesInFolder(folderPrefix) {
       const resultFiles = [];
       const { data: items, error } = await client.storage
@@ -861,7 +1005,6 @@
       for (const item of items) {
         if (item.name === '.emptyFolderPlaceholder') continue;
 
-        // 如果是子資料夾 (id 為 null 或無 metadata)
         const isSubFolder = item.id === null || !item.metadata;
         const currentPath = folderPrefix ? `${folderPrefix}/${item.name}` : item.name;
 
@@ -888,7 +1031,6 @@
         let allFiles = [];
 
         if (currentUserRole === 'admin') {
-          // 管理員：撈取 Storage 根目錄底下的所有客戶資料夾與檔案
           const { data: rootItems, error: rootError } = await client.storage
             .from(BUCKET_NAME)
             .list('', { limit: 100 });
@@ -910,7 +1052,6 @@
             }
           }
         } else {
-          // 客戶端：僅撈取自己專屬資料夾 (包含底下子資料夾如 client_feedback)
           allFiles = await listAllFilesInFolder(currentUsername);
         }
 
@@ -919,7 +1060,6 @@
           return;
         }
 
-        // 依據資料夾路徑 (folderPath) 將檔案分組
         const groupedFolders = {};
         allFiles.forEach(f => {
           const groupName = f.folderPath;
@@ -929,14 +1069,12 @@
           groupedFolders[groupName].push(f);
         });
 
-        // 產生檔案的 Signed URL 並渲染出「可展開式樹狀表格」
         let tableHtml = '';
         let groupIndex = 0;
 
         for (const [folderName, files] of Object.entries(groupedFolders)) {
           const folderId = `folder_group_${groupIndex}`;
           
-          // 資料夾標題列 (點擊切換收合/展開)
           tableHtml += `
             <tr class="folder-row" onclick="toggleFolder('${folderId}')">
               <td colspan="5">
@@ -950,13 +1088,11 @@
             </tr>
           `;
 
-          // 資料夾內部子檔案列
           for (const file of files) {
             const formatMeta = getFileFormatMeta(file.name);
             const sizeKB = (file.metadata?.size ? (file.metadata.size / 1024).toFixed(1) : '0.0') + ' KB';
             const updatedTime = file.created_at ? new Date(file.created_at).toLocaleString('zh-TW', { hour12: false }) : '-';
 
-            // 產生即時下載 Signed URL
             const { data: signData } = await client.storage
               .from(BUCKET_NAME)
               .createSignedUrl(file.fullPath, 600);
@@ -996,7 +1132,6 @@
       }
     }
 
-    // 單一資料夾展開/收合
     window.toggleFolder = function(folderId) {
       const rows = document.querySelectorAll(`.${folderId}`);
       const arrow = document.getElementById(`arrow_${folderId}`);
@@ -1019,7 +1154,6 @@
       }
     };
 
-    // 全部展開 / 全部收合切換
     toggleAllFoldersBtn.addEventListener('click', () => {
       isAllExpanded = !isAllExpanded;
       const allFileRows = document.querySelectorAll('.file-row');
@@ -1058,7 +1192,6 @@
 
       const file = files[0];
       const timestamp = Date.now();
-      // 保留副檔名，將其他特殊字元安全化
       const fileExt = file.name.split('.').pop();
       const baseName = file.name.substring(0, file.name.lastIndexOf('.')).replace(/[^a-zA-Z0-9_-]/g, '_');
       const sanitizedName = `${baseName}.${fileExt}`;
