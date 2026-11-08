@@ -29,7 +29,6 @@
       padding: 24px 12px;
     }
 
-    /* 背景暗化遮罩 */
     .bg-overlay {
       position: fixed;
       top: 0;
@@ -40,7 +39,6 @@
       z-index: 1;
     }
 
-    /* 登入卡片容器 (登入前) */
     .login-container {
       position: relative;
       z-index: 2;
@@ -56,14 +54,13 @@
       transition: all 0.3s ease;
     }
 
-    /* 終端面板容器 (登入後展開寬版) */
     .dashboard-container {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 1050px;
+      max-width: 1180px;
       padding: 32px;
-      background: rgba(13, 20, 36, 0.82);
+      background: rgba(13, 20, 36, 0.85);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid rgba(56, 189, 248, 0.3);
@@ -93,7 +90,6 @@
       letter-spacing: 1px;
     }
 
-    /* 頂部控制列 */
     .top-bar {
       display: flex;
       justify-content: space-between;
@@ -101,12 +97,15 @@
       padding-bottom: 18px;
       border-bottom: 1px solid rgba(56, 189, 248, 0.2);
       margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
     .user-info {
       display: flex;
       align-items: center;
       gap: 12px;
+      flex-wrap: wrap;
     }
 
     .user-badge {
@@ -136,7 +135,117 @@
       background: #dc2626;
     }
 
-    /* 功能區塊卡片 */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: rgba(15, 23, 42, 0.65);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 10px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #38bdf8;
+    }
+
+    .stat-title {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-top: 6px;
+      font-family: 'Consolas', monospace;
+    }
+
+    .admin-tab-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: #38bdf8;
+    }
+
+    .tab-btn.active {
+      color: #38bdf8;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #38bdf8;
+      box-shadow: 0 0 10px #38bdf8;
+    }
+
+    .admin-selector-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(30, 41, 59, 0.6);
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .select-customer {
+      background: #0f172a;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      outline: none;
+      font-weight: 600;
+      min-width: 200px;
+    }
+
+    .select-customer option {
+      background: #0f172a;
+      color: #f8fafc;
+    }
+
     .module-card {
       background: rgba(15, 23, 42, 0.55);
       border: 1px solid rgba(148, 163, 184, 0.18);
@@ -154,6 +263,8 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .module-title {
@@ -165,7 +276,6 @@
       gap: 8px;
     }
 
-    /* 數據表格設計 */
     .table-container {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -222,7 +332,6 @@
       border: 1px solid rgba(239, 68, 68, 0.4);
     }
 
-    /* 檔案下載與按鈕 */
     .btn-action {
       background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
       color: #fff;
@@ -259,7 +368,6 @@
       background: rgba(56, 189, 248, 0.15);
     }
 
-    /* 上傳回傳區域 */
     .upload-zone {
       display: flex;
       flex-wrap: wrap;
@@ -292,7 +400,6 @@
       background: #334155;
     }
 
-    /* 表單元件樣式 (登入用) */
     .form-group {
       margin-bottom: 20px;
     }
@@ -355,7 +462,6 @@
       transform: none;
     }
 
-    /* 提示訊息 */
     #statusMessage {
       margin-top: 16px;
       padding: 10px 14px;
@@ -371,9 +477,6 @@
     .status-success { background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.5); color: #6ee7b7; }
     .status-info { background: rgba(56, 189, 248, 0.15); border: 1px solid rgba(56, 189, 248, 0.4); color: #7dd3fc; }
 
-    /* ==========================================
-       資料夾展開與檔案格式特化樣式 (Tree View)
-       ========================================== */
     .folder-row {
       background: rgba(30, 41, 59, 0.65) !important;
       cursor: pointer;
@@ -431,7 +534,6 @@
       gap: 8px;
     }
 
-    /* 格式標籤 (Format Badges) */
     .format-badge {
       display: inline-block;
       padding: 2px 6px;
@@ -442,179 +544,25 @@
       text-transform: uppercase;
     }
 
-    .format-pdf {
-      background: rgba(239, 68, 68, 0.2);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.4);
+    .format-pdf { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+    .format-excel { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+    .format-img { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+    .format-cad { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .format-other { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.35); }
+
+    .search-input {
+      padding: 6px 12px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 6px;
+      color: #f8fafc;
+      font-size: 13px;
+      outline: none;
     }
 
-    .format-excel {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-    }
-
-    .format-img {
-      background: rgba(168, 85, 247, 0.2);
-      color: #c084fc;
-      border: 1px solid rgba(168, 85, 247, 0.4);
-    }
-
-    .format-cad {
-      background: rgba(245, 158, 11, 0.2);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.4);
-    }
-
-    .format-other {
-      background: rgba(148, 163, 184, 0.2);
-      color: #cbd5e1;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-    }
-
-    /* =========================================================
-       響應式設計 (RWD) 與手機 / 電腦雙端體驗深度優化
-       ========================================================= */
-
-    /* 滾動條美化 */
-    .table-container::-webkit-scrollbar {
-      height: 6px;
-    }
-    .table-container::-webkit-scrollbar-track {
-      background: rgba(15, 23, 42, 0.6);
-      border-radius: 4px;
-    }
-    .table-container::-webkit-scrollbar-thumb {
-      background: rgba(56, 189, 248, 0.35);
-      border-radius: 4px;
-    }
-    .table-container::-webkit-scrollbar-thumb:hover {
-      background: rgba(56, 189, 248, 0.6);
-    }
-
-    /* 手機端斷點 (<= 768px) */
-    @media (max-width: 768px) {
-      body {
-        padding: 12px 6px;
-        align-items: flex-start;
-      }
-
-      .login-container {
-        padding: 28px 18px;
-        max-width: 100%;
-        margin-top: 20px;
-      }
-
-      .dashboard-container {
-        padding: 16px 12px;
-        max-width: 100%;
-        border-radius: 12px;
-      }
-
-      input[type="text"],
-      input[type="password"] {
-        font-size: 16px;
-        padding: 12px;
-      }
-
-      .top-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-        padding-bottom: 14px;
-        margin-bottom: 18px;
-      }
-
-      .user-info {
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-
-      .btn-logout {
-        width: 100%;
-        padding: 10px 0;
-        text-align: center;
-      }
-
-      .module-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-
-      .module-header > div:last-child {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        width: 100%;
-      }
-
-      .module-header > div:last-child button {
-        flex: 1 1 calc(50% - 6px);
-        min-height: 40px;
-        justify-content: center;
-      }
-
-      .btn-action, .btn-refresh {
-        padding: 8px 12px;
-        min-height: 40px;
-        justify-content: center;
-      }
-
-      .module-card {
-        padding: 14px 10px;
-        margin-bottom: 16px;
-      }
-
-      .module-title {
-        font-size: 15px;
-      }
-
-      th, td {
-        padding: 10px 8px;
-        font-size: 12px;
-      }
-
-      .file-name-cell {
-        padding-left: 20px !important;
-        max-width: 180px;
-        word-break: break-all;
-      }
-
-      .upload-zone {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-      }
-
-      .upload-zone input[type="file"] {
-        width: 100%;
-      }
-
-      .upload-zone .btn-action {
-        width: 100%;
-        padding: 11px 0;
-        text-align: center;
-      }
-    }
-
-    /* 平板及小型筆電 (769px ~ 1024px) */
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .dashboard-container {
-        padding: 24px 20px;
-        max-width: 95%;
-      }
-    }
-
-    /* 電腦滑鼠懸停回饋 */
-    @media (hover: hover) and (pointer: fine) {
-      .btn-action:hover, .btn-submit:hover {
-        cursor: pointer;
-        filter: brightness(1.1);
-      }
-      .folder-row:hover {
-        background: rgba(56, 189, 248, 0.18) !important;
-      }
+    .search-input:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
     }
   </style>
 </head>
@@ -634,7 +582,7 @@
       <input 
         type="text" 
         id="username" 
-        placeholder="請輸入帳號 (例如: jainnher)" 
+        placeholder="請輸入帳號 (例如: admin, chin-yuh)" 
         autocomplete="username" 
         required
       />
@@ -655,9 +603,8 @@
     <div id="statusMessage"></div>
   </div>
 
-  <!-- 2. 登入成功後的客戶專屬終端儀表板 -->
+  <!-- 2. 終端儀表板 -->
   <div class="dashboard-container" id="dashboardContainer">
-    <!-- 頂部身分與登出 -->
     <div class="top-bar">
       <div class="user-info">
         <h2 style="font-size: 18px; color: #f8fafc; letter-spacing: 1px;">數據連線終端</h2>
@@ -666,78 +613,179 @@
       <button id="logoutBtn" class="btn-logout">中斷連線 (登出)</button>
     </div>
 
-    <!-- 模組 A：檢驗數據報表表格 (結構化數據) -->
-    <div class="module-card">
-      <div class="module-header">
-        <div class="module-title" id="reportModuleTitle">📊 客戶專屬檢驗報表</div>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <input type="file" id="excelImportInput" accept=".xlsx, .xls, .csv" style="display: none;" />
-          <button id="importExcelBtn" class="btn-refresh" style="border-color: #34d399; color: #34d399;">📥 匯入 Excel 連動</button>
-          <button id="downloadExcelBtn" class="btn-action" style="padding: 5px 12px; font-size: 12px;">📊 下載報表 (Excel)</button>
-          <button id="refreshTableBtn" class="btn-refresh">重新整理</button>
-        </div>
+    <!-- 管理員專屬：總覽數據 KPI 卡片 -->
+    <div class="admin-stats-grid" id="adminStatsGrid" style="display: none;">
+      <div class="stat-card">
+        <div class="stat-title">納管客戶總數 (已建立帳號)</div>
+        <div class="stat-value" id="statCustomerCount">0</div>
       </div>
-      <div class="table-container">
-        <table id="inspectionTable">
-          <thead id="inspectionTableHead">
-            <tr>
-              <th>工件 / 機台編號</th>
-              <th>檢驗項目</th>
-              <th>量測數值</th>
-              <th>公差範圍</th>
-              <th>判定結果</th>
-              <th>檢驗日期</th>
-            </tr>
-          </thead>
-          <tbody id="inspectionTableBody">
-            <tr>
-              <td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">載入量測數據中...</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="stat-card">
+        <div class="stat-title">納管機台 / 機型總數</div>
+        <div class="stat-value" id="statMachineCount">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">當前報表合格率</div>
+        <div class="stat-value" id="statPassRate" style="color: #34d399;">--%</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">當前檢驗數據筆數</div>
+        <div class="stat-value" id="statTotalInspections">0</div>
       </div>
     </div>
 
-    <!-- 模組 B：檔案清單與一鍵下載 (可展開資料夾與辨識 PDF 格式) -->
-    <div class="module-card">
-      <div class="module-header">
-        <div class="module-title">📁 檢驗報告與文件下載區</div>
-        <div style="display: flex; gap: 8px;">
-          <button id="toggleAllFoldersBtn" class="btn-refresh" style="border-color: #38bdf8; color: #38bdf8;">📂 全部展開 / 收合</button>
-          <button id="refreshFilesBtn" class="btn-refresh">重新整理檔案</button>
+    <!-- 管理員專屬：分頁切換導航 -->
+    <div class="admin-tab-nav" id="adminTabNav" style="display: none;">
+      <button class="tab-btn active" data-tab="tab-reports">📊 客戶專屬檢驗報表</button>
+      <button class="tab-btn" data-tab="tab-customers">👥 客戶總覽清單</button>
+      <button class="tab-btn" data-tab="tab-machines">⚙️ 機型與機台總覽清單</button>
+    </div>
+
+    <!-- 管理員專屬：即時客戶切換選單 -->
+    <div class="admin-selector-bar" id="adminSelectorBar" style="display: none;">
+      <span style="font-size: 13px; font-weight: 600; color: #7dd3fc;">🔍 切換查看客戶：</span>
+      <select id="customerSelectDropdown" class="select-customer">
+        <option value="">載入客戶中...</option>
+      </select>
+      <button id="btnReloadAdminData" class="btn-refresh">🔄 重新整理所有清單</button>
+      <span id="currentViewingCustomerText" style="font-size: 12px; color: #94a3b8; margin-left: auto;"></span>
+    </div>
+
+    <!-- 分頁 1：客戶檢驗報表 -->
+    <div id="tab-reports" class="tab-content-pane">
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-title" id="reportModuleTitle">📊 客戶專屬檢驗報表</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <input type="file" id="excelImportInput" accept=".xlsx, .xls, .csv" style="display: none;" />
+            <button id="importExcelBtn" class="btn-refresh" style="border-color: #34d399; color: #34d399;">📥 匯入 Excel 連動</button>
+            <button id="downloadExcelBtn" class="btn-action" style="padding: 5px 12px; font-size: 12px;">📊 下載報表 (Excel)</button>
+            <button id="refreshTableBtn" class="btn-refresh">重新整理</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table id="inspectionTable">
+            <thead id="inspectionTableHead">
+              <tr>
+                <th>工件 / 機台編號</th>
+                <th>檢驗項目</th>
+                <th>量測數值</th>
+                <th>公差範圍</th>
+                <th>判定結果</th>
+                <th>檢驗日期</th>
+              </tr>
+            </thead>
+            <tbody id="inspectionTableBody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">載入量測數據中...</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th style="min-width: 320px;">資料夾 / 檔案名稱</th>
-              <th>格式種類</th>
-              <th>檔案大小</th>
-              <th>上傳更新時間</th>
-              <th style="width: 120px; text-align: center;">操作</th>
-            </tr>
-          </thead>
-          <tbody id="fileListBody">
-            <tr>
-              <td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">正在讀取專屬資料夾檔案...</td>
-            </tr>
-          </tbody>
-        </table>
+
+      <!-- 檔案下載與展開 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-title" id="filesModuleTitle">📁 檢驗報告與文件下載區</div>
+          <div style="display: flex; gap: 8px;">
+            <button id="toggleAllFoldersBtn" class="btn-refresh" style="border-color: #38bdf8; color: #38bdf8;">📂 全部展開 / 收合</button>
+            <button id="refreshFilesBtn" class="btn-refresh">重新整理檔案</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="min-width: 320px;">資料夾 / 檔案名稱</th>
+                <th>格式種類</th>
+                <th>檔案大小</th>
+                <th>上傳更新時間</th>
+                <th style="width: 120px; text-align: center;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="fileListBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">正在讀取專屬資料夾檔案...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 上傳回傳區域 -->
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-title">📤 客戶端數據與檔案回傳</div>
+        </div>
+        <div class="upload-zone">
+          <input type="file" id="clientUploadInput" />
+          <button id="clientUploadBtn" class="btn-action">確認上傳回傳</button>
+          <span id="uploadStatusText" style="font-size: 13px; color: #94a3b8;">支援 PDF、圖片、CAD 與檢驗數據檔案</span>
+        </div>
       </div>
     </div>
 
-    <!-- 模組 C：客戶端上傳回傳 (確認單、問題照片、回簽資料) -->
-    <div class="module-card">
-      <div class="module-header">
-        <div class="module-title">📤 客戶端數據與檔案回傳</div>
-      </div>
-      <div class="upload-zone">
-        <input type="file" id="clientUploadInput" />
-        <button id="clientUploadBtn" class="btn-action">確認上傳回傳</button>
-        <span id="uploadStatusText" style="font-size: 13px; color: #94a3b8;">支援 PDF、圖片、CAD 與檢驗數據檔案</span>
+    <!-- 分頁 2：客戶總覽清單 -->
+    <div id="tab-customers" class="tab-content-pane" style="display: none;">
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-title">👥 全系統客戶總覽清單 (帳號建立清單)</div>
+          <div>
+            <input type="text" id="customerSearchInput" class="search-input" placeholder="🔍 搜尋客戶代號..." />
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>客戶帳號 (Username)</th>
+                <th>登入 UserID (UUID)</th>
+                <th>綁定資料表</th>
+                <th>雲端目錄檔案數</th>
+                <th style="text-align: center;">快速操作</th>
+              </tr>
+            </thead>
+            <tbody id="customerSummaryTableBody">
+              <tr>
+                <td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">載入客戶總覽中...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
+
+    <!-- 分頁 3：機型與機台總覽清單 -->
+    <div id="tab-machines" class="tab-content-pane" style="display: none;">
+      <div class="module-card">
+        <div class="module-header">
+          <div class="module-title">⚙️ 機型與機台名稱欄位總覽清單</div>
+          <div>
+            <input type="text" id="machineSearchInput" class="search-input" placeholder="🔍 搜尋機型 / 機台名稱..." />
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>所屬客戶</th>
+                <th>機型 / 機台名稱</th>
+                <th>檢驗項目總筆數</th>
+                <th>合格 / 不合格統計</th>
+                <th>最新判定結果</th>
+                <th style="text-align: center;">操作</th>
+              </tr>
+            </thead>
+            <tbody id="machineSummaryTableBody">
+              <tr>
+                <td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">正在彙整機台與機型資料...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -749,7 +797,7 @@
 
     const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // 2. DOM 元素
+    // DOM 元素
     const loginContainer = document.getElementById('loginContainer');
     const dashboardContainer = document.getElementById('dashboardContainer');
     const usernameInput = document.getElementById('username');
@@ -758,7 +806,26 @@
     const logoutBtn = document.getElementById('logoutBtn');
     const statusMessage = document.getElementById('statusMessage');
     const userBadge = document.getElementById('userBadge');
+    
+    // 管理員專屬元件
+    const adminStatsGrid = document.getElementById('adminStatsGrid');
+    const adminTabNav = document.getElementById('adminTabNav');
+    const adminSelectorBar = document.getElementById('adminSelectorBar');
+    const customerSelectDropdown = document.getElementById('customerSelectDropdown');
+    const btnReloadAdminData = document.getElementById('btnReloadAdminData');
+    const currentViewingCustomerText = document.getElementById('currentViewingCustomerText');
+    const statCustomerCount = document.getElementById('statCustomerCount');
+    const statMachineCount = document.getElementById('statMachineCount');
+    const statPassRate = document.getElementById('statPassRate');
+    const statTotalInspections = document.getElementById('statTotalInspections');
+    const customerSummaryTableBody = document.getElementById('customerSummaryTableBody');
+    const machineSummaryTableBody = document.getElementById('machineSummaryTableBody');
+    const customerSearchInput = document.getElementById('customerSearchInput');
+    const machineSearchInput = document.getElementById('machineSearchInput');
+
+    // 報表與檔案元件
     const reportModuleTitle = document.getElementById('reportModuleTitle');
+    const filesModuleTitle = document.getElementById('filesModuleTitle');
     const inspectionTableHead = document.getElementById('inspectionTableHead');
     const inspectionTableBody = document.getElementById('inspectionTableBody');
     const fileListBody = document.getElementById('fileListBody');
@@ -768,23 +835,34 @@
     const clientUploadInput = document.getElementById('clientUploadInput');
     const clientUploadBtn = document.getElementById('clientUploadBtn');
     const uploadStatusText = document.getElementById('uploadStatusText');
+    const downloadExcelBtn = document.getElementById('downloadExcelBtn');
+    const importExcelBtn = document.getElementById('importExcelBtn');
+    const excelImportInput = document.getElementById('excelImportInput');
 
+    // 全域變數
     let currentUsername = '';
     let currentUserId = '';
+    let currentUserRole = 'client';
+    let targetViewCustomer = ''; 
     let activeTableName = '';
+    let currentInspectionData = [];
+    let currentTableHeaders = [];
+    let allAccountsList = [];
+    let allMachinesCache = [];
 
-    // 動態取得資料表可能候選名稱清單（容錯支援帶連字號、無連字號等各種命名）
-    function getCandidateTableNames() {
-      if (!currentUsername) return [];
-      const clean = currentUsername.toLowerCase().trim();
+    // 候選表名生成：完全支援連字號、底線與大小寫
+    function getCandidateTableNames(user) {
+      const u = (user || targetViewCustomer || currentUsername || '').toLowerCase().trim();
+      if (!u) return [];
+      const cleanNoDash = u.replace(/[-_]/g, '');
       const list = [
-        `${clean}2026`,                        // 優先如 jainnher2026, chin-yuh2026
-        clean,                                 // 如 jainnher
-        `${clean.replace(/[-_]/g, '')}2026`,   // 如 chinyuh2026
-        `${clean.replace(/_/g, '-')}2026`,     // 如 chin-yuh2026
-        `${clean.replace(/-/g, '_')}2026`      // 如 chin_yuh2026
+        `${u}2026`,
+        `${cleanNoDash}2026`,
+        u,
+        cleanNoDash,
+        `${u.replace(/_/g, '-')}2026`,
+        `${u.replace(/-/g, '_')}2026`
       ];
-      // 去重
       return [...new Set(list)];
     }
 
@@ -799,19 +877,19 @@
       statusMessage.innerText = '';
     }
 
-    // 3. 檢查登入 Session 與身分權限
-    let currentUserRole = 'client';
-
+    // 驗證登入與身分檢查
     async function checkAuthSession() {
       try {
         const { data: { user }, error: userError } = await client.auth.getUser();
         if (user) {
           currentUserId = user.id;
           currentUsername = user.email.split('@')[0];
+          targetViewCustomer = currentUsername;
+
           loginContainer.style.display = 'none';
           dashboardContainer.style.display = 'block';
 
-          // 查詢使用者角色
+          // 判斷角色
           try {
             const { data: roleData, error: roleError } = await client
               .from('user_roles')
@@ -820,50 +898,68 @@
               .maybeSingle();
 
             if (!roleError && roleData && roleData.role) {
-              currentUserRole = roleData.role;
+              currentUserRole = roleData.role.toLowerCase();
+            } else if (currentUsername.toLowerCase().includes('admin')) {
+              currentUserRole = 'admin';
             } else {
               currentUserRole = 'client';
             }
           } catch (err) {
-            console.warn('角色權限查詢跳過，預設為客戶模式:', err);
-            currentUserRole = 'client';
+            currentUserRole = currentUsername.toLowerCase().includes('admin') ? 'admin' : 'client';
           }
 
           applyRolePermissions(currentUserRole, currentUsername);
-          loadInspectionData();
-          loadCustomerFiles();
+
+          if (currentUserRole === 'admin') {
+            await initAdminFeatures();
+          } else {
+            loadInspectionData();
+            loadCustomerFiles();
+          }
         } else {
-          currentUsername = '';
-          currentUserId = '';
-          currentUserRole = 'client';
-          activeTableName = '';
-          loginContainer.style.display = 'block';
-          dashboardContainer.style.display = 'none';
+          resetSessionState();
         }
       } catch (err) {
         console.error('Session 驗證異常:', err);
       }
     }
 
+    function resetSessionState() {
+      currentUsername = '';
+      currentUserId = '';
+      currentUserRole = 'client';
+      targetViewCustomer = '';
+      activeTableName = '';
+      loginContainer.style.display = 'block';
+      dashboardContainer.style.display = 'none';
+      adminStatsGrid.style.display = 'none';
+      adminTabNav.style.display = 'none';
+      adminSelectorBar.style.display = 'none';
+    }
+
     function applyRolePermissions(role, username) {
       if (role === 'admin') {
-        userBadge.innerText = '登入身分：' + username + ' (系統管理員)';
+        userBadge.innerText = `登入身分：${username} (系統管理員)`;
         userBadge.style.color = '#34d399';
         userBadge.style.borderColor = 'rgba(52, 211, 153, 0.4)';
         userBadge.style.background = 'rgba(16, 185, 129, 0.15)';
-        if (importExcelBtn) importExcelBtn.style.display = 'inline-block';
-        if (reportModuleTitle) reportModuleTitle.innerText = `📊 管理員總覽：${username} 檢驗報表`;
+        importExcelBtn.style.display = 'inline-block';
+        adminStatsGrid.style.display = 'grid';
+        adminTabNav.style.display = 'flex';
+        adminSelectorBar.style.display = 'flex';
       } else {
-        userBadge.innerText = '登入身分：' + username + ' (專屬客戶)';
+        userBadge.innerText = `登入身分：${username} (專屬客戶)`;
         userBadge.style.color = '#38bdf8';
         userBadge.style.borderColor = 'rgba(56, 189, 248, 0.35)';
         userBadge.style.background = 'rgba(56, 189, 248, 0.15)';
-        if (importExcelBtn) importExcelBtn.style.display = 'none';
-        if (reportModuleTitle) reportModuleTitle.innerText = `📊 ${username} 專屬檢驗報表`;
+        importExcelBtn.style.display = 'none';
+        adminStatsGrid.style.display = 'none';
+        adminTabNav.style.display = 'none';
+        adminSelectorBar.style.display = 'none';
       }
     }
 
-    // 4. 登入邏輯
+    // 登入事件處理
     loginBtn.addEventListener('click', async () => {
       const username = usernameInput.value.trim();
       const password = passwordInput.value;
@@ -873,9 +969,7 @@
         return;
       }
 
-      const internalEmail = username.includes('@') 
-        ? username 
-        : `${username.toLowerCase()}@pmc.local`;
+      const internalEmail = username.includes('@') ? username : `${username.toLowerCase()}@pmc.local`;
 
       try {
         loginBtn.disabled = true;
@@ -913,15 +1007,392 @@
       usernameInput.value = '';
       passwordInput.value = '';
       clearStatus();
-      checkAuthSession();
+      resetSessionState();
     });
 
-    // ==========================================
-    // 功能 1：動態表頭 (Dynamic Schema) 與數據渲染
-    // ==========================================
-    let currentInspectionData = [];
-    let currentTableHeaders = [];
+    // =========================================================================
+    // 管理員總攬核心：有帳號密碼(UserID)的客戶載入、機台與報表修復
+    // =========================================================================
+    async function initAdminFeatures() {
+      await loadAllConfiguredAccounts();
+      setupAdminTabs();
+    }
 
+    // 取得所有具備 UserID / 密碼的客戶帳號 (從 user_roles 或 profiles 表讀取)
+    async function loadAllConfiguredAccounts() {
+      allAccountsList = [];
+      const mapAccounts = new Map();
+
+      try {
+        // 優先從 user_roles 撈取所有有身分綁定的使用者
+        const { data: roleUsers, error: rErr } = await client
+          .from('user_roles')
+          .select('user_id, role, username');
+
+        if (!rErr && roleUsers && roleUsers.length > 0) {
+          roleUsers.forEach(u => {
+            const uname = (u.username || '').toLowerCase().trim();
+            if (uname && uname !== 'admin') {
+              mapAccounts.set(uname, {
+                username: uname,
+                userId: u.user_id || '已配置',
+                role: u.role || 'client'
+              });
+            }
+          });
+        }
+      } catch (e) {
+        console.warn('user_roles 讀取略過:', e);
+      }
+
+      // 備份已知有效客戶名單（確保即使無自訂 user_roles 也能抓到有建立登入的使用者）
+      const fallbackList = ['chin-yuh', 'jainnher'];
+      fallbackList.forEach(fb => {
+        if (!mapAccounts.has(fb)) {
+          mapAccounts.set(fb, {
+            username: fb,
+            userId: '已綁定認證',
+            role: 'client'
+          });
+        }
+      });
+
+      // 檢查 Storage 資料夾作為輔助驗證
+      try {
+        const { data: storageList } = await client.storage.from(BUCKET_NAME).list('', { limit: 100 });
+        if (storageList) {
+          storageList.forEach(item => {
+            const folder = item.name.toLowerCase().trim();
+            if (folder && folder !== '.emptyfolderplaceholder' && !folder.includes('.') && folder !== 'admin') {
+              if (!mapAccounts.has(folder)) {
+                mapAccounts.set(folder, {
+                  username: folder,
+                  userId: '已配置帳號',
+                  role: 'client'
+                });
+              }
+            }
+          });
+        }
+      } catch (e) {}
+
+      allAccountsList = Array.from(mapAccounts.values());
+
+      // 納管客戶總數統計
+      statCustomerCount.innerText = allAccountsList.length;
+
+      // 渲染客戶選單
+      let optHtml = '';
+      allAccountsList.forEach(acc => {
+        optHtml += `<option value="${acc.username}">${acc.username}</option>`;
+      });
+      customerSelectDropdown.innerHTML = optHtml;
+
+      if (!targetViewCustomer || targetViewCustomer === 'admin') {
+        targetViewCustomer = allAccountsList[0]?.username || 'chin-yuh';
+      }
+      customerSelectDropdown.value = targetViewCustomer;
+      updateAdminCustomerViewText();
+
+      // 同步載入報表、檔案、客戶表與機台統計
+      await Promise.all([
+        loadInspectionData(),
+        loadCustomerFiles(),
+        loadCustomerSummaryList(),
+        loadMachineRegistryList()
+      ]);
+    }
+
+    function updateAdminCustomerViewText() {
+      if (currentViewingCustomerText) {
+        currentViewingCustomerText.innerText = `當前視角：【${targetViewCustomer}】`;
+      }
+    }
+
+    customerSelectDropdown.addEventListener('change', async (e) => {
+      targetViewCustomer = e.target.value;
+      updateAdminCustomerViewText();
+      await loadInspectionData();
+      await loadCustomerFiles();
+    });
+
+    btnReloadAdminData.addEventListener('click', async () => {
+      btnReloadAdminData.disabled = true;
+      btnReloadAdminData.innerText = '讀取中...';
+      await loadAllConfiguredAccounts();
+      btnReloadAdminData.innerText = '🔄 重新整理所有清單';
+      btnReloadAdminData.disabled = false;
+    });
+
+    function setupAdminTabs() {
+      const tabButtons = document.querySelectorAll('.admin-tab-nav .tab-btn');
+      tabButtons.forEach(btn => {
+        btn.onclick = () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const targetId = btn.getAttribute('data-tab');
+          document.querySelectorAll('.tab-content-pane').forEach(pane => {
+            pane.style.display = pane.id === targetId ? 'block' : 'none';
+          });
+        };
+      });
+    }
+
+    // 渲染【客戶總覽清單】表格
+    async function loadCustomerSummaryList() {
+      customerSummaryTableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 16px;">正在檢查客戶關聯與檔案...</td></tr>';
+      
+      const rows = [];
+      for (const acc of allAccountsList) {
+        let fileCount = 0;
+        let dbStatus = '未連接';
+        let candidate = getCandidateTableNames(acc.username)[0];
+
+        try {
+          const { data: fData } = await client.storage.from(BUCKET_NAME).list(acc.username, { limit: 100 });
+          if (fData) fileCount = fData.length;
+        } catch (e) {}
+
+        // 測試表連線
+        try {
+          const { error } = await client.from(candidate).select('*', { count: 'exact', head: true });
+          dbStatus = !error ? `已連線 (${candidate})` : '未建立或RLS限制';
+        } catch (e) {
+          dbStatus = '連線異常';
+        }
+
+        rows.push(`
+          <tr>
+            <td><strong style="color: #38bdf8; font-size: 14px;">${acc.username}</strong></td>
+            <td><code style="color: #94a3b8; font-size: 11px;">${acc.userId}</code></td>
+            <td><code>${candidate}</code></td>
+            <td><span class="folder-count-badge">${fileCount} 個檔案</span></td>
+            <td style="text-align: center;">
+              <button class="btn-refresh" onclick="switchToCustomer('${acc.username}')" style="padding: 4px 10px;">檢視報表</button>
+            </td>
+          </tr>
+        `);
+      }
+
+      customerSummaryTableBody.innerHTML = rows.join('') || '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">尚無客戶資料</td></tr>';
+    }
+
+    window.switchToCustomer = async function(clientName) {
+      targetViewCustomer = clientName;
+      customerSelectDropdown.value = clientName;
+      updateAdminCustomerViewText();
+
+      const reportTabBtn = document.querySelector('[data-tab="tab-reports"]');
+      if (reportTabBtn) reportTabBtn.click();
+
+      await loadInspectionData();
+      await loadCustomerFiles();
+    };
+
+    // 安全資料庫查詢：支援連字號及多別名容錯
+    async function queryTableDataSafe(clientName) {
+      const candidates = getCandidateTableNames(clientName);
+      let rows = null;
+      let hitTable = '';
+      let errMsg = '';
+
+      for (const tName of candidates) {
+        try {
+          const { data, error } = await client.from(tName).select('*');
+          if (!error && data) {
+            if (data.length > 0) {
+              return { data, tableName: tName, error: null };
+            }
+            if (!hitTable) {
+              hitTable = tName;
+              rows = data;
+            }
+          } else if (error) {
+            errMsg = error.message;
+          }
+        } catch (e) {
+          errMsg = e.message;
+        }
+      }
+
+      if (hitTable) {
+        return { data: rows || [], tableName: hitTable, error: null };
+      }
+
+      return { data: null, tableName: candidates[0], error: errMsg || '找不到可用資料表' };
+    }
+
+    // 載入當前目標客戶的報表數據
+    async function loadInspectionData() {
+      const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
+      if (!activeUser) return;
+
+      inspectionTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 24px;">正在連線讀取【${activeUser}】報表資料...</td></tr>`;
+
+      const result = await queryTableDataSafe(activeUser);
+      activeTableName = result.tableName;
+
+      if (reportModuleTitle) {
+        reportModuleTitle.innerText = currentUserRole === 'admin' 
+          ? `📊 管理員總覽：【${activeUser}】檢驗報表 (${result.tableName})` 
+          : `📊 ${currentUsername} 專屬檢驗報表 (${result.tableName})`;
+      }
+
+      if (result.error && !result.data) {
+        inspectionTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; color: #f87171; padding: 24px;">
+              <div style="font-weight: 600; margin-bottom: 6px;">❌ 載入【${activeUser}】報表失敗</div>
+              <div style="font-size: 12px; color: #cbd5e1;">錯誤訊息：${result.error}</div>
+              <div style="font-size: 11px; color: #94a3b8; margin-top: 4px;">請確認資料表名稱是否為 ${result.tableName}</div>
+            </td>
+          </tr>
+        `;
+        statTotalInspections.innerText = '0';
+        statPassRate.innerText = '--%';
+        return;
+      }
+
+      const finalData = result.data || [];
+
+      statTotalInspections.innerText = finalData.length;
+
+      if (finalData.length === 0) {
+        inspectionTableBody.innerHTML = `
+          <tr>
+            <td colspan="6" style="text-align: center; color: #94a3b8; padding: 28px 16px;">
+              <div style="font-size: 15px; color: #fbbf24; margin-bottom: 8px;">⚠️ 目前尚無檢驗報表數據</div>
+              <div style="font-size: 12px; color: #94a3b8; line-height: 1.6;">
+                資料表 <code>${result.tableName}</code> 已成功連線，但目前筆數為 0。<br />
+                <strong>排查提示：</strong>若後台已有資料，可能因啟用了 <strong>RLS (Row Level Security)</strong>，請至 Supabase 開啟 Policy 允許 SELECT 或停用該表 RLS 即可正常讀取。
+              </div>
+            </td>
+          </tr>
+        `;
+        statPassRate.innerText = '--%';
+        currentInspectionData = [];
+        return;
+      }
+
+      const ignoredColumns = ['id', 'assigned_user_id', 'created_at', 'updated_at'];
+      const dynamicHeaders = Object.keys(finalData[0])
+        .filter(col => !ignoredColumns.includes(col))
+        .map(col => ({ key: col, label: col }));
+
+      renderDynamicInspectionTable(dynamicHeaders, finalData);
+    }
+
+    refreshTableBtn.addEventListener('click', loadInspectionData);
+
+    // 機型與機台總覽清單與數量計算
+    async function loadMachineRegistryList() {
+      machineSummaryTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">正在提取並彙整機台資訊...</td></tr>';
+      allMachinesCache = [];
+
+      for (const acc of allAccountsList) {
+        const res = await queryTableDataSafe(acc.username);
+        const data = res.data;
+
+        if (data && data.length > 0) {
+          const machineMap = {};
+
+          data.forEach(row => {
+            const machineKey = row['機台名稱'] || row['機型'] || row['機器'] || row['機型/機號'] || 
+                               row['機台機型'] || row['machine_name'] || row['model'] || 
+                               row['機台'] || row['編號'] || '機型/機號';
+
+            if (!machineMap[machineKey]) {
+              machineMap[machineKey] = {
+                customer: acc.username,
+                machine: machineKey,
+                totalTests: 0,
+                passCount: 0,
+                failCount: 0,
+                lastResult: '無'
+              };
+            }
+
+            machineMap[machineKey].totalTests++;
+            
+            let resultVal = '';
+            for (const k of Object.keys(row)) {
+              if (k.includes('判定') || k.includes('結果') || k.toLowerCase().includes('result')) {
+                resultVal = String(row[k] || '');
+                break;
+              }
+            }
+
+            const up = resultVal.toUpperCase();
+            if (up.includes('PASS') || up.includes('合格') || up.includes('OK')) {
+              machineMap[machineKey].passCount++;
+              machineMap[machineKey].lastResult = 'PASS (合格)';
+            } else if (up.includes('FAIL') || up.includes('不合格') || up.includes('NG')) {
+              machineMap[machineKey].failCount++;
+              machineMap[machineKey].lastResult = 'FAIL (異常)';
+            } else {
+              machineMap[machineKey].lastResult = resultVal || '檢驗完成';
+            }
+          });
+
+          Object.values(machineMap).forEach(m => allMachinesCache.push(m));
+        }
+      }
+
+      statMachineCount.innerText = allMachinesCache.length;
+      renderMachineTable(allMachinesCache);
+    }
+
+    function renderMachineTable(machines) {
+      if (!machines || machines.length === 0) {
+        machineSummaryTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">尚無機台或機型紀錄 (請確認資料表是否有數據或匯入資料)</td></tr>';
+        return;
+      }
+
+      let html = '';
+      machines.forEach(m => {
+        const passPercent = m.totalTests > 0 ? Math.round((m.passCount / m.totalTests) * 100) : 100;
+        const isPass = m.lastResult.includes('PASS') || m.lastResult.includes('合格');
+        html += `
+          <tr>
+            <td><strong style="color: #cbd5e1;">${m.customer}</strong></td>
+            <td><strong style="color: #38bdf8;">${m.machine}</strong></td>
+            <td>${m.totalTests} 項量測</td>
+            <td>
+              <span style="color: #34d399;">${m.passCount} 合格</span> / 
+              <span style="color: #f87171;">${m.failCount} 異常</span> 
+              <span style="font-size: 11px; color: #94a3b8;">(${passPercent}%)</span>
+            </td>
+            <td>
+              <span class="badge-status ${isPass ? 'status-pass' : 'status-fail'}">${m.lastResult}</span>
+            </td>
+            <td style="text-align: center;">
+              <button class="btn-refresh" onclick="switchToCustomer('${m.customer}')" style="padding: 4px 10px;">查看報表</button>
+            </td>
+          </tr>
+        `;
+      });
+      machineSummaryTableBody.innerHTML = html;
+    }
+
+    // 搜尋過濾功能
+    customerSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const rows = customerSummaryTableBody.querySelectorAll('tr');
+      rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+
+    machineSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = allMachinesCache.filter(m => 
+        m.customer.toLowerCase().includes(q) || m.machine.toLowerCase().includes(q)
+      );
+      renderMachineTable(filtered);
+    });
+
+    // 動態表格渲染
     function renderDynamicInspectionTable(headers, dataList) {
       if (!dataList || dataList.length === 0) {
         inspectionTableBody.innerHTML = `<tr><td colspan="${headers.length || 6}" style="text-align: center; color: #94a3b8; padding: 20px;">尚無檢驗量測數據</td></tr>`;
@@ -931,7 +1402,14 @@
       currentTableHeaders = headers;
       currentInspectionData = dataList;
 
-      // 1. 動態表頭
+      let passCount = 0;
+      dataList.forEach(row => {
+        const str = JSON.stringify(row).toUpperCase();
+        if (str.includes('PASS') || str.includes('合格') || str.includes('OK')) passCount++;
+      });
+      statTotalInspections.innerText = dataList.length;
+      statPassRate.innerText = `${Math.round((passCount / dataList.length) * 100)}%`;
+
       let headHtml = '<tr>';
       headers.forEach(h => {
         headHtml += `<th>${h.label || h.key || h}</th>`;
@@ -939,159 +1417,42 @@
       headHtml += '</tr>';
       inspectionTableHead.innerHTML = headHtml;
 
-      // 2. 動態資料列
       let bodyHtml = '';
       dataList.forEach(item => {
         bodyHtml += '<tr>';
         headers.forEach(h => {
-            const key = typeof h === 'object' ? h.key : h;
-      // 若為 null、undefined 或是純空白字元，皆轉為空字串 ''
-            const rawVal = item[key];
-            const val = (rawVal !== undefined && rawVal !== null) ? String(rawVal).trim() : '';
-          
+          const key = typeof h === 'object' ? h.key : h;
+          const rawVal = item[key];
+          const val = (rawVal !== undefined && rawVal !== null) ? String(rawVal).trim() : '';
           const lowerKey = String(key).toLowerCase();
-  const lowerLabel = String(h.label || '').toLowerCase();
+          const lowerLabel = String(h.label || '').toLowerCase();
 
-  // 若值為空白，直接渲染空儲存格
-  if (val === '') {
-    bodyHtml += `<td></td>`;
-  } else if (lowerKey.includes('result') || lowerKey.includes('判定') || lowerLabel.includes('判定') || lowerLabel.includes('結果')) {
-    const isPass = String(val).toUpperCase().includes('PASS') || String(val).includes('合格') || String(val).includes('OK');
-    const isFail = String(val).toUpperCase().includes('FAIL') || String(val).includes('不合格') || String(val).includes('NG');
-    const badgeClass = isPass ? 'status-pass' : (isFail ? 'status-fail' : 'status-info');
-    bodyHtml += `<td><span class="badge-status ${badgeClass}">${val}</span></td>`;
-  } else if (lowerKey.includes('code') || lowerKey.includes('編號') || lowerLabel.includes('編號') || lowerKey === '機台名稱') {
-    bodyHtml += `<td><strong style="color: #38bdf8;">${val}</strong></td>`;
-  } else {
-    bodyHtml += `<td>${val}</td>`;
-  }
+          if (val === '') {
+            bodyHtml += `<td></td>`;
+          } else if (lowerKey.includes('result') || lowerKey.includes('判定') || lowerLabel.includes('判定') || lowerLabel.includes('結果')) {
+            const isPass = String(val).toUpperCase().includes('PASS') || String(val).includes('合格') || String(val).includes('OK');
+            const isFail = String(val).toUpperCase().includes('FAIL') || String(val).includes('不合格') || String(val).includes('NG');
+            const badgeClass = isPass ? 'status-pass' : (isFail ? 'status-fail' : 'status-info');
+            bodyHtml += `<td><span class="badge-status ${badgeClass}">${val}</span></td>`;
+          } else if (lowerKey.includes('code') || lowerKey.includes('編號') || lowerLabel.includes('編號') || lowerKey.includes('機台') || lowerKey.includes('機型')) {
+            bodyHtml += `<td><strong style="color: #38bdf8;">${val}</strong></td>`;
+          } else {
+            bodyHtml += `<td>${val}</td>`;
+          }
         });
         bodyHtml += '</tr>';
       });
       inspectionTableBody.innerHTML = bodyHtml;
     }
 
-    // =========================================================================
-    // 核心修復：載入報表數據 (自動排除表名不符、RLS阻擋與空資料問題)
-    // =========================================================================
-    async function loadInspectionData() {
-      if (!currentUsername) {
-        console.warn('[報表除錯] 尚未取得使用者帳號名稱，暫緩查詢報表');
-        return;
-      }
-
-      const candidates = getCandidateTableNames();
-      inspectionTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 24px;">正在連線讀取客戶專屬報表資料...</td></tr>`;
-
-      let querySuccess = false;
-      let finalData = null;
-      let usedTableName = '';
-      let lastErrorMessage = '';
-
-      // 1. 自動遍歷可能的資料表名稱 (避免大小寫或連字號差異)
-      for (const tName of candidates) {
-        try {
-          console.log(`[報表除錯] 嘗試查詢資料表: public."${tName}"`);
-          const { data, error } = await client
-            .from(tName)
-            .select('*');
-
-          if (!error) {
-            querySuccess = true;
-            usedTableName = tName;
-            finalData = data;
-            activeTableName = tName;
-            console.log(`[報表除錯] 成功命中資料表 "${tName}"，取得筆數:`, data?.length);
-            break;
-          } else {
-            // 如果是資料表不存在的錯誤 (PGRST200 等)，繼續嘗試下一個候選表名
-            console.warn(`[報表除錯] 資料表 "${tName}" 查詢跳過:`, error.message);
-            lastErrorMessage = error.message;
-          }
-        } catch (e) {
-          lastErrorMessage = e.message;
-        }
-      }
-
-      // 2. 所有候選表名皆查詢失敗
-      if (!querySuccess) {
-        console.error('[報表除錯] 所有候選資料表均無法連線:', lastErrorMessage);
-        inspectionTableBody.innerHTML = `
-          <tr>
-            <td colspan="6" style="text-align: center; color: #f87171; padding: 24px;">
-              <div style="font-weight: 600; margin-bottom: 6px;">❌ 載入專屬報表失敗</div>
-              <div style="font-size: 12px; color: #cbd5e1; margin-bottom: 6px;">錯誤訊息：${lastErrorMessage}</div>
-              <div style="font-size: 11px; color: #94a3b8;">
-                請確認 Supabase 後台是否已建立名稱為 <code>${candidates[0]}</code> 的資料表。
-              </div>
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      // 更新模組標題
-      if (reportModuleTitle) {
-        reportModuleTitle.innerText = currentUserRole === 'admin' 
-          ? `📊 管理員總覽：${usedTableName} 檢驗報表` 
-          : `📊 ${currentUsername} 專屬檢驗報表 (${usedTableName})`;
-      }
-
-      // 3. 資料庫回傳為空陣列 (0 筆資料) - 提供明確的 RLS 與指派提示
-      if (!finalData || finalData.length === 0) {
-        console.warn(`[報表除錯] 資料表 "${usedTableName}" 存在，但回傳 0 筆資料。`);
-        inspectionTableBody.innerHTML = `
-          <tr>
-            <td colspan="6" style="text-align: center; color: #94a3b8; padding: 28px 16px;">
-              <div style="font-size: 15px; color: #fbbf24; margin-bottom: 8px;">⚠️ 目前尚無符合權限的專屬報表資料</div>
-              <div style="font-size: 12px; color: #94a3b8; max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                資料表 <code>${usedTableName}</code> 已連線成功，但未讀取到資料列。<br />
-                <strong>可能原因：</strong>資料表啟用了 RLS (Row Level Security)，而現有資料尚未將 <code>assigned_user_id</code> 綁定為當前帳號 UID (<code style="color: #38bdf8;">${currentUserId || '未取得'}</code>)。<br />
-                <span style="color: #64748b; font-size: 11px;">(若剛匯入 Excel，請於 Supabase 執行 UPDATE 綁定客戶 UID 即可立即顯示)</span>
-              </div>
-            </td>
-          </tr>
-        `;
-        currentInspectionData = [];
-        return;
-      }
-
-      // 4. 成功讀取到資料列 -> 動態偵測第一列欄位作為表頭並渲染
-      // 自動排除系統內部與無關欄位 (即使沒有 id 也不會報錯)
-      const ignoredColumns = ['id', 'assigned_user_id', 'created_at', 'updated_at'];
-      const sampleRow = finalData[0];
-      const dynamicHeaders = Object.keys(sampleRow)
-        .filter(col => !ignoredColumns.includes(col))
-        .map(col => ({
-          key: col,
-          label: col
-        }));
-
-      console.log('[報表除錯] 解析動態表頭成功:', dynamicHeaders.map(h => h.key));
-      renderDynamicInspectionTable(dynamicHeaders, finalData);
-    }
-
-    refreshTableBtn.addEventListener('click', loadInspectionData);
-
-    // =======================================================
-    // 功能 2：可展開式資料夾樹狀清單與 PDF/多檔案格式精準辨識
-    // =======================================================
+    // 專屬檔案列表
     function getFileFormatMeta(filename) {
       const ext = filename.split('.').pop().toLowerCase();
-      if (ext === 'pdf') {
-        return { type: 'PDF', icon: '📕', badgeClass: 'format-pdf', label: 'PDF 文件' };
-      } else if (['xlsx', 'xls', 'csv'].includes(ext)) {
-        return { type: 'EXCEL', icon: '📊', badgeClass: 'format-excel', label: '試算表' };
-      } else if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)) {
-        return { type: 'IMAGE', icon: '🖼️', badgeClass: 'format-img', label: '影像圖檔' };
-      } else if (['dwg', 'dxf', 'step', 'stp', 'iges', 'igs'].includes(ext)) {
-        return { type: 'CAD', icon: '📐', badgeClass: 'format-cad', label: 'CAD 工程圖' };
-      } else if (['doc', 'docx'].includes(ext)) {
-        return { type: 'WORD', icon: '📘', badgeClass: 'format-other', label: 'Word 文件' };
-      } else if (['zip', 'rar', '7z'].includes(ext)) {
-        return { type: 'ARCHIVE', icon: '📦', badgeClass: 'format-other', label: '壓縮檔' };
-      }
-      return { type: ext.toUpperCase() || 'FILE', icon: '📄', badgeClass: 'format-other', label: ext.toUpperCase() || '一般檔案' };
+      if (ext === 'pdf') return { type: 'PDF', icon: '📕', badgeClass: 'format-pdf', label: 'PDF 文件' };
+      if (['xlsx', 'xls', 'csv'].includes(ext)) return { type: 'EXCEL', icon: '📊', badgeClass: 'format-excel', label: '試算表' };
+      if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return { type: 'IMAGE', icon: '🖼️', badgeClass: 'format-img', label: '影像圖檔' };
+      if (['dwg', 'dxf', 'step', 'stp', 'iges'].includes(ext)) return { type: 'CAD', icon: '📐', badgeClass: 'format-cad', label: 'CAD 工程圖' };
+      return { type: ext.toUpperCase() || 'FILE', icon: '📄', badgeClass: 'format-other', label: '一般檔案' };
     }
 
     async function listAllFilesInFolder(folderPrefix) {
@@ -1104,7 +1465,6 @@
 
       for (const item of items) {
         if (item.name === '.emptyFolderPlaceholder') continue;
-
         const isSubFolder = item.id === null || !item.metadata;
         const currentPath = folderPrefix ? `${folderPrefix}/${item.name}` : item.name;
 
@@ -1125,35 +1485,17 @@
     let isAllExpanded = true;
 
     async function loadCustomerFiles() {
-      fileListBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">正在讀取並分類檔案結構...</td></tr>';
+      const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
+      if (filesModuleTitle) {
+        filesModuleTitle.innerText = currentUserRole === 'admin'
+          ? `📁 【${activeUser}】專屬文件與檢驗報告`
+          : `📁 檢驗報告與文件下載區`;
+      }
+
+      fileListBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">正在讀取檔案清單...</td></tr>';
 
       try {
-        let allFiles = [];
-
-        if (currentUserRole === 'admin') {
-          const { data: rootItems, error: rootError } = await client.storage
-            .from(BUCKET_NAME)
-            .list('', { limit: 100 });
-
-          if (rootError) throw rootError;
-
-          for (const item of rootItems || []) {
-            if (item.name === '.emptyFolderPlaceholder') continue;
-            const isFolder = item.id === null || !item.metadata;
-            if (isFolder) {
-              const subFiles = await listAllFilesInFolder(item.name);
-              allFiles.push(...subFiles);
-            } else {
-              allFiles.push({
-                ...item,
-                fullPath: item.name,
-                folderPath: '根目錄一般文件'
-              });
-            }
-          }
-        } else {
-          allFiles = await listAllFilesInFolder(currentUsername);
-        }
+        const allFiles = await listAllFilesInFolder(activeUser);
 
         if (allFiles.length === 0) {
           fileListBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">目前尚無任何檢驗檔案</td></tr>';
@@ -1163,9 +1505,7 @@
         const groupedFolders = {};
         allFiles.forEach(f => {
           const groupName = f.folderPath;
-          if (!groupedFolders[groupName]) {
-            groupedFolders[groupName] = [];
-          }
+          if (!groupedFolders[groupName]) groupedFolders[groupName] = [];
           groupedFolders[groupName].push(f);
         });
 
@@ -1174,7 +1514,6 @@
 
         for (const [folderName, files] of Object.entries(groupedFolders)) {
           const folderId = `folder_group_${groupIndex}`;
-          
           tableHtml += `
             <tr class="folder-row" onclick="toggleFolder('${folderId}')">
               <td colspan="5">
@@ -1182,7 +1521,6 @@
                   <span class="folder-arrow expanded" id="arrow_${folderId}">▶</span>
                   <span>📁 ${folderName}</span>
                   <span class="folder-count-badge">${files.length} 個檔案</span>
-                  <span style="font-size: 11px; color: #64748b; margin-left: auto;">點擊展開/收合目錄</span>
                 </div>
               </td>
             </tr>
@@ -1203,7 +1541,7 @@
               <tr class="file-row ${folderId}">
                 <td>
                   <div class="file-name-cell">
-                    <span style="font-size: 16px;">${formatMeta.icon}</span>
+                    <span>${formatMeta.icon}</span>
                     <span style="color: #f1f5f9; font-weight: 500;">${file.name}</span>
                   </div>
                 </td>
@@ -1214,9 +1552,7 @@
                 <td>${sizeKB}</td>
                 <td>${updatedTime}</td>
                 <td style="text-align: center;">
-                  <a href="${downloadUrl}" target="_blank" download="${file.name}" class="btn-action">
-                    下載檔案
-                  </a>
+                  <a href="${downloadUrl}" target="_blank" download="${file.name}" class="btn-action">下載</a>
                 </td>
               </tr>
             `;
@@ -1227,7 +1563,6 @@
         fileListBody.innerHTML = tableHtml;
 
       } catch (err) {
-        console.error('檔案清單載入失敗:', err);
         fileListBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #f87171; padding: 20px;">載入失敗：${err.message}</td></tr>`;
       }
     }
@@ -1235,54 +1570,21 @@
     window.toggleFolder = function(folderId) {
       const rows = document.querySelectorAll(`.${folderId}`);
       const arrow = document.getElementById(`arrow_${folderId}`);
-      
       const isHidden = rows.length > 0 && rows[0].classList.contains('hidden');
-      rows.forEach(r => {
-        if (isHidden) {
-          r.classList.remove('hidden');
-        } else {
-          r.classList.add('hidden');
-        }
-      });
-
-      if (arrow) {
-        if (isHidden) {
-          arrow.classList.add('expanded');
-        } else {
-          arrow.classList.remove('expanded');
-        }
-      }
+      rows.forEach(r => r.classList.toggle('hidden', !isHidden));
+      if (arrow) arrow.classList.toggle('expanded', isHidden);
     };
 
     toggleAllFoldersBtn.addEventListener('click', () => {
       isAllExpanded = !isAllExpanded;
-      const allFileRows = document.querySelectorAll('.file-row');
-      const allArrows = document.querySelectorAll('.folder-arrow');
-
-      allFileRows.forEach(row => {
-        if (isAllExpanded) {
-          row.classList.remove('hidden');
-        } else {
-          row.classList.add('hidden');
-        }
-      });
-
-      allArrows.forEach(arrow => {
-        if (isAllExpanded) {
-          arrow.classList.add('expanded');
-        } else {
-          arrow.classList.remove('expanded');
-        }
-      });
-
+      document.querySelectorAll('.file-row').forEach(row => row.classList.toggle('hidden', !isAllExpanded));
+      document.querySelectorAll('.folder-arrow').forEach(arrow => arrow.classList.toggle('expanded', isAllExpanded));
       toggleAllFoldersBtn.innerText = isAllExpanded ? '📂 全部收合' : '📁 全部展開';
     });
 
     refreshFilesBtn.addEventListener('click', loadCustomerFiles);
 
-    // ==========================================
-    // 功能 3：客戶端上傳回傳檔案
-    // ==========================================
+    // 上傳與 Excel 操作
     clientUploadBtn.addEventListener('click', async () => {
       const files = clientUploadInput.files;
       if (!files || files.length === 0) {
@@ -1290,48 +1592,37 @@
         return;
       }
 
+      const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
       const file = files[0];
       const timestamp = Date.now();
       const fileExt = file.name.split('.').pop();
       const baseName = file.name.substring(0, file.name.lastIndexOf('.')).replace(/[^a-zA-Z0-9_-]/g, '_');
       const sanitizedName = `${baseName}.${fileExt}`;
-      const filePath = `${currentUsername}/client_feedback/${timestamp}_${sanitizedName}`;
+      const filePath = `${activeUser}/client_feedback/${timestamp}_${sanitizedName}`;
 
       try {
         clientUploadBtn.disabled = true;
-        uploadStatusText.innerText = '正在傳輸檔案至安全雲端空間...';
+        uploadStatusText.innerText = '正在上傳檔案...';
         uploadStatusText.style.color = '#38bdf8';
 
-        const { data, error } = await client.storage
+        const { error } = await client.storage
           .from(BUCKET_NAME)
-          .upload(filePath, file, {
-            cacheControl: '3600',
-            upsert: false
-          });
+          .upload(filePath, file, { cacheControl: '3600', upsert: false });
 
         if (error) throw error;
 
-        uploadStatusText.innerText = `上傳成功！已送達伺服器 (${file.name})`;
+        uploadStatusText.innerText = `上傳成功！已存入 ${activeUser} 專屬目錄`;
         uploadStatusText.style.color = '#34d399';
         clientUploadInput.value = '';
-
         loadCustomerFiles();
 
       } catch (err) {
-        console.error('上傳回傳出錯:', err);
         uploadStatusText.innerText = `上傳失敗：${err.message}`;
         uploadStatusText.style.color = '#f87171';
       } finally {
         clientUploadBtn.disabled = false;
       }
     });
-
-    // ==========================================
-    // 功能 4：Excel 匯出與管理員匯入 (寫入當前活耀資料表)
-    // ==========================================
-    const downloadExcelBtn = document.getElementById('downloadExcelBtn');
-    const importExcelBtn = document.getElementById('importExcelBtn');
-    const excelImportInput = document.getElementById('excelImportInput');
 
     downloadExcelBtn.addEventListener('click', () => {
       if (!currentInspectionData || currentInspectionData.length === 0) {
@@ -1342,77 +1633,60 @@
       const exportRows = currentInspectionData.map(item => {
         const row = {};
         currentTableHeaders.forEach(h => {
-          const colLabel = h.label || h.key || h;
           const colKey = h.key || h;
-          row[colLabel] = item[colKey] !== undefined ? item[colKey] : '';
+          row[h.label || colKey] = item[colKey] !== undefined ? item[colKey] : '';
         });
         return row;
       });
 
       const worksheet = XLSX.utils.json_to_sheet(exportRows);
-      const colWidths = currentTableHeaders.map(h => ({
-        wch: Math.max((h.label ? h.label.length * 2.5 : 12), 14)
-      }));
-      worksheet['!cols'] = colWidths;
-
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "專屬檢驗報表");
+      XLSX.utils.book_append_sheet(workbook, worksheet, "檢驗報表");
 
       const todayStr = new Date().toISOString().split('T')[0];
-      const targetTable = activeTableName || (getCandidateTableNames()[0]);
-      const filename = `專屬報表_${targetTable}_${todayStr}.xlsx`;
-      XLSX.writeFile(workbook, filename);
+      const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
+      XLSX.writeFile(workbook, `檢驗報表_${activeUser}_${todayStr}.xlsx`);
     });
 
-    importExcelBtn.addEventListener('click', () => {
-      excelImportInput.click();
-    });
+    importExcelBtn.addEventListener('click', () => excelImportInput.click());
 
     excelImportInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (!file) return;
 
-      const targetTable = activeTableName || (getCandidateTableNames()[0]);
-      if (!targetTable) {
-        alert('尚未取得目標資料表名稱，請先確認登入狀態');
-        return;
-      }
+      const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
+      const targetTable = activeTableName || (getCandidateTableNames(activeUser)[0]);
 
       const reader = new FileReader();
       reader.onload = async (evt) => {
         try {
           const data = new Uint8Array(evt.target.result);
           const workbook = XLSX.read(data, { type: 'array' });
-          const firstSheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[firstSheetName];
+          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
           const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
 
           if (jsonData.length === 0) {
-            alert('Excel 內容為空或無有效數據列！');
+            alert('Excel 內容為空！');
             return;
           }
 
           importExcelBtn.innerText = '正在寫入資料庫...';
           importExcelBtn.disabled = true;
 
-          const { data: insertedData, error: insertError } = await client
-            .from(targetTable)
-            .insert(jsonData);
+          const { error: insertError } = await client.from(targetTable).insert(jsonData);
 
           if (insertError) {
-            console.warn('寫入資料庫提示:', insertError.message);
-            const sample = jsonData[0];
-            const dynamicHeaders = Object.keys(sample).map(k => ({ key: k, label: k }));
+            const dynamicHeaders = Object.keys(jsonData[0]).map(k => ({ key: k, label: k }));
             renderDynamicInspectionTable(dynamicHeaders, jsonData);
-            alert(`已在前端預覽 ${jsonData.length} 筆資料。（寫入 Supabase 提醒：${insertError.message}）`);
+            alert(`已在前端預覽 ${jsonData.length} 筆資料。（寫入提示：${insertError.message}）`);
           } else {
             alert(`🎉 成功匯入 ${jsonData.length} 筆數據至 ${targetTable}！`);
-            loadInspectionData();
+            await loadInspectionData();
+            await loadMachineRegistryList();
           }
 
         } catch (err) {
-          console.error('Excel 解析失敗:', err);
-          alert('解析 Excel 檔案出錯：' + err.message);
+          alert('解析 Excel 失敗：' + err.message);
         } finally {
           importExcelBtn.innerText = '📥 匯入 Excel 連動';
           importExcelBtn.disabled = false;
@@ -1422,7 +1696,7 @@
       reader.readAsArrayBuffer(file);
     });
 
-    // 啟動時檢查狀態
+    // 啟動身分檢查
     checkAuthSession();
   </script>
 </body>
