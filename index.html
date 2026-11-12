@@ -58,9 +58,9 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 1180px;
+      max-width: 1240px;
       padding: 32px;
-      background: rgba(13, 20, 36, 0.85);
+      background: rgba(13, 20, 36, 0.88);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border: 1px solid rgba(56, 189, 248, 0.3);
@@ -111,11 +111,8 @@
     .user-badge {
       display: inline-block;
       padding: 5px 14px;
-      background: rgba(56, 189, 248, 0.15);
       border-radius: 20px;
       font-size: 13px;
-      color: #38bdf8;
-      border: 1px solid rgba(56, 189, 248, 0.35);
       font-weight: 600;
     }
 
@@ -238,7 +235,7 @@
       font-size: 13px;
       outline: none;
       font-weight: 600;
-      min-width: 200px;
+      min-width: 180px;
     }
 
     .select-customer option {
@@ -353,6 +350,50 @@
       transform: translateY(-1px);
     }
 
+    .btn-smart {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+      color: #fff;
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      transition: all 0.2s;
+      box-shadow: 0 2px 10px rgba(124, 58, 237, 0.35);
+    }
+
+    .btn-smart:hover {
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      transform: translateY(-1px);
+    }
+
+    .btn-smart:disabled {
+      background: #475569;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.25);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.85);
+      color: #fff;
+    }
+
     .btn-refresh {
       background: transparent;
       border: 1px solid rgba(56, 189, 248, 0.4);
@@ -414,7 +455,8 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    input[type="date"] {
       width: 100%;
       padding: 12px 14px;
       background: rgba(15, 23, 42, 0.7);
@@ -427,10 +469,16 @@
     }
 
     input[type="text"]:focus,
-    input[type="password"]:focus {
+    input[type="password"]:focus,
+    input[type="date"]:focus {
       border-color: #38bdf8;
       background: rgba(15, 23, 42, 0.9);
       box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1) brightness(0.85);
+      cursor: pointer;
     }
 
     .btn-submit {
@@ -548,6 +596,7 @@
     .format-excel { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
     .format-img { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
     .format-cad { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+    .format-doc { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); }
     .format-other { background: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.35); }
 
     .search-input {
@@ -563,6 +612,162 @@
     .search-input:focus {
       border-color: #38bdf8;
       box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+    }
+
+    /* 數據終端資料庫專屬樣式 (樹狀分類 + 拖曳 + 勾選 UI) */
+    .terminal-layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 860px) {
+      .terminal-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .tree-panel {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 8px;
+      padding: 14px;
+      max-height: 680px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tree-toolbar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      flex-wrap: wrap;
+    }
+
+    .tree-node {
+      padding: 6px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: #cbd5e1;
+      transition: all 0.15s ease;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+
+    .tree-node:hover {
+      background: rgba(56, 189, 248, 0.12);
+      color: #38bdf8;
+    }
+
+    .tree-node.active-folder {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: rgba(52, 211, 153, 0.4);
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    /* 拖曳互動樣式 */
+    .drag-over-target {
+      background: rgba(56, 189, 248, 0.28) !important;
+      border: 1px dashed #38bdf8 !important;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
+
+    .dragging-item {
+      opacity: 0.45;
+    }
+
+    .terminal-checkbox {
+      width: 15px;
+      height: 15px;
+      accent-color: #38bdf8;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .batch-action-bar {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .batch-action-bar.visible {
+      display: flex;
+    }
+
+    .tree-children {
+      margin-left: 16px;
+      border-left: 1px dashed rgba(56, 189, 248, 0.25);
+      padding-left: 6px;
+    }
+
+    .content-panel {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .path-indicator {
+      font-size: 13px;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(30, 41, 59, 0.5);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      flex-wrap: wrap;
+    }
+
+    .smart-upload-box {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.14) 0%, rgba(15, 23, 42, 0.65) 100%);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .priority-badge-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: #cbd5e1;
+      background: rgba(15, 23, 42, 0.55);
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(167, 139, 250, 0.25);
+    }
+
+    .priority-step {
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(139, 92, 246, 0.22);
+      color: #ddd6fe;
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      font-weight: 600;
     }
   </style>
 </head>
@@ -638,6 +843,7 @@
       <button class="tab-btn active" data-tab="tab-reports">📊 客戶專屬檢驗報表</button>
       <button class="tab-btn" data-tab="tab-customers">👥 客戶總覽清單</button>
       <button class="tab-btn" data-tab="tab-machines">⚙️ 機型與機台總覽清單</button>
+      <button class="tab-btn" data-tab="tab-gdrive-terminal" style="color: #34d399; font-weight: bold;">🗄️ 數據終端資料庫</button>
     </div>
 
     <!-- 管理員專屬：即時客戶切換選單 -->
@@ -683,10 +889,10 @@
         </div>
       </div>
 
-      <!-- 檔案下載與展開 -->
+      <!-- Supabase 檔案下載與展開 -->
       <div class="module-card">
         <div class="module-header">
-          <div class="module-title" id="filesModuleTitle">📁 檢驗報告與文件下載區</div>
+          <div class="module-title" id="filesModuleTitle">📁 檢驗報告與文件下載區 (Supabase Storage)</div>
           <div style="display: flex; gap: 8px;">
             <button id="toggleAllFoldersBtn" class="btn-refresh" style="border-color: #38bdf8; color: #38bdf8;">📂 全部展開 / 收合</button>
             <button id="refreshFilesBtn" class="btn-refresh">重新整理檔案</button>
@@ -712,10 +918,10 @@
         </div>
       </div>
 
-      <!-- 上傳回傳區域 -->
+      <!-- 客戶端上傳回傳區域 (Supabase) -->
       <div class="module-card">
         <div class="module-header">
-          <div class="module-title">📤 客戶端數據與檔案回傳</div>
+          <div class="module-title">📤 客戶端數據與檔案回傳 (Supabase)</div>
         </div>
         <div class="upload-zone">
           <input type="file" id="clientUploadInput" />
@@ -786,16 +992,154 @@
       </div>
     </div>
 
+    <!-- 分頁 4：管理員專屬【數據終端資料庫】(Google Drive 樹狀分類管理 + 智慧自動歸檔 + 拖曳與勾選) -->
+    <div id="tab-gdrive-terminal" class="tab-content-pane" style="display: none;">
+      <div class="module-card" style="border-color: rgba(52, 211, 153, 0.4);">
+        <div class="module-header">
+          <div class="module-title" style="color: #34d399;">
+            <span>🗄️ 數據終端資料庫 (Google Drive 樹狀結構與智慧歸檔系統)</span>
+            <span style="font-size: 11px; padding: 2px 6px; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 4px;">ADMIN ONLY</span>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button id="btnAiCopilotPrompt" class="btn-refresh" style="border-color: #a855f7; color: #c084fc;">🤖 AI 數據檢索助手 (即將啟用)</button>
+            <button id="refreshTerminalTreeBtn" class="btn-refresh" style="border-color: #34d399; color: #34d399;">🔄 重新整理資料庫樹</button>
+          </div>
+        </div>
+
+        <div class="terminal-layout">
+          <!-- 左側：分類樹狀圖 (支援拖曳目標與勾選新增/移除) -->
+          <div class="tree-panel">
+            <div style="font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; display: flex; justify-content: space-between;">
+              <span>📁 目錄樹狀圖 (可拖曳/勾選)</span>
+              <span id="treeStatsText" style="color: #38bdf8;">0 個節點</span>
+            </div>
+
+            <!-- 樹狀圖快捷工具列：新增目錄 / 移除勾選目錄 -->
+            <div class="tree-toolbar">
+              <button id="btnTreeAddFolder" class="btn-refresh" style="padding: 4px 8px; font-size: 11px; border-color: #34d399; color: #34d399;">➕ 新增目錄</button>
+              <button id="btnTreeDeleteChecked" class="btn-danger" style="padding: 4px 8px; font-size: 11px;" disabled>🗑️ 移除勾選目錄 (<span id="treeCheckedCount">0</span>)</button>
+            </div>
+
+            <div id="treeViewContainer">
+              <div style="color: #94a3b8; font-size: 12px; padding: 12px 0;">正在讀取結構...</div>
+            </div>
+            <div style="margin-top: 10px; font-size: 11px; color: #64748b; line-height: 1.4;">
+              💡 提示：可直接拖曳右側檔案或資料夾丟入左側任一目錄節點進行移動。
+            </div>
+          </div>
+
+          <!-- 右側：操作面板與清單 -->
+          <div class="content-panel">
+            <!-- 區塊 A：智慧自動分類歸檔引擎 -->
+            <div class="smart-upload-box">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                <span style="font-size: 13px; font-weight: 700; color: #c4b5fd;">✨ 智慧自動分類上傳（自動建立：歸檔日期 / 廠商 / 格式子目錄）</span>
+                <span style="font-size: 11px; color: #94a3b8;">支援同時多選檔案批次歸檔</span>
+              </div>
+
+              <div class="priority-badge-bar">
+                <span style="color: #a78bfa; font-weight: 600;">📅 資料夾日期優先級：</span>
+                <span class="priority-step">1. 檔名備註日期</span>
+                <span>▶</span>
+                <span class="priority-step">2. 指定檢驗日期</span>
+                <span>▶</span>
+                <span class="priority-step">3. 檔案建立日期</span>
+              </div>
+
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                <select id="smartVendorSelect" class="select-customer" style="min-width: 190px; border-color: rgba(167, 139, 250, 0.5); color: #e9d5ff;">
+                  <option value="">🔍 自動從檔名提取廠商 (如: 嘉友_報表.pdf)</option>
+                </select>
+
+                <div style="display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.75); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(167, 139, 250, 0.4);">
+                  <label for="smartInspectionDate" style="margin: 0; font-size: 12px; color: #c4b5fd; white-space: nowrap;">檢驗日期(選填)：</label>
+                  <input type="date" id="smartInspectionDate" style="padding: 3px 6px; font-size: 12px; border: none; background: transparent; color: #f8fafc; width: 130px;" />
+                </div>
+
+                <input type="file" id="smartUploadInput" multiple style="color: #cbd5e1; font-size: 13px;" />
+                <button id="smartUploadBtn" class="btn-smart">🚀 啟動智慧自動歸檔</button>
+              </div>
+              <div id="smartUploadStatus" style="font-size: 12px; color: #a78bfa; line-height: 1.5;">
+                提示：系統將優先讀取檔名日期（支援 <code>20261112</code>、<code>2026-11-12</code>、民國 <code>1151112</code>）；若檔名無日期則採用「檢驗日期」，皆無則自動抓取檔案原始「建立日期」。
+              </div>
+            </div>
+
+            <!-- 區塊 B：手動指定節點路徑與新增/上傳 -->
+            <div class="path-indicator">
+              <span>📍 當前所在節點：</span>
+              <strong id="currentSelectedFolderPath" style="color: #38bdf8;">/ (根目錄)</strong>
+              <div style="margin-left: auto; display: flex; gap: 6px;">
+                <button id="btnCreateSubFolder" class="btn-refresh" style="padding: 3px 8px; font-size: 11px;">➕ 新增子資料夾</button>
+                <button id="btnTriggerManualUpload" class="btn-refresh" style="padding: 3px 8px; font-size: 11px; border-color: #34d399; color: #34d399;">📤 新增檔案至此目錄</button>
+              </div>
+            </div>
+
+            <div class="upload-zone" id="manualUploadZone" style="border-color: rgba(52, 211, 153, 0.35); padding: 10px 14px;">
+              <input type="file" id="terminalUploadInput" multiple />
+              <button id="terminalUploadBtn" class="btn-action" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">手動傳入當前節點</button>
+              <span id="terminalUploadStatus" style="font-size: 12px; color: #94a3b8;">支援多選檔案直接存入上方所示之資料夾路徑</span>
+            </div>
+
+            <!-- 區塊 C：勾選批次操作列 (勾選檔案或資料夾後自動顯示) -->
+            <div class="batch-action-bar" id="contentBatchBar">
+              <span style="color: #38bdf8; font-weight: 600;">☑️ 已勾選 <span id="contentCheckedCount">0</span> 個項目：</span>
+              <select id="batchMoveTargetSelect" class="select-customer" style="min-width: 180px; padding: 4px 10px; font-size: 12px;">
+                <option value="">選擇移動目標資料夾...</option>
+              </select>
+              <button id="btnBatchMove" class="btn-action" style="padding: 4px 10px; font-size: 11px;">📦 移動至目標目錄</button>
+              <button id="btnBatchDelete" class="btn-danger" style="padding: 4px 10px; font-size: 11px;">🗑️ 批次移除</button>
+              <button id="btnClearContentSelection" class="btn-refresh" style="margin-left: auto; padding: 3px 8px; font-size: 11px;">取消全選</button>
+            </div>
+
+            <!-- 檔案搜尋與清單 -->
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px;">
+              <input type="text" id="terminalSearchInput" class="search-input" placeholder="🔍 搜尋當前目錄檔案名稱..." style="width: 100%; max-width: 320px;" />
+              <span id="currentFolderStatsText" style="font-size: 12px; color: #94a3b8;">0 個項目</span>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 36px; text-align: center;">
+                      <input type="checkbox" id="terminalSelectAllCheckbox" class="terminal-checkbox" title="全選 / 取消全選" />
+                    </th>
+                    <th>項目名稱 (可按住拖曳移動)</th>
+                    <th>類別 / 格式</th>
+                    <th>大小</th>
+                    <th>建立時間</th>
+                    <th style="text-align: center; width: 140px;">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="terminalFileListBody">
+                  <tr>
+                    <td colspan="6" style="text-align: center; color: #94a3b8; padding: 24px;">請由左側點選資料夾節點檢視檔案</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // 1. 初始化 Supabase
+    // =========================================================================
+    // 1. 初始化 Supabase 與 Google Apps Script 設定
+    // =========================================================================
     const { createClient } = supabase;
     const SUPABASE_URL = 'https://admaccvexnsedcawifsd.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_94TFG3LvJ904VE35qyFhmg_now-EM8X';
     const BUCKET_NAME = 'INSPECTION DATA BASE';
 
     const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby3Wn4mcEF1QdjwoB7C21zumGd68pYVJku2GANPVW9VrtrCOqcThQJRzaXRhEQs68_qOw/exec";
+    const GAS_API_SECRET = "OO9l8323655l$6";
 
     // DOM 元素
     const loginContainer = document.getElementById('loginContainer');
@@ -822,6 +1166,41 @@
     const machineSummaryTableBody = document.getElementById('machineSummaryTableBody');
     const customerSearchInput = document.getElementById('customerSearchInput');
     const machineSearchInput = document.getElementById('machineSearchInput');
+
+    // 數據終端資料庫與智慧歸檔元件
+    const refreshTerminalTreeBtn = document.getElementById('refreshTerminalTreeBtn');
+    const treeViewContainer = document.getElementById('treeViewContainer');
+    const treeStatsText = document.getElementById('treeStatsText');
+    const btnTreeAddFolder = document.getElementById('btnTreeAddFolder');
+    const btnTreeDeleteChecked = document.getElementById('btnTreeDeleteChecked');
+    const treeCheckedCount = document.getElementById('treeCheckedCount');
+
+    const currentSelectedFolderPath = document.getElementById('currentSelectedFolderPath');
+    const btnCreateSubFolder = document.getElementById('btnCreateSubFolder');
+    const btnTriggerManualUpload = document.getElementById('btnTriggerManualUpload');
+    const terminalUploadInput = document.getElementById('terminalUploadInput');
+    const terminalUploadBtn = document.getElementById('terminalUploadBtn');
+    const terminalUploadStatus = document.getElementById('terminalUploadStatus');
+    const terminalSearchInput = document.getElementById('terminalSearchInput');
+    const terminalFileListBody = document.getElementById('terminalFileListBody');
+    const currentFolderStatsText = document.getElementById('currentFolderStatsText');
+    const btnAiCopilotPrompt = document.getElementById('btnAiCopilotPrompt');
+
+    // 右側勾選與批次移動刪除元件
+    const terminalSelectAllCheckbox = document.getElementById('terminalSelectAllCheckbox');
+    const contentBatchBar = document.getElementById('contentBatchBar');
+    const contentCheckedCount = document.getElementById('contentCheckedCount');
+    const batchMoveTargetSelect = document.getElementById('batchMoveTargetSelect');
+    const btnBatchMove = document.getElementById('btnBatchMove');
+    const btnBatchDelete = document.getElementById('btnBatchDelete');
+    const btnClearContentSelection = document.getElementById('btnClearContentSelection');
+
+    // 智慧自動分類上傳元件
+    const smartVendorSelect = document.getElementById('smartVendorSelect');
+    const smartInspectionDate = document.getElementById('smartInspectionDate');
+    const smartUploadInput = document.getElementById('smartUploadInput');
+    const smartUploadBtn = document.getElementById('smartUploadBtn');
+    const smartUploadStatus = document.getElementById('smartUploadStatus');
 
     // 報表與檔案元件
     const reportModuleTitle = document.getElementById('reportModuleTitle');
@@ -850,18 +1229,26 @@
     let allAccountsList = [];
     let allMachinesCache = [];
 
-    // 候選表名生成：完全支援連字號、底線與大小寫
+    // 數據終端資料庫狀態 (含拖曳與勾選狀態)
+    let gdriveTreeData = null;
+    let selectedFolderNode = null;
+    let folderNodeMap = new Map();
+    let checkedTreeFolderIds = new Set();
+    let checkedContentItems = new Map(); // key: itemId, value: { id, type, name }
+    let draggedPayloadItems = []; // 目前正在拖曳的項目陣列 [{ id, type, name }]
+
     function getCandidateTableNames(user) {
       const u = (user || targetViewCustomer || currentUsername || '').toLowerCase().trim();
       if (!u) return [];
       const cleanNoDash = u.replace(/[-_]/g, '');
+      const withUnderscore = u.replace(/-/g, '_');
       const list = [
-        `${u}2026`,
+        `${withUnderscore}2026`,
         `${cleanNoDash}2026`,
-        u,
+        withUnderscore,
         cleanNoDash,
-        `${u.replace(/_/g, '-')}2026`,
-        `${u.replace(/-/g, '_')}2026`
+        `${u}2026`,
+        u
       ];
       return [...new Set(list)];
     }
@@ -880,7 +1267,7 @@
     // 驗證登入與身分檢查
     async function checkAuthSession() {
       try {
-        const { data: { user }, error: userError } = await client.auth.getUser();
+        const { data: { user } } = await client.auth.getUser();
         if (user) {
           currentUserId = user.id;
           currentUsername = user.email.split('@')[0];
@@ -889,7 +1276,6 @@
           loginContainer.style.display = 'none';
           dashboardContainer.style.display = 'block';
 
-          // 判斷角色
           try {
             const { data: roleData, error: roleError } = await client
               .from('user_roles')
@@ -899,6 +1285,8 @@
 
             if (!roleError && roleData && roleData.role) {
               currentUserRole = roleData.role.toLowerCase();
+            } else if (user.app_metadata?.role) {
+              currentUserRole = user.app_metadata.role.toLowerCase();
             } else if (currentUsername.toLowerCase().includes('admin')) {
               currentUserRole = 'admin';
             } else {
@@ -912,6 +1300,7 @@
 
           if (currentUserRole === 'admin') {
             await initAdminFeatures();
+            await loadTerminalTree();
           } else {
             loadInspectionData();
             loadCustomerFiles();
@@ -959,7 +1348,6 @@
       }
     }
 
-    // 登入事件處理
     loginBtn.addEventListener('click', async () => {
       const username = usernameInput.value.trim();
       const password = passwordInput.value;
@@ -975,7 +1363,7 @@
         loginBtn.disabled = true;
         showStatus('正在驗證憑證並連線至資料庫終端...', 'info');
 
-        const { data, error } = await client.auth.signInWithPassword({
+        const { error } = await client.auth.signInWithPassword({
           email: internalEmail,
           password: password
         });
@@ -1011,20 +1399,751 @@
     });
 
     // =========================================================================
-    // 管理員總攬核心：有帳號密碼(UserID)的客戶載入、機台與報表修復
+    // 2. Google Apps Script 數據終端資料庫 API 通訊、拖曳與批次勾選管理
+    // =========================================================================
+    async function callGasApi(payload) {
+      const response = await fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        redirect: "follow",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok && response.status !== 0) {
+        throw new Error(`HTTP 狀態碼異常 (${response.status})`);
+      }
+
+      return await response.json();
+    }
+
+    // 載入與渲染完整 Google Drive 樹狀結構
+    async function loadTerminalTree(preserveSelectedId = null) {
+      if (currentUserRole !== 'admin') return;
+
+      const prevSelectedId = preserveSelectedId || (selectedFolderNode ? selectedFolderNode.id : null);
+      treeViewContainer.innerHTML = '<div style="color: #94a3b8; font-size: 12px; padding: 12px 0;">正在解析 Google 雲端硬碟樹狀結構...</div>';
+
+      try {
+        const result = await callGasApi({
+          action: "tree",
+          secret: GAS_API_SECRET
+        });
+
+        if (result.error) throw new Error(result.error);
+
+        gdriveTreeData = result.tree;
+        folderNodeMap.clear();
+        checkedTreeFolderIds.clear();
+        updateTreeBatchToolbar();
+
+        // 渲染樹狀節點
+        treeViewContainer.innerHTML = '';
+        renderTreeNode(gdriveTreeData, treeViewContainer, '/', true);
+        treeStatsText.innerText = `${folderNodeMap.size} 個資料夾`;
+
+        // 更新右側「批次移動目標資料夾」下拉選單
+        populateBatchMoveDropdown();
+
+        // 恢復原先選取的資料夾，若不存在則選取根節點
+        if (prevSelectedId && folderNodeMap.has(prevSelectedId)) {
+          selectFolderNode(prevSelectedId);
+        } else {
+          selectFolderNode(gdriveTreeData.id);
+        }
+
+      } catch (err) {
+        console.error('資料庫樹讀取異常:', err);
+        treeViewContainer.innerHTML = `<div style="color: #f87171; font-size: 11px; padding: 10px 0;">連線失敗：${err.message}</div>`;
+      }
+    }
+
+    // 填充「批次移動目標資料夾」下拉選單
+    function populateBatchMoveDropdown() {
+      let html = '<option value="">選擇移動目標資料夾...</option>';
+      folderNodeMap.forEach((node, id) => {
+        html += `<option value="${id}">📁 ${node.path}</option>`;
+      });
+      batchMoveTargetSelect.innerHTML = html;
+    }
+
+    // 遞迴渲染目錄節點 (支援勾選框 + 拖曳來源 + 拖曳放置目標)
+    function renderTreeNode(node, container, path, isRoot = false) {
+      folderNodeMap.set(node.id, { ...node, path: path, isRoot: isRoot });
+
+      const nodeWrapper = document.createElement('div');
+      
+      const nodeEl = document.createElement('div');
+      nodeEl.className = 'tree-node';
+      nodeEl.id = `tree_node_${node.id}`;
+      nodeEl.draggable = !isRoot; // 根目錄不可被拖走，但可作為放置目標
+
+      const checkboxHtml = isRoot
+        ? `<span style="width: 15px; display: inline-block;"></span>`
+        : `<input type="checkbox" class="terminal-checkbox tree-folder-cb" data-id="${node.id}" title="勾選此目錄" />`;
+
+      nodeEl.innerHTML = `
+        <span class="folder-arrow expanded" style="font-size: 10px;">▶</span>
+        ${checkboxHtml}
+        <span>📁</span>
+        <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${node.name}">${node.name}</span>
+        <span style="font-size: 10px; color: #94a3b8;">${(node.folders?.length || 0) + (node.files?.length || 0)}</span>
+      `;
+
+      // 勾選框事件（阻止觸發選取目錄）
+      const cb = nodeEl.querySelector('.tree-folder-cb');
+      if (cb) {
+        cb.onclick = (e) => e.stopPropagation();
+        cb.onchange = (e) => {
+          if (e.target.checked) {
+            checkedTreeFolderIds.add(node.id);
+          } else {
+            checkedTreeFolderIds.delete(node.id);
+          }
+          updateTreeBatchToolbar();
+        };
+      }
+
+      // 點擊選取資料夾
+      nodeEl.onclick = (e) => {
+        e.stopPropagation();
+        selectFolderNode(node.id);
+      };
+
+      // 【拖曳來源事件】(針對資料夾節點)
+      if (!isRoot) {
+        nodeEl.addEventListener('dragstart', (e) => {
+          e.stopPropagation();
+          nodeEl.classList.add('dragging-item');
+          draggedPayloadItems = [{ id: node.id, type: 'folder', name: node.name }];
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', JSON.stringify(draggedPayloadItems));
+        });
+
+        nodeEl.addEventListener('dragend', () => {
+          nodeEl.classList.remove('dragging-item');
+          document.querySelectorAll('.drag-over-target').forEach(el => el.classList.remove('drag-over-target'));
+        });
+      }
+
+      // 【拖曳放置目標事件】(允許將檔案或資料夾丟入此目錄)
+      nodeEl.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.dataTransfer.dropEffect = 'move';
+        nodeEl.classList.add('drag-over-target');
+      });
+
+      nodeEl.addEventListener('dragleave', (e) => {
+        e.stopPropagation();
+        nodeEl.classList.remove('drag-over-target');
+      });
+
+      nodeEl.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        nodeEl.classList.remove('drag-over-target');
+        await handleDropMoveToFolder(node.id, node.name);
+      });
+
+      nodeWrapper.appendChild(nodeEl);
+
+      if (node.folders && node.folders.length > 0) {
+        const childrenContainer = document.createElement('div');
+        childrenContainer.className = 'tree-children';
+        node.folders.forEach(sub => {
+          renderTreeNode(sub, childrenContainer, `${path === '/' ? '' : path}/${sub.name}`, false);
+        });
+        nodeWrapper.appendChild(childrenContainer);
+
+        const arrow = nodeEl.querySelector('.folder-arrow');
+        arrow.onclick = (e) => {
+          e.stopPropagation();
+          const isHidden = childrenContainer.style.display === 'none';
+          childrenContainer.style.display = isHidden ? 'block' : 'none';
+          arrow.classList.toggle('expanded', isHidden);
+        };
+      } else {
+        const arrow = nodeEl.querySelector('.folder-arrow');
+        arrow.style.visibility = 'hidden';
+      }
+
+      container.appendChild(nodeWrapper);
+    }
+
+    // 執行拖曳放置後的移動 API 呼叫
+    async function handleDropMoveToFolder(targetFolderId, targetFolderName) {
+      if (!draggedPayloadItems || draggedPayloadItems.length === 0) return;
+
+      // 過濾掉目標資料夾本身
+      const validItems = draggedPayloadItems.filter(item => item.id !== targetFolderId);
+      if (validItems.length === 0) return;
+
+      const label = validItems.length === 1
+        ? `【${validItems[0].name}】`
+        : `【${validItems[0].name}】等 ${validItems.length} 個項目`;
+
+      if (!confirm(`確定要將 ${label} 移動到資料夾【${targetFolderName}】嗎？`)) {
+        draggedPayloadItems = [];
+        return;
+      }
+
+      try {
+        terminalUploadStatus.innerText = `正在移動 ${label} 至【${targetFolderName}】...`;
+        terminalUploadStatus.style.color = '#38bdf8';
+
+        const res = await callGasApi({
+          action: "move",
+          secret: GAS_API_SECRET,
+          targetFolderId: targetFolderId,
+          items: validItems
+        });
+
+        if (res.success) {
+          terminalUploadStatus.innerText = `✅ 已成功移動 ${res.movedCount} 個項目至【${targetFolderName}】`;
+          terminalUploadStatus.style.color = '#34d399';
+          draggedPayloadItems = [];
+          await loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null);
+        } else {
+          throw new Error(res.error || '移動失敗');
+        }
+      } catch (err) {
+        alert('移動失敗：' + err.message);
+        terminalUploadStatus.innerText = `❌ 移動失敗：${err.message}`;
+        terminalUploadStatus.style.color = '#f87171';
+      }
+    }
+
+    // 更新左側樹狀圖「移除勾選目錄」按鈕狀態
+    function updateTreeBatchToolbar() {
+      const count = checkedTreeFolderIds.size;
+      treeCheckedCount.innerText = count;
+      btnTreeDeleteChecked.disabled = count === 0;
+    }
+
+    // 左側樹狀圖「新增目錄」按鈕
+    btnTreeAddFolder.addEventListener('click', () => {
+      btnCreateSubFolder.click();
+    });
+
+    // 左側樹狀圖「移除勾選目錄」按鈕
+    btnTreeDeleteChecked.addEventListener('click', async () => {
+      if (checkedTreeFolderIds.size === 0) return;
+      if (!confirm(`⚠️ 確定要將勾選的 ${checkedTreeFolderIds.size} 個資料夾（包含內部所有檔案）移入垃圾桶嗎？`)) {
+        return;
+      }
+
+      const items = Array.from(checkedTreeFolderIds).map(id => ({ id, type: 'folder' }));
+      btnTreeDeleteChecked.disabled = true;
+
+      try {
+        const res = await callGasApi({
+          action: "batch_delete",
+          secret: GAS_API_SECRET,
+          items: items
+        });
+
+        if (res.success) {
+          alert(`🗑️ 已成功移除 ${res.deletedCount} 個目錄！`);
+          await loadTerminalTree();
+        } else {
+          throw new Error(res.error || '批次刪除失敗');
+        }
+      } catch (err) {
+        alert('批次移除目錄失敗：' + err.message);
+      } finally {
+        updateTreeBatchToolbar();
+      }
+    });
+
+    // 選取特定資料夾節點並更新清單
+    function selectFolderNode(folderId) {
+      const node = folderNodeMap.get(folderId);
+      if (!node) return;
+
+      selectedFolderNode = node;
+      checkedContentItems.clear();
+      terminalSelectAllCheckbox.checked = false;
+      updateContentBatchToolbar();
+
+      document.querySelectorAll('.tree-node').forEach(el => el.classList.remove('active-folder'));
+      const activeEl = document.getElementById(`tree_node_${folderId}`);
+      if (activeEl) activeEl.classList.add('active-folder');
+
+      currentSelectedFolderPath.innerText = node.path;
+      renderTerminalContent(node);
+    }
+
+    // 渲染所選資料夾的內容清單 (支援勾選框 + 拖曳移動)
+    function renderTerminalContent(node) {
+      const files = node.files || [];
+      const subFolders = node.folders || [];
+      const totalCount = files.length + subFolders.length;
+      currentFolderStatsText.innerText = `${totalCount} 個項目 (${subFolders.length} 資料夾, ${files.length} 檔案)`;
+
+      if (totalCount === 0) {
+        terminalFileListBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">此目錄內無檔案或子資料夾</td></tr>';
+        return;
+      }
+
+      let html = '';
+
+      // 1. 渲染子資料夾 (可勾選、可被拖曳、也可作為放置目標)
+      subFolders.forEach(f => {
+        const safeName = f.name.replace(/'/g, "\\'");
+        html += `
+          <tr class="terminal-file-row terminal-drop-folder" draggable="true"
+              data-item-id="${f.id}" data-item-type="folder" data-item-name="${f.name}">
+            <td style="text-align: center;">
+              <input type="checkbox" class="terminal-checkbox content-item-cb"
+                     data-id="${f.id}" data-type="folder" data-name="${f.name}" />
+            </td>
+            <td>
+              <span style="margin-right: 6px; cursor: grab;">⋮⋮ 📁</span>
+              <strong style="color: #38bdf8; cursor: pointer;" onclick="selectFolderNode('${f.id}')">${f.name}</strong>
+            </td>
+            <td><span class="format-badge format-other">資料夾</span></td>
+            <td>--</td>
+            <td>--</td>
+            <td style="text-align: center;">
+              <button class="btn-danger" onclick="deleteTerminalItem('${f.id}', 'folder', '${safeName}')">刪除目錄</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // 2. 渲染檔案 (可勾選、可被拖曳)
+      files.forEach(file => {
+        const formatMeta = getFileFormatMeta(file.name);
+        const sizeKB = (file.size ? (file.size / 1024).toFixed(1) : '0.0') + ' KB';
+        const createdTime = file.createdTime ? new Date(file.createdTime).toLocaleString('zh-TW', { hour12: false }) : '-';
+        const safeName = file.name.replace(/'/g, "\\'");
+        html += `
+          <tr class="terminal-file-row" draggable="true"
+              data-item-id="${file.id}" data-item-type="file" data-item-name="${file.name}">
+            <td style="text-align: center;">
+              <input type="checkbox" class="terminal-checkbox content-item-cb"
+                     data-id="${file.id}" data-type="file" data-name="${file.name}" />
+            </td>
+            <td>
+              <span style="margin-right: 6px; cursor: grab;">⋮⋮ ${formatMeta.icon}</span>
+              <span style="color: #f8fafc; font-weight: 500;">${file.name}</span>
+            </td>
+            <td>
+              <span class="format-badge ${formatMeta.badgeClass}">${formatMeta.type}</span>
+            </td>
+            <td>${sizeKB}</td>
+            <td>${createdTime}</td>
+            <td style="text-align: center; display: flex; gap: 6px; justify-content: center;">
+              <a href="${file.url}" target="_blank" rel="noopener noreferrer" class="btn-action" style="padding: 4px 8px; font-size: 11px;">檢視</a>
+              <button class="btn-danger" onclick="deleteTerminalItem('${file.id}', 'file', '${safeName}')">刪除</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      terminalFileListBody.innerHTML = html;
+      bindContentRowInteractions();
+    }
+
+    // 綁定右側表格列的勾選與拖曳事件
+    function bindContentRowInteractions() {
+      // 勾選框事件
+      document.querySelectorAll('.content-item-cb').forEach(cb => {
+        cb.onchange = (e) => {
+          const id = e.target.dataset.id;
+          const type = e.target.dataset.type;
+          const name = e.target.dataset.name;
+          if (e.target.checked) {
+            checkedContentItems.set(id, { id, type, name });
+          } else {
+            checkedContentItems.delete(id);
+          }
+          updateContentBatchToolbar();
+        };
+      });
+
+      // 拖曳來源事件 (若拖曳的項目在已勾選清單中，則整批一起拖曳移動)
+      document.querySelectorAll('#terminalFileListBody tr[draggable="true"]').forEach(row => {
+        row.addEventListener('dragstart', (e) => {
+          row.classList.add('dragging-item');
+          const itemId = row.dataset.itemId;
+          const itemType = row.dataset.itemType;
+          const itemName = row.dataset.itemName;
+
+          if (checkedContentItems.has(itemId) && checkedContentItems.size > 1) {
+            draggedPayloadItems = Array.from(checkedContentItems.values());
+          } else {
+            draggedPayloadItems = [{ id: itemId, type: itemType, name: itemName }];
+          }
+          e.dataTransfer.effectAllowed = 'move';
+          e.dataTransfer.setData('text/plain', JSON.stringify(draggedPayloadItems));
+        });
+
+        row.addEventListener('dragend', () => {
+          row.classList.remove('dragging-item');
+          document.querySelectorAll('.drag-over-target').forEach(el => el.classList.remove('drag-over-target'));
+        });
+      });
+
+      // 右側清單中的「子資料夾列」也可作為拖曳放置目標
+      document.querySelectorAll('#terminalFileListBody tr.terminal-drop-folder').forEach(folderRow => {
+        folderRow.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          folderRow.classList.add('drag-over-target');
+        });
+
+        folderRow.addEventListener('dragleave', () => {
+          folderRow.classList.remove('drag-over-target');
+        });
+
+        folderRow.addEventListener('drop', async (e) => {
+          e.preventDefault();
+          folderRow.classList.remove('drag-over-target');
+          const targetId = folderRow.dataset.itemId;
+          const targetName = folderRow.dataset.itemName;
+          await handleDropMoveToFolder(targetId, targetName);
+        });
+      });
+    }
+
+    // 更新右側勾選批次操作列狀態
+    function updateContentBatchToolbar() {
+      const count = checkedContentItems.size;
+      contentCheckedCount.innerText = count;
+      if (count > 0) {
+        contentBatchBar.classList.add('visible');
+      } else {
+        contentBatchBar.classList.remove('visible');
+      }
+    }
+
+    // 全選 / 取消全選右側清單
+    terminalSelectAllCheckbox.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      checkedContentItems.clear();
+      document.querySelectorAll('.content-item-cb').forEach(cb => {
+        // 僅勾選目前可見（未被搜尋過濾隱藏）的列
+        if (cb.closest('tr').style.display !== 'none') {
+          cb.checked = isChecked;
+          if (isChecked) {
+            checkedContentItems.set(cb.dataset.id, {
+              id: cb.dataset.id,
+              type: cb.dataset.type,
+              name: cb.dataset.name
+            });
+          }
+        }
+      });
+      updateContentBatchToolbar();
+    });
+
+    btnClearContentSelection.addEventListener('click', () => {
+      terminalSelectAllCheckbox.checked = false;
+      checkedContentItems.clear();
+      document.querySelectorAll('.content-item-cb').forEach(cb => cb.checked = false);
+      updateContentBatchToolbar();
+    });
+
+    // 批次移動按鈕事件
+    btnBatchMove.addEventListener('click', async () => {
+      const targetId = batchMoveTargetSelect.value;
+      if (!targetId) {
+        alert('請先從下拉選單選擇要移動過去的目標資料夾！');
+        return;
+      }
+      if (checkedContentItems.size === 0) return;
+
+      const targetNode = folderNodeMap.get(targetId);
+      const items = Array.from(checkedContentItems.values());
+      btnBatchMove.disabled = true;
+
+      try {
+        const res = await callGasApi({
+          action: "move",
+          secret: GAS_API_SECRET,
+          targetFolderId: targetId,
+          items: items
+        });
+
+        if (res.success) {
+          alert(`📦 已成功移動 ${res.movedCount} 個項目至【${targetNode ? targetNode.path : targetId}】！`);
+          await loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null);
+        } else {
+          throw new Error(res.error || '批次移動失敗');
+        }
+      } catch (err) {
+        alert('批次移動失敗：' + err.message);
+      } finally {
+        btnBatchMove.disabled = false;
+      }
+    });
+
+    // 批次刪除按鈕事件
+    btnBatchDelete.addEventListener('click', async () => {
+      if (checkedContentItems.size === 0) return;
+      if (!confirm(`⚠️ 確定要將勾選的 ${checkedContentItems.size} 個項目移入垃圾桶嗎？`)) {
+        return;
+      }
+
+      const items = Array.from(checkedContentItems.values());
+      btnBatchDelete.disabled = true;
+
+      try {
+        const res = await callGasApi({
+          action: "batch_delete",
+          secret: GAS_API_SECRET,
+          items: items
+        });
+
+        if (res.success) {
+          alert(`🗑️ 已成功移除 ${res.deletedCount} 個項目！`);
+          await loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null);
+        } else {
+          throw new Error(res.error || '批次移除失敗');
+        }
+      } catch (err) {
+        alert('批次移除失敗：' + err.message);
+      } finally {
+        btnBatchDelete.disabled = false;
+      }
+    });
+
+    // 快捷觸發「新增檔案至此目錄」
+    btnTriggerManualUpload.addEventListener('click', () => {
+      terminalUploadInput.click();
+    });
+
+    // 檔案轉 Base64 輔助 Promise
+    function readFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function formatLocalDate(timestampOrDate) {
+      const d = new Date(timestampOrDate);
+      if (isNaN(d.getTime())) return '';
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    // 【智慧自動分類歸檔上傳按鈕事件】
+    smartUploadBtn.addEventListener('click', async () => {
+      if (currentUserRole !== 'admin') {
+        alert('權限不足：只有管理員可使用智慧自動歸檔功能！');
+        return;
+      }
+
+      const files = smartUploadInput.files;
+      if (!files || files.length === 0) {
+        alert('請先選取至少一個要智慧歸檔的檔案！');
+        return;
+      }
+
+      const customVendor = smartVendorSelect.value;
+      const inspectionDate = smartInspectionDate.value || '';
+      smartUploadBtn.disabled = true;
+
+      let successCount = 0;
+      let logs = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        if (file.size > 25 * 1024 * 1024) {
+          logs.push(`❌ ${file.name} (超過 25MB 上限略過)`);
+          continue;
+        }
+
+        const fileCreatedDate = file.lastModified ? formatLocalDate(file.lastModified) : '';
+
+        smartUploadStatus.innerText = `正在智慧分類與歸檔 (${i + 1}/${files.length})：${file.name}...`;
+        smartUploadStatus.style.color = '#c4b5fd';
+
+        try {
+          const base64Data = await readFileAsBase64(file);
+          const res = await callGasApi({
+            action: "smart_upload",
+            secret: GAS_API_SECRET,
+            fileName: file.name,
+            mimeType: file.type || "application/octet-stream",
+            fileBase64: base64Data,
+            customVendor: customVendor,
+            inspectionDate: inspectionDate,
+            createdDate: fileCreatedDate
+          });
+
+          if (res.success) {
+            successCount++;
+            const sourceTag = res.file.dateSource ? ` (${res.file.dateSource})` : '';
+            logs.push(`✅ ${file.name} ➔ [${res.file.path}]${sourceTag}`);
+          } else {
+            logs.push(`❌ ${file.name} (${res.error})`);
+          }
+        } catch (err) {
+          logs.push(`❌ ${file.name} (${err.message})`);
+        }
+      }
+
+      smartUploadStatus.innerHTML = `歸檔完成！成功 ${successCount} / ${files.length} 筆：<br/><span style="color: #6ee7b7;">${logs.join('<br/>')}</span>`;
+      smartUploadInput.value = '';
+      smartUploadBtn.disabled = false;
+
+      await loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null);
+    });
+
+    // 建立新分類資料夾
+    btnCreateSubFolder.addEventListener('click', async () => {
+      if (!selectedFolderNode) {
+        alert('請先在左側選取要建立子分類的目標節點！');
+        return;
+      }
+
+      const folderName = prompt(`請輸入要在【${selectedFolderNode.name}】建立的子分類名稱：`);
+      if (!folderName || !folderName.trim()) return;
+
+      btnCreateSubFolder.disabled = true;
+      btnCreateSubFolder.innerText = '建立中...';
+
+      try {
+        const res = await callGasApi({
+          action: "create_folder",
+          secret: GAS_API_SECRET,
+          parentId: selectedFolderNode.id,
+          folderName: folderName.trim()
+        });
+
+        if (res.success) {
+          alert(`🎉 成功建立分類目錄：${res.folder.name}`);
+          await loadTerminalTree(selectedFolderNode.id);
+        } else {
+          throw new Error(res.error || '建立失敗');
+        }
+      } catch (err) {
+        alert('建立資料夾失敗：' + err.message);
+      } finally {
+        btnCreateSubFolder.disabled = false;
+        btnCreateSubFolder.innerText = '➕ 新增子資料夾';
+      }
+    });
+
+    // 手動上傳檔案至當前選取的節點（支援多檔）
+    terminalUploadBtn.addEventListener('click', async () => {
+      if (!selectedFolderNode) {
+        alert('請先在左側選取要存放檔案的資料夾！');
+        return;
+      }
+
+      const files = terminalUploadInput.files;
+      if (!files || files.length === 0) {
+        alert('請先選取要上傳的檔案！');
+        return;
+      }
+
+      terminalUploadBtn.disabled = true;
+      let okCount = 0;
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.size > 25 * 1024 * 1024) {
+          alert(`檔案 ${file.name} 超過 25MB，已略過。`);
+          continue;
+        }
+
+        terminalUploadStatus.innerText = `正在上傳 (${i + 1}/${files.length}) 至【${selectedFolderNode.name}】：${file.name}...`;
+        terminalUploadStatus.style.color = '#38bdf8';
+
+        try {
+          const base64Data = await readFileAsBase64(file);
+          const res = await callGasApi({
+            action: "upload",
+            secret: GAS_API_SECRET,
+            parentId: selectedFolderNode.id,
+            fileName: file.name,
+            mimeType: file.type || "application/octet-stream",
+            fileBase64: base64Data
+          });
+
+          if (res.success) {
+            okCount++;
+          } else {
+            throw new Error(res.error || '上傳失敗');
+          }
+        } catch (err) {
+          terminalUploadStatus.innerText = `❌ 上傳出錯：${err.message}`;
+          terminalUploadStatus.style.color = '#f87171';
+        }
+      }
+
+      if (okCount > 0) {
+        terminalUploadStatus.innerText = `✅ 已成功上傳 ${okCount} 個檔案至【${selectedFolderNode.name}】`;
+        terminalUploadStatus.style.color = '#34d399';
+        terminalUploadInput.value = '';
+        await loadTerminalTree(selectedFolderNode.id);
+      }
+      terminalUploadBtn.disabled = false;
+    });
+
+    // 刪除單筆檔案或資料夾
+    window.deleteTerminalItem = async function(itemId, itemType, itemName) {
+      const typeLabel = itemType === 'folder' ? '目錄(含內部檔案)' : '檔案';
+      if (!confirm(`確定要將 ${typeLabel}【${itemName}】移入垃圾桶嗎？`)) {
+        return;
+      }
+
+      try {
+        const res = await callGasApi({
+          action: "delete",
+          secret: GAS_API_SECRET,
+          itemId: itemId,
+          itemType: itemType
+        });
+
+        if (res.success) {
+          alert(`已成功刪除【${itemName}】！`);
+          await loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null);
+        } else {
+          throw new Error(res.error || '刪除失敗');
+        }
+      } catch (err) {
+        alert('刪除失敗：' + err.message);
+      }
+    };
+
+    // 數據終端搜尋過濾
+    terminalSearchInput.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const rows = terminalFileListBody.querySelectorAll('.terminal-file-row');
+      rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+
+    refreshTerminalTreeBtn.addEventListener('click', () => loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null));
+
+    btnAiCopilotPrompt.addEventListener('click', () => {
+      alert("🤖【AI 數據終端助手】架構預告：\n\n系統已完成數據庫樹狀結構標準化（日期 / 廠商 / 檔案類別）！未來進入此功能後，AI 將直接根據您建立的階層標籤與檔案名稱進行檢索問答！");
+    });
+
+    // =========================================================================
+    // 3. 管理員總覽核心：客戶、機台與報表
     // =========================================================================
     async function initAdminFeatures() {
       await loadAllConfiguredAccounts();
       setupAdminTabs();
     }
 
-    // 取得所有具備 UserID / 密碼的客戶帳號 (從 user_roles 或 profiles 表讀取)
     async function loadAllConfiguredAccounts() {
       allAccountsList = [];
       const mapAccounts = new Map();
 
       try {
-        // 優先從 user_roles 撈取所有有身分綁定的使用者
         const { data: roleUsers, error: rErr } = await client
           .from('user_roles')
           .select('user_id, role, username');
@@ -1045,7 +2164,6 @@
         console.warn('user_roles 讀取略過:', e);
       }
 
-      // 備份已知有效客戶名單（確保即使無自訂 user_roles 也能抓到有建立登入的使用者）
       const fallbackList = ['chin-yuh', 'jainnher'];
       fallbackList.forEach(fb => {
         if (!mapAccounts.has(fb)) {
@@ -1057,7 +2175,6 @@
         }
       });
 
-      // 檢查 Storage 資料夾作為輔助驗證
       try {
         const { data: storageList } = await client.storage.from(BUCKET_NAME).list('', { limit: 100 });
         if (storageList) {
@@ -1077,16 +2194,17 @@
       } catch (e) {}
 
       allAccountsList = Array.from(mapAccounts.values());
-
-      // 納管客戶總數統計
       statCustomerCount.innerText = allAccountsList.length;
 
-      // 渲染客戶選單
       let optHtml = '';
+      let smartOptHtml = '<option value="">🔍 自動依檔名萃取廠商前綴 (預設)</option>';
+
       allAccountsList.forEach(acc => {
         optHtml += `<option value="${acc.username}">${acc.username}</option>`;
+        smartOptHtml += `<option value="${acc.username}">🏢 指定歸類至：${acc.username}</option>`;
       });
       customerSelectDropdown.innerHTML = optHtml;
+      smartVendorSelect.innerHTML = smartOptHtml;
 
       if (!targetViewCustomer || targetViewCustomer === 'admin') {
         targetViewCustomer = allAccountsList[0]?.username || 'chin-yuh';
@@ -1094,7 +2212,6 @@
       customerSelectDropdown.value = targetViewCustomer;
       updateAdminCustomerViewText();
 
-      // 同步載入報表、檔案、客戶表與機台統計
       await Promise.all([
         loadInspectionData(),
         loadCustomerFiles(),
@@ -1139,28 +2256,18 @@
       });
     }
 
-    // 渲染【客戶總覽清單】表格
     async function loadCustomerSummaryList() {
       customerSummaryTableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 16px;">正在檢查客戶關聯與檔案...</td></tr>';
       
       const rows = [];
       for (const acc of allAccountsList) {
         let fileCount = 0;
-        let dbStatus = '未連接';
         let candidate = getCandidateTableNames(acc.username)[0];
 
         try {
           const { data: fData } = await client.storage.from(BUCKET_NAME).list(acc.username, { limit: 100 });
           if (fData) fileCount = fData.length;
         } catch (e) {}
-
-        // 測試表連線
-        try {
-          const { error } = await client.from(candidate).select('*', { count: 'exact', head: true });
-          dbStatus = !error ? `已連線 (${candidate})` : '未建立或RLS限制';
-        } catch (e) {
-          dbStatus = '連線異常';
-        }
 
         rows.push(`
           <tr>
@@ -1190,7 +2297,6 @@
       await loadCustomerFiles();
     };
 
-    // 安全資料庫查詢：支援連字號及多別名容錯
     async function queryTableDataSafe(clientName) {
       const candidates = getCandidateTableNames(clientName);
       let rows = null;
@@ -1223,7 +2329,6 @@
       return { data: null, tableName: candidates[0], error: errMsg || '找不到可用資料表' };
     }
 
-    // 載入當前目標客戶的報表數據
     async function loadInspectionData() {
       const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
       if (!activeUser) return;
@@ -1255,7 +2360,6 @@
       }
 
       const finalData = result.data || [];
-
       statTotalInspections.innerText = finalData.length;
 
       if (finalData.length === 0) {
@@ -1285,7 +2389,6 @@
 
     refreshTableBtn.addEventListener('click', loadInspectionData);
 
-    // 機型與機台總覽清單與數量計算
     async function loadMachineRegistryList() {
       machineSummaryTableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8; padding: 20px;">正在提取並彙整機台資訊...</td></tr>';
       allMachinesCache = [];
@@ -1375,7 +2478,6 @@
       machineSummaryTableBody.innerHTML = html;
     }
 
-    // 搜尋過濾功能
     customerSearchInput.addEventListener('input', (e) => {
       const q = e.target.value.toLowerCase().trim();
       const rows = customerSummaryTableBody.querySelectorAll('tr');
@@ -1392,7 +2494,6 @@
       renderMachineTable(filtered);
     });
 
-    // 動態表格渲染
     function renderDynamicInspectionTable(headers, dataList) {
       if (!dataList || dataList.length === 0) {
         inspectionTableBody.innerHTML = `<tr><td colspan="${headers.length || 6}" style="text-align: center; color: #94a3b8; padding: 20px;">尚無檢驗量測數據</td></tr>`;
@@ -1445,13 +2546,13 @@
       inspectionTableBody.innerHTML = bodyHtml;
     }
 
-    // 專屬檔案列表
     function getFileFormatMeta(filename) {
       const ext = filename.split('.').pop().toLowerCase();
       if (ext === 'pdf') return { type: 'PDF', icon: '📕', badgeClass: 'format-pdf', label: 'PDF 文件' };
       if (['xlsx', 'xls', 'csv'].includes(ext)) return { type: 'EXCEL', icon: '📊', badgeClass: 'format-excel', label: '試算表' };
       if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) return { type: 'IMAGE', icon: '🖼️', badgeClass: 'format-img', label: '影像圖檔' };
       if (['dwg', 'dxf', 'step', 'stp', 'iges'].includes(ext)) return { type: 'CAD', icon: '📐', badgeClass: 'format-cad', label: 'CAD 工程圖' };
+      if (['doc', 'docx', 'txt'].includes(ext)) return { type: 'DOC', icon: '📝', badgeClass: 'format-doc', label: '文件檔案' };
       return { type: ext.toUpperCase() || 'FILE', icon: '📄', badgeClass: 'format-other', label: '一般檔案' };
     }
 
@@ -1488,8 +2589,8 @@
       const activeUser = currentUserRole === 'admin' ? targetViewCustomer : currentUsername;
       if (filesModuleTitle) {
         filesModuleTitle.innerText = currentUserRole === 'admin'
-          ? `📁 【${activeUser}】專屬文件與檢驗報告`
-          : `📁 檢驗報告與文件下載區`;
+          ? `📁 【${activeUser}】專屬文件與檢驗報告 (Supabase Storage)`
+          : `📁 檢驗報告與文件下載區 (Supabase Storage)`;
       }
 
       fileListBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8; padding: 20px;">正在讀取檔案清單...</td></tr>';
@@ -1584,7 +2685,6 @@
 
     refreshFilesBtn.addEventListener('click', loadCustomerFiles);
 
-    // 上傳與 Excel 操作
     clientUploadBtn.addEventListener('click', async () => {
       const files = clientUploadInput.files;
       if (!files || files.length === 0) {
