@@ -58,7 +58,7 @@
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 1240px;
+      max-width: 1320px;
       padding: 32px;
       background: rgba(13, 20, 36, 0.88);
       backdrop-filter: blur(18px);
@@ -289,7 +289,7 @@
     }
 
     th {
-      background: rgba(30, 41, 59, 0.8);
+      background: rgba(30, 41, 59, 0.85);
       color: #94a3b8;
       padding: 10px 12px;
       border-bottom: 1px solid rgba(56, 189, 248, 0.25);
@@ -298,7 +298,7 @@
     }
 
     td {
-      padding: 12px;
+      padding: 10px 12px;
       border-bottom: 1px solid rgba(148, 163, 184, 0.12);
       color: #e2e8f0;
       vertical-align: middle;
@@ -371,7 +371,7 @@
       transform: translateY(-1px);
     }
 
-    .btn-smart:disabled {
+    .btn-smart:disabled, .btn-action:disabled {
       background: #475569;
       cursor: not-allowed;
       box-shadow: none;
@@ -503,7 +503,7 @@
       transform: translateY(-1px);
     }
 
-    .btn-submit:disabled, .btn-action:disabled {
+    .btn-submit:disabled {
       background: #475569;
       cursor: not-allowed;
       box-shadow: none;
@@ -674,7 +674,6 @@
       font-weight: 600;
     }
 
-    /* 拖曳互動樣式 */
     .drag-over-target {
       background: rgba(56, 189, 248, 0.28) !important;
       border: 1px dashed #38bdf8 !important;
@@ -769,6 +768,162 @@
       border: 1px solid rgba(167, 139, 250, 0.35);
       font-weight: 600;
     }
+
+    /* =========================================================================
+       大數據檢驗分析報表專屬樣式
+       ========================================================================= */
+    .bigdata-source-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .bigdata-manual-upload-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(30, 41, 59, 0.7);
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .bigdata-manual-upload-group input[type="file"] {
+      color: #cbd5e1;
+      font-size: 12px;
+      max-width: 220px;
+    }
+
+    .bigdata-manual-upload-group input[type="file"]::file-selector-button {
+      background: #0f172a;
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      padding: 4px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 11px;
+      margin-right: 8px;
+      transition: background 0.2s;
+    }
+
+    .bigdata-manual-upload-group input[type="file"]::file-selector-button:hover {
+      background: #1e293b;
+    }
+
+    .field-config-panel {
+      background: rgba(15, 23, 42, 0.72);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .field-config-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    }
+
+    .field-chip-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .field-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      font-size: 12px;
+      color: #cbd5e1;
+      cursor: grab;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+
+    .field-chip:hover {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.12);
+    }
+
+    .field-chip.checked-field {
+      background: rgba(2, 132, 199, 0.24);
+      border-color: rgba(56, 189, 248, 0.65);
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .field-chip.chip-drag-over {
+      border: 1px dashed #fbbf24 !important;
+      background: rgba(245, 158, 11, 0.22) !important;
+      transform: scale(1.03);
+    }
+
+    .field-chip-del {
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0 2px;
+      line-height: 1;
+      border-radius: 3px;
+    }
+
+    .field-chip-del:hover {
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .draggable-th {
+      cursor: grab;
+      user-select: none;
+      position: relative;
+      transition: background 0.15s ease;
+    }
+
+    .draggable-th:hover {
+      background: rgba(56, 189, 248, 0.2) !important;
+      color: #38bdf8;
+    }
+
+    .draggable-th.th-drag-over {
+      border-left: 3px solid #fbbf24 !important;
+      background: rgba(245, 158, 11, 0.18) !important;
+    }
+
+    .row-excluded td {
+      opacity: 0.42;
+      background: rgba(15, 23, 42, 0.35);
+    }
+
+    .bigdata-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>
@@ -844,6 +999,7 @@
       <button class="tab-btn" data-tab="tab-customers">👥 客戶總覽清單</button>
       <button class="tab-btn" data-tab="tab-machines">⚙️ 機型與機台總覽清單</button>
       <button class="tab-btn" data-tab="tab-gdrive-terminal" style="color: #34d399; font-weight: bold;">🗄️ 數據終端資料庫</button>
+      <button class="tab-btn" data-tab="tab-bigdata-report" style="color: #fbbf24; font-weight: bold;">📈 大數據檢驗分析報表</button>
     </div>
 
     <!-- 管理員專屬：即時客戶切換選單 -->
@@ -992,7 +1148,7 @@
       </div>
     </div>
 
-    <!-- 分頁 4：管理員專屬【數據終端資料庫】(Google Drive 樹狀分類管理 + 智慧自動歸檔 + 拖曳與勾選) -->
+    <!-- 分頁 4：管理員專屬【數據終端資料庫】 -->
     <div id="tab-gdrive-terminal" class="tab-content-pane" style="display: none;">
       <div class="module-card" style="border-color: rgba(52, 211, 153, 0.4);">
         <div class="module-header">
@@ -1007,14 +1163,13 @@
         </div>
 
         <div class="terminal-layout">
-          <!-- 左側：分類樹狀圖 (支援拖曳目標與勾選新增/移除) -->
+          <!-- 左側：分類樹狀圖 -->
           <div class="tree-panel">
             <div style="font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 8px; display: flex; justify-content: space-between;">
               <span>📁 目錄樹狀圖 (可拖曳/勾選)</span>
               <span id="treeStatsText" style="color: #38bdf8;">0 個節點</span>
             </div>
 
-            <!-- 樹狀圖快捷工具列：新增目錄 / 移除勾選目錄 -->
             <div class="tree-toolbar">
               <button id="btnTreeAddFolder" class="btn-refresh" style="padding: 4px 8px; font-size: 11px; border-color: #34d399; color: #34d399;">➕ 新增目錄</button>
               <button id="btnTreeDeleteChecked" class="btn-danger" style="padding: 4px 8px; font-size: 11px;" disabled>🗑️ 移除勾選目錄 (<span id="treeCheckedCount">0</span>)</button>
@@ -1033,7 +1188,7 @@
             <!-- 區塊 A：智慧自動分類歸檔引擎 -->
             <div class="smart-upload-box">
               <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
-                <span style="font-size: 13px; font-weight: 700; color: #c4b5fd;">✨ 智慧自動分類上傳（自動建立：歸檔日期 / 廠商 / 格式子目錄）</span>
+                <span style="font-size: 13px; font-weight: 700; color: #c4b5fd;">✨ 智慧自動分類上傳（自動建立：客戶名稱 / 歸檔日期 / 後續分類）</span>
                 <span style="font-size: 11px; color: #94a3b8;">支援同時多選檔案批次歸檔</span>
               </div>
 
@@ -1048,7 +1203,7 @@
 
               <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                 <select id="smartVendorSelect" class="select-customer" style="min-width: 190px; border-color: rgba(167, 139, 250, 0.5); color: #e9d5ff;">
-                  <option value="">🔍 自動從檔名提取廠商 (如: 嘉友_報表.pdf)</option>
+                  <option value="">🔍 自動從檔名提取客戶 (如: 嘉友_報表.pdf)</option>
                 </select>
 
                 <div style="display: flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.75); padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(167, 139, 250, 0.4);">
@@ -1060,7 +1215,7 @@
                 <button id="smartUploadBtn" class="btn-smart">🚀 啟動智慧自動歸檔</button>
               </div>
               <div id="smartUploadStatus" style="font-size: 12px; color: #a78bfa; line-height: 1.5;">
-                提示：系統將優先讀取檔名日期（支援 <code>20261112</code>、<code>2026-11-12</code>、民國 <code>1151112</code>）；若檔名無日期則採用「檢驗日期」，皆無則自動抓取檔案原始「建立日期」。
+                提示：檔名包含「工作委託單」或「委託單」時將優先歸入<code>工作委託單</code>目錄；日期支援 <code>20261112</code>、<code>2026-11-12</code>、民國 <code>1151112</code>。
               </div>
             </div>
 
@@ -1080,7 +1235,7 @@
               <span id="terminalUploadStatus" style="font-size: 12px; color: #94a3b8;">支援多選檔案直接存入上方所示之資料夾路徑</span>
             </div>
 
-            <!-- 區塊 C：勾選批次操作列 (勾選檔案或資料夾後自動顯示) -->
+            <!-- 區塊 C：勾選批次操作列 -->
             <div class="batch-action-bar" id="contentBatchBar">
               <span style="color: #38bdf8; font-weight: 600;">☑️ 已勾選 <span id="contentCheckedCount">0</span> 個項目：</span>
               <select id="batchMoveTargetSelect" class="select-customer" style="min-width: 180px; padding: 4px 10px; font-size: 12px;">
@@ -1120,6 +1275,130 @@
             </div>
 
           </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- =========================================================================
+         分頁 5：管理員專屬【大數據檢驗分析報表】(位於「數據終端資料庫」右方)
+         ========================================================================= -->
+    <div id="tab-bigdata-report" class="tab-content-pane" style="display: none;">
+      <div class="module-card" style="border-color: rgba(251, 191, 36, 0.45);">
+        <div class="module-header">
+          <div class="module-title" style="color: #fbbf24;">
+            <span>📈 大數據檢驗分析報表 (跨資料庫整合與自訂維度分析引擎)</span>
+            <span style="font-size: 11px; padding: 2px 6px; background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.45); border-radius: 4px; color: #fcd34d;">ADMIN ONLY</span>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+            <select id="bigDataExportFormat" class="select-customer" style="min-width: 140px; padding: 5px 10px; font-size: 12px; border-color: rgba(52, 211, 153, 0.5); color: #34d399;">
+              <option value="xlsx">📊 EXCEL (.xlsx)</option>
+              <option value="csv">📄 CSV (.csv)</option>
+            </select>
+            <button id="btnBigDataExport" class="btn-action" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">📥 匯出分析報表</button>
+          </div>
+        </div>
+
+        <!-- 區塊 1：資料來源撈取控制列 -->
+        <div class="bigdata-source-bar">
+          <span style="font-size: 13px; font-weight: 700; color: #fbbf24;">🔗 數據來源撈取：</span>
+
+          <label style="display: inline-flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 12px; color: #e2e8f0;">
+            <input type="checkbox" id="srcCheckSupabase" class="terminal-checkbox" checked />
+            <span>Supabase 客戶報表</span>
+          </label>
+
+          <select id="bigDataSupabaseCustomer" class="select-customer" style="min-width: 150px; padding: 4px 10px; font-size: 12px;">
+            <option value="__ALL__">🌐 全部客戶資料表</option>
+          </select>
+
+          <label style="display: inline-flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 12px; color: #e2e8f0;">
+            <input type="checkbox" id="srcCheckGdriveCsv" class="terminal-checkbox" checked />
+            <span>數據終端資料庫 (僅搜尋 EXCEL / CSV)</span>
+          </label>
+
+          <select id="bigDataGdriveFolder" class="select-customer" style="min-width: 170px; padding: 4px 10px; font-size: 12px;">
+            <option value="">📁 全部資料夾目錄</option>
+          </select>
+
+          <!-- 新增：手動選擇多檔案上傳加入 -->
+          <div class="bigdata-manual-upload-group">
+            <label style="display: inline-flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 12px; color: #38bdf8; font-weight: 600;">
+              <input type="checkbox" id="srcCheckManualFiles" class="terminal-checkbox" />
+              <span>手動選擇檔案上傳加入</span>
+            </label>
+            <input type="file" id="bigDataManualFilesInput" accept=".xlsx, .xls, .csv" multiple title="支援多選 EXCEL (.xlsx, .xls) 與 CSV (.csv) 檔案" />
+            <span id="bigDataManualFilesBadge" style="font-size: 11px; color: #94a3b8;">未選取檔案</span>
+          </div>
+
+          <input type="text" id="bigDataKeywordFilter" class="search-input" placeholder="🔍 關鍵字篩選 (如機台/PASS)..." style="width: 185px; padding: 5px 10px; font-size: 12px;" />
+
+          <button id="btnFetchBigData" class="btn-smart" style="margin-left: auto;">⚡ 撈取整合數據</button>
+        </div>
+
+        <div id="bigDataFetchStatus" style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">
+          嚴格偵錯規則已啟用：僅搜尋 <strong>EXCEL (.xlsx/.xls) 與 CSV (.csv)</strong> 檔案；僅撈取下方「已勾選欄位」之相關資料；單筆資料需同時具備 <strong>2 個以上</strong>有效欄位數值方判定為需求數據。
+        </div>
+
+        <!-- 區塊 2：欄位勾選、常用模板、新增、刪除、拖曳排序配置面板 -->
+        <div class="field-config-panel">
+          <div class="field-config-header">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="font-size: 13px; font-weight: 700; color: #7dd3fc;">🧩 報表欄位管理（勾選要撈取的欄位 / 拖曳排序 / 常用模板）</span>
+              <span id="bigDataFieldCountBadge" class="folder-count-badge">已選 0 / 0 欄</span>
+              <span id="bigDataFieldPresetStatus" style="font-size: 11px; color: #fbbf24;"></span>
+            </div>
+
+            <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+              <input type="text" id="newCustomFieldInput" class="search-input" placeholder="輸入新欄位名稱..." style="width: 155px; padding: 5px 10px; font-size: 12px;" />
+              <button id="btnAddCustomField" class="btn-refresh" style="border-color: #34d399; color: #34d399; padding: 5px 10px;">➕ 新增欄位</button>
+              <button id="btnSaveFavoriteFields" class="btn-refresh" style="border-color: #fbbf24; color: #fbbf24; padding: 5px 10px;" title="將目前的欄位勾選與排序儲存為常用欄位">⭐ 設定為常用欄位</button>
+              <button id="btnRestoreFavoriteFields" class="btn-refresh" style="border-color: #c084fc; color: #c084fc; padding: 5px 10px;" title="恢復已設定的常用欄位（若未設定則恢復最後一次使用欄位勾選設定）">🔄 恢復上一次常用欄位</button>
+              <button id="btnSelectAllFields" class="btn-refresh" style="padding: 5px 10px;">全選欄位</button>
+              <button id="btnDeselectAllFields" class="btn-refresh" style="padding: 5px 10px;">全不選</button>
+            </div>
+          </div>
+
+          <div style="font-size: 11px; color: #94a3b8; margin-bottom: 8px;">
+            💡 操作提示：系統會自動記憶<strong>最後一次使用欄位勾選設定</strong>；點擊「⭐ 設定為常用欄位」可固定常用配置，隨時可按「🔄 恢復上一次常用欄位」一鍵還原；按住欄位標籤或表頭左右拖曳可調整順序。
+          </div>
+
+          <div class="field-chip-grid" id="bigDataFieldChipGrid"></div>
+        </div>
+
+        <!-- 區塊 3：資料列勾選狀態與快速操作列 -->
+        <div class="bigdata-toolbar">
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <span style="font-size: 13px; font-weight: 600; color: #cbd5e1;">
+              📋 有效分析明細：共 <strong id="bigDataTotalRowCount" style="color: #38bdf8;">0</strong> 筆（已過濾空值與不足 2 欄之雜訊），已勾選採用 <strong id="bigDataCheckedRowCount" style="color: #34d399;">0</strong> 筆
+            </span>
+            <button id="btnBigDataCheckAllRows" class="btn-refresh" style="padding: 3px 9px; font-size: 11px;">☑️ 全部採用</button>
+            <button id="btnBigDataUncheckAllRows" class="btn-refresh" style="padding: 3px 9px; font-size: 11px;">⬜ 全部取消</button>
+          </div>
+          <div style="font-size: 11px; color: #94a3b8;">
+            ※ 匯出報表時，僅會輸出「已勾選採用」的資料列與「已勾選顯示」的欄位。
+          </div>
+        </div>
+
+        <!-- 區塊 4：大數據檢驗分析動態表格 -->
+        <div class="table-container" style="max-height: 560px; overflow-y: auto;">
+          <table id="bigDataAnalysisTable">
+            <thead id="bigDataTableHead" style="position: sticky; top: 0; z-index: 5;">
+              <tr>
+                <th style="width: 44px; text-align: center;">
+                  <input type="checkbox" id="bigDataMasterRowCheckbox" class="terminal-checkbox" checked title="全選 / 取消全選資料列" />
+                </th>
+                <th>請先勾選所需欄位並點擊上方「⚡ 撈取整合數據」</th>
+              </tr>
+            </thead>
+            <tbody id="bigDataTableBody">
+              <tr>
+                <td colspan="2" style="text-align: center; color: #94a3b8; padding: 32px;">
+                  尚未載入分析資料，請勾選上方欄位與資料來源後點擊「⚡ 撈取整合數據」
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
       </div>
@@ -1202,6 +1481,35 @@
     const smartUploadBtn = document.getElementById('smartUploadBtn');
     const smartUploadStatus = document.getElementById('smartUploadStatus');
 
+    // 大數據檢驗分析報表元件
+    const srcCheckSupabase = document.getElementById('srcCheckSupabase');
+    const bigDataSupabaseCustomer = document.getElementById('bigDataSupabaseCustomer');
+    const srcCheckGdriveCsv = document.getElementById('srcCheckGdriveCsv');
+    const bigDataGdriveFolder = document.getElementById('bigDataGdriveFolder');
+    const srcCheckManualFiles = document.getElementById('srcCheckManualFiles');
+    const bigDataManualFilesInput = document.getElementById('bigDataManualFilesInput');
+    const bigDataManualFilesBadge = document.getElementById('bigDataManualFilesBadge');
+    const bigDataKeywordFilter = document.getElementById('bigDataKeywordFilter');
+    const btnFetchBigData = document.getElementById('btnFetchBigData');
+    const bigDataFetchStatus = document.getElementById('bigDataFetchStatus');
+    const bigDataFieldCountBadge = document.getElementById('bigDataFieldCountBadge');
+    const bigDataFieldPresetStatus = document.getElementById('bigDataFieldPresetStatus');
+    const newCustomFieldInput = document.getElementById('newCustomFieldInput');
+    const btnAddCustomField = document.getElementById('btnAddCustomField');
+    const btnSaveFavoriteFields = document.getElementById('btnSaveFavoriteFields');
+    const btnRestoreFavoriteFields = document.getElementById('btnRestoreFavoriteFields');
+    const btnSelectAllFields = document.getElementById('btnSelectAllFields');
+    const btnDeselectAllFields = document.getElementById('btnDeselectAllFields');
+    const bigDataFieldChipGrid = document.getElementById('bigDataFieldChipGrid');
+    const bigDataTotalRowCount = document.getElementById('bigDataTotalRowCount');
+    const bigDataCheckedRowCount = document.getElementById('bigDataCheckedRowCount');
+    const btnBigDataCheckAllRows = document.getElementById('btnBigDataCheckAllRows');
+    const btnBigDataUncheckAllRows = document.getElementById('btnBigDataUncheckAllRows');
+    const bigDataTableHead = document.getElementById('bigDataTableHead');
+    const bigDataTableBody = document.getElementById('bigDataTableBody');
+    const bigDataExportFormat = document.getElementById('bigDataExportFormat');
+    const btnBigDataExport = document.getElementById('btnBigDataExport');
+
     // 報表與檔案元件
     const reportModuleTitle = document.getElementById('reportModuleTitle');
     const filesModuleTitle = document.getElementById('filesModuleTitle');
@@ -1229,13 +1537,194 @@
     let allAccountsList = [];
     let allMachinesCache = [];
 
-    // 數據終端資料庫狀態 (含拖曳與勾選狀態)
+    // 數據終端資料庫狀態
     let gdriveTreeData = null;
     let selectedFolderNode = null;
     let folderNodeMap = new Map();
     let checkedTreeFolderIds = new Set();
-    let checkedContentItems = new Map(); // key: itemId, value: { id, type, name }
-    let draggedPayloadItems = []; // 目前正在拖曳的項目陣列 [{ id, type, name }]
+    let checkedContentItems = new Map();
+    let draggedPayloadItems = [];
+
+    // =========================================================================
+    // 大數據檢驗分析報表狀態、LocalStorage 記憶設定與預設欄位定義
+    // =========================================================================
+    const STORAGE_KEY_LAST_USED_FIELDS = 'pmc_bigdata_last_used_fields_v1';
+    const STORAGE_KEY_FAVORITE_FIELDS = 'pmc_bigdata_favorite_fields_v1';
+    const ALLOWED_BIGDATA_FILE_TYPES = ['xlsx', 'xls', 'csv'];
+
+    const SYSTEM_META_FIELDS = ['資料來源', '所屬客戶', '來源檔案/資料表'];
+
+    const INITIAL_BIGDATA_FIELDS = [
+      "資料來源",
+      "所屬客戶",
+      "來源檔案/資料表",
+      "工件 / 機台編號",
+      "檢驗項目",
+      "量測數值",
+      "公差範圍",
+      "判定結果",
+      "檢驗日期",
+      "軸向",
+      "日期",
+      "序號",
+      "機器名稱",
+      "Mean Dev.M",
+      "Sys.Dev.E",
+      "Repeat.R+",
+      "Repeat.R-",
+      "Reversal B",
+      "Accuracy A+",
+      "Accuracy A-",
+      "Accuracy A",
+      "受測軸",
+      "執行次數",
+      "測試日期",
+      "精度 (A)",
+      "重複性 (R)",
+      "系統開發 (E)",
+      "反向差 (B)",
+      "平均反向差值 (B Mean)",
+      "平均差異 (M)"
+    ];
+
+    let bigDataFields = [];
+    let bigDataRows = [];
+    let draggedFieldIndex = null;
+
+    // 儲存「最後一次使用欄位勾選設定」
+    function saveLastUsedFieldsState() {
+      try {
+        const snapshot = bigDataFields.map(f => ({
+          name: f.name,
+          checked: Boolean(f.checked)
+        }));
+        localStorage.setItem(STORAGE_KEY_LAST_USED_FIELDS, JSON.stringify(snapshot));
+      } catch (e) {
+        console.warn('儲存最後一次欄位設定失敗:', e);
+      }
+    }
+
+    // 讀取「最後一次使用欄位勾選設定」
+    function loadLastUsedFieldsState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_LAST_USED_FIELDS);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) && parsed.length > 0 ? parsed : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // 設定目前欄位配置為「常用欄位」
+    function saveFavoriteFieldsState() {
+      try {
+        const snapshot = bigDataFields.map(f => ({
+          name: f.name,
+          checked: Boolean(f.checked)
+        }));
+        localStorage.setItem(STORAGE_KEY_FAVORITE_FIELDS, JSON.stringify(snapshot));
+        saveLastUsedFieldsState();
+        updateFieldPresetStatusBadge('⭐ 已更新常用欄位設定');
+        alert('⭐ 已將目前的欄位勾選與排序設定儲存為「常用欄位」！');
+      } catch (e) {
+        alert('儲存常用欄位失敗：' + e.message);
+      }
+    }
+
+    // 恢復「上一次常用欄位」（優先讀取已儲存的常用欄位，若無則讀取最後一次使用欄位勾選設定）
+    function restoreFavoriteFieldsState() {
+      try {
+        let raw = localStorage.getItem(STORAGE_KEY_FAVORITE_FIELDS);
+        let sourceLabel = '上一次常用欄位';
+
+        if (!raw) {
+          raw = localStorage.getItem(STORAGE_KEY_LAST_USED_FIELDS);
+          sourceLabel = '最後一次使用欄位勾選設定';
+        }
+
+        if (!raw) {
+          alert('目前尚無已儲存的常用欄位或歷史勾選紀錄！');
+          return;
+        }
+
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          alert('紀錄格式異常，無法恢復欄位設定。');
+          return;
+        }
+
+        const seen = new Set();
+        const restoredList = [];
+        parsed.forEach(item => {
+          const cleanName = String(item?.name || '').trim();
+          if (cleanName && !seen.has(cleanName.toLowerCase())) {
+            seen.add(cleanName.toLowerCase());
+            restoredList.push({
+              name: cleanName,
+              checked: Boolean(item.checked)
+            });
+          }
+        });
+
+        bigDataFields = restoredList;
+        saveLastUsedFieldsState();
+        renderBigDataFieldChips();
+        renderBigDataTable();
+        updateFieldPresetStatusBadge(`🔄 已恢復${sourceLabel}`);
+      } catch (e) {
+        alert('恢復常用欄位失敗：' + e.message);
+      }
+    }
+
+    function updateFieldPresetStatusBadge(text) {
+      if (!bigDataFieldPresetStatus) return;
+      bigDataFieldPresetStatus.innerText = text;
+    }
+
+    function initBigDataFields() {
+      const savedLastUsed = loadLastUsedFieldsState();
+      const seen = new Set();
+      bigDataFields = [];
+
+      if (savedLastUsed) {
+        savedLastUsed.forEach(item => {
+          const cleanName = String(item?.name || '').trim();
+          if (cleanName && !seen.has(cleanName.toLowerCase())) {
+            seen.add(cleanName.toLowerCase());
+            bigDataFields.push({ name: cleanName, checked: Boolean(item.checked) });
+          }
+        });
+        updateFieldPresetStatusBadge('📌 已載入最後一次使用欄位設定');
+      } else {
+        INITIAL_BIGDATA_FIELDS.forEach(rawName => {
+          const cleanName = String(rawName).trim();
+          if (cleanName && !seen.has(cleanName.toLowerCase())) {
+            seen.add(cleanName.toLowerCase());
+            bigDataFields.push({ name: cleanName, checked: true });
+          }
+        });
+        saveLastUsedFieldsState();
+      }
+
+      renderBigDataFieldChips();
+      renderBigDataTable();
+    }
+
+    // 手動上傳多檔選取狀態連動
+    if (bigDataManualFilesInput) {
+      bigDataManualFilesInput.addEventListener('change', (e) => {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+          srcCheckManualFiles.checked = true;
+          bigDataManualFilesBadge.innerText = `已選 ${files.length} 個檔案`;
+          bigDataManualFilesBadge.style.color = '#34d399';
+        } else {
+          bigDataManualFilesBadge.innerText = '未選取檔案';
+          bigDataManualFilesBadge.style.color = '#94a3b8';
+        }
+      });
+    }
 
     function getCandidateTableNames(user) {
       const u = (user || targetViewCustomer || currentUsername || '').toLowerCase().trim();
@@ -1264,7 +1753,6 @@
       statusMessage.innerText = '';
     }
 
-    // 驗證登入與身分檢查
     async function checkAuthSession() {
       try {
         const { data: { user } } = await client.auth.getUser();
@@ -1299,6 +1787,7 @@
           applyRolePermissions(currentUserRole, currentUsername);
 
           if (currentUserRole === 'admin') {
+            initBigDataFields();
             await initAdminFeatures();
             await loadTerminalTree();
           } else {
@@ -1399,7 +1888,736 @@
     });
 
     // =========================================================================
-    // 2. Google Apps Script 數據終端資料庫 API 通訊、拖曳與批次勾選管理
+    // 2. 大數據檢驗分析報表：欄位管理與偵錯驗證邏輯
+    // =========================================================================
+    function renderBigDataFieldChips() {
+      const checkedCount = bigDataFields.filter(f => f.checked).length;
+      bigDataFieldCountBadge.innerText = `已選 ${checkedCount} / ${bigDataFields.length} 欄`;
+
+      let html = '';
+      bigDataFields.forEach((field, idx) => {
+        html += `
+          <div class="field-chip ${field.checked ? 'checked-field' : ''}"
+               draggable="true"
+               data-field-idx="${idx}"
+               title="按住左右拖曳可調整欄位前後順序">
+            <span style="color: #64748b; font-size: 11px;">⋮⋮</span>
+            <input type="checkbox" class="terminal-checkbox bigdata-field-cb"
+                   data-field-idx="${idx}" ${field.checked ? 'checked' : ''} />
+            <span>${escapeHtml(field.name)}</span>
+            <button type="button" class="field-chip-del" data-del-idx="${idx}" title="移除此欄位">×</button>
+          </div>
+        `;
+      });
+
+      bigDataFieldChipGrid.innerHTML = html;
+      bindBigDataFieldChipEvents();
+    }
+
+    function bindBigDataFieldChipEvents() {
+      bigDataFieldChipGrid.querySelectorAll('.bigdata-field-cb').forEach(cb => {
+        cb.onclick = (e) => e.stopPropagation();
+        cb.onchange = (e) => {
+          const idx = parseInt(e.target.dataset.fieldIdx, 10);
+          if (!isNaN(idx) && bigDataFields[idx]) {
+            bigDataFields[idx].checked = e.target.checked;
+            saveLastUsedFieldsState();
+            renderBigDataFieldChips();
+            renderBigDataTable();
+          }
+        };
+      });
+
+      bigDataFieldChipGrid.querySelectorAll('.field-chip-del').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const idx = parseInt(e.target.dataset.delIdx, 10);
+          if (!isNaN(idx) && bigDataFields[idx]) {
+            const targetName = bigDataFields[idx].name;
+            if (confirm(`確定要從欄位清單中移除【${targetName}】嗎？`)) {
+              bigDataFields.splice(idx, 1);
+              saveLastUsedFieldsState();
+              renderBigDataFieldChips();
+              renderBigDataTable();
+            }
+          }
+        };
+      });
+
+      bigDataFieldChipGrid.querySelectorAll('.field-chip').forEach(chip => {
+        chip.addEventListener('dragstart', (e) => {
+          draggedFieldIndex = parseInt(chip.dataset.fieldIdx, 10);
+          chip.classList.add('dragging-item');
+          e.dataTransfer.effectAllowed = 'move';
+        });
+
+        chip.addEventListener('dragend', () => {
+          chip.classList.remove('dragging-item');
+          bigDataFieldChipGrid.querySelectorAll('.chip-drag-over').forEach(el => el.classList.remove('chip-drag-over'));
+        });
+
+        chip.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          chip.classList.add('chip-drag-over');
+        });
+
+        chip.addEventListener('dragleave', () => {
+          chip.classList.remove('chip-drag-over');
+        });
+
+        chip.addEventListener('drop', (e) => {
+          e.preventDefault();
+          chip.classList.remove('chip-drag-over');
+          const targetIndex = parseInt(chip.dataset.fieldIdx, 10);
+          reorderBigDataFields(draggedFieldIndex, targetIndex);
+        });
+      });
+    }
+
+    function reorderBigDataFields(fromIdx, toIdx) {
+      if (fromIdx === null || toIdx === null || fromIdx === toIdx) return;
+      if (fromIdx < 0 || fromIdx >= bigDataFields.length || toIdx < 0 || toIdx >= bigDataFields.length) return;
+
+      const [movedField] = bigDataFields.splice(fromIdx, 1);
+      bigDataFields.splice(toIdx, 0, movedField);
+      draggedFieldIndex = null;
+
+      saveLastUsedFieldsState();
+      renderBigDataFieldChips();
+      renderBigDataTable();
+    }
+
+    function handleAddCustomField() {
+      const rawInput = newCustomFieldInput.value.trim();
+      if (!rawInput) {
+        alert('請輸入要新增的欄位名稱！');
+        newCustomFieldInput.focus();
+        return;
+      }
+
+      const isDuplicate = bigDataFields.some(
+        f => f.name.trim().toLowerCase() === rawInput.toLowerCase()
+      );
+
+      if (isDuplicate) {
+        alert('欄位名稱重複');
+        newCustomFieldInput.select();
+        return;
+      }
+
+      bigDataFields.push({ name: rawInput, checked: true });
+      newCustomFieldInput.value = '';
+      saveLastUsedFieldsState();
+      renderBigDataFieldChips();
+      renderBigDataTable();
+    }
+
+    btnAddCustomField.addEventListener('click', handleAddCustomField);
+    newCustomFieldInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') handleAddCustomField();
+    });
+
+    btnSaveFavoriteFields.addEventListener('click', saveFavoriteFieldsState);
+    btnRestoreFavoriteFields.addEventListener('click', restoreFavoriteFieldsState);
+
+    btnSelectAllFields.addEventListener('click', () => {
+      bigDataFields.forEach(f => f.checked = true);
+      saveLastUsedFieldsState();
+      renderBigDataFieldChips();
+      renderBigDataTable();
+    });
+
+    btnDeselectAllFields.addEventListener('click', () => {
+      bigDataFields.forEach(f => f.checked = false);
+      saveLastUsedFieldsState();
+      renderBigDataFieldChips();
+      renderBigDataTable();
+    });
+
+    function mergeDiscoveredFieldNames(fieldNamesList) {
+      const existingLower = new Set(bigDataFields.map(f => f.name.trim().toLowerCase()));
+      let addedCount = 0;
+
+      fieldNamesList.forEach(rawName => {
+        const clean = String(rawName || '').trim();
+        if (!clean) return;
+        if (['id', 'assigned_user_id', 'created_at', 'updated_at', '_fileurl', '_fileformat'].includes(clean.toLowerCase())) return;
+
+        if (!existingLower.has(clean.toLowerCase())) {
+          existingLower.add(clean.toLowerCase());
+          bigDataFields.push({ name: clean, checked: true });
+          addedCount++;
+        }
+      });
+
+      if (addedCount > 0) {
+        saveLastUsedFieldsState();
+        renderBigDataFieldChips();
+      }
+    }
+
+    // 前端數值有效性驗證（排除空值、佔位符、以及誤抓到的欄位標題）
+    function isValidCellData(val, allFieldNames) {
+      if (val === null || val === undefined) return false;
+      const str = String(val).trim();
+      if (str === '' || /^[-—–_./\\:：=*#()（）\[\]]+$/.test(str)) return false;
+      if (/^(null|undefined|nan|n\/a|none|無|空白)$/i.test(str)) return false;
+      if (allFieldNames.some(h => h.toLowerCase() === str.toLowerCase())) return false;
+      return true;
+    }
+
+    // 解析手動上傳的 EXCEL / CSV 多檔案為原始列陣列
+    function parseManualExcelOrCsvFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const data = new Uint8Array(evt.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            const extractedRows = [];
+
+            workbook.SheetNames.forEach(sheetName => {
+              const worksheet = workbook.Sheets[sheetName];
+              const matrix = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+              if (!matrix || matrix.length === 0) return;
+
+              // 尋找最佳標題列（非空儲存格最多且主要為文字的前 15 列內）
+              let headerRowIdx = 0;
+              let bestScore = -1;
+              const scanLimit = Math.min(matrix.length, 15);
+              for (let r = 0; r < scanLimit; r++) {
+                const rowCells = matrix[r] || [];
+                const nonEmptyTexts = rowCells.filter(c => {
+                  const s = String(c ?? '').trim();
+                  return s !== '' && isNaN(Number(s));
+                });
+                if (nonEmptyTexts.length > bestScore && nonEmptyTexts.length >= 2) {
+                  bestScore = nonEmptyTexts.length;
+                  headerRowIdx = r;
+                }
+              }
+
+              const headers = (matrix[headerRowIdx] || []).map(h => String(h ?? '').trim());
+              for (let r = headerRowIdx + 1; r < matrix.length; r++) {
+                const rowVals = matrix[r] || [];
+                const obj = {};
+                let hasAnyVal = false;
+                headers.forEach((hName, cIdx) => {
+                  if (!hName) return;
+                  const cellVal = rowVals[cIdx];
+                  if (cellVal !== undefined && cellVal !== null && String(cellVal).trim() !== '') {
+                    obj[hName] = String(cellVal).trim();
+                    hasAnyVal = true;
+                  }
+                });
+                if (hasAnyVal) {
+                  extractedRows.push({
+                    sheetName: sheetName,
+                    rowObj: obj
+                  });
+                }
+              }
+            });
+
+            resolve(extractedRows);
+          } catch (err) {
+            reject(err);
+          }
+        };
+        reader.onerror = (err) => reject(err);
+        reader.readAsArrayBuffer(file);
+      });
+    }
+
+    // =========================================================================
+    // 3. 大數據檢驗分析報表：嚴格只撈取已勾選欄位，且有效欄位 >= 2 才保留
+    // =========================================================================
+    btnFetchBigData.addEventListener('click', async () => {
+      if (currentUserRole !== 'admin') return;
+
+      const useSupabase = srcCheckSupabase.checked;
+      const useGdriveFiles = srcCheckGdriveCsv.checked;
+      const useManualFiles = srcCheckManualFiles && srcCheckManualFiles.checked;
+
+      if (!useSupabase && !useGdriveFiles && !useManualFiles) {
+        alert('請至少勾選一個數據來源（Supabase 客戶報表、數據終端資料庫 或 手動選擇檔案上傳加入）！');
+        return;
+      }
+
+      if (useManualFiles && (!bigDataManualFilesInput.files || bigDataManualFilesInput.files.length === 0)) {
+        alert('您已勾選「手動選擇檔案上傳加入」，請先點選要上傳的 EXCEL 或 CSV 檔案！');
+        bigDataManualFilesInput.focus();
+        return;
+      }
+
+      // 儲存本次使用的欄位勾選設定
+      saveLastUsedFieldsState();
+      updateFieldPresetStatusBadge('💾 已記錄本次欄位勾選設定');
+
+      // 取得目前使用者勾選的「數據欄位」（扣除系統來源 Meta 欄位）
+      const selectedDataColumns = bigDataFields
+        .filter(f => f.checked && !SYSTEM_META_FIELDS.includes(f.name))
+        .map(f => f.name);
+
+      if (selectedDataColumns.length < 2) {
+        alert('請至少勾選 2 個以上的數據欄位名稱（例如：軸向、日期、機器名稱、Accuracy A 等），系統才能判定有效數據列！');
+        return;
+      }
+
+      const allKnownFieldNames = bigDataFields.map(f => f.name);
+      const selectedCustomer = bigDataSupabaseCustomer.value;
+      const selectedFolderId = bigDataGdriveFolder.value;
+      const keyword = bigDataKeywordFilter.value.trim().toLowerCase();
+
+      btnFetchBigData.disabled = true;
+      btnFetchBigData.innerText = '⏳ 正在嚴格比對撈取...';
+      bigDataFetchStatus.innerText = `正在針對已勾選的 ${selectedDataColumns.length} 個欄位進行撈取與偵錯驗證（僅搜尋 EXCEL 與 CSV；僅保留同時具備 2 個以上有效數值的資料）...`;
+      bigDataFetchStatus.style.color = '#38bdf8';
+
+      const combinedRows = [];
+      let supabaseCount = 0;
+      let gdriveCount = 0;
+      let manualUploadCount = 0;
+      let droppedInvalidCount = 0;
+      let scanSummaryText = '';
+      let errorNotes = [];
+
+      // 中英文同義欄位雙向自動互補對照表
+      const aliasPairs = [
+        ['日期', '測試日期'],
+        ['日期', '檢驗日期'],
+        ['機器名稱', '工件 / 機台編號'],
+        ['機器名稱', '機台名稱'],
+        ['軸向', '受測軸'],
+        ['精度 (A)', 'Accuracy A'],
+        ['重複性 (R)', 'Repeat.R+'],
+        ['系統開發 (E)', 'Sys.Dev.E'],
+        ['反向差 (B)', 'Reversal B'],
+        ['平均差異 (M)', 'Mean Dev.M']
+      ];
+
+      // 擴展查詢欄位池：若勾選了中文欄位，同步把對應英文同義詞一併送給後端搜尋，再映射回來
+      const expandedQueryColumns = new Set(selectedDataColumns);
+      selectedDataColumns.forEach(col => {
+        aliasPairs.forEach(([a, b]) => {
+          if (col === a) expandedQueryColumns.add(b);
+          if (col === b) expandedQueryColumns.add(a);
+        });
+      });
+
+      function buildStrictFilteredRow(rawSourceObj, metaInfo) {
+        const tempMap = {};
+        Object.keys(rawSourceObj).forEach(k => {
+          if (!k.startsWith('_') && isValidCellData(rawSourceObj[k], allKnownFieldNames)) {
+            tempMap[k] = String(rawSourceObj[k]).trim();
+          }
+        });
+
+        aliasPairs.forEach(([colA, colB]) => {
+          if (!tempMap[colA] && tempMap[colB]) tempMap[colA] = tempMap[colB];
+          if (!tempMap[colB] && tempMap[colA]) tempMap[colB] = tempMap[colA];
+        });
+
+        const strictRow = {
+          '資料來源': metaInfo.source,
+          '所屬客戶': metaInfo.customer,
+          '來源檔案/資料表': metaInfo.fileOrTable
+        };
+
+        let validSelectedCount = 0;
+        selectedDataColumns.forEach(colName => {
+          let matchedVal = tempMap[colName];
+          if (matchedVal === undefined) {
+            const foundKey = Object.keys(tempMap).find(k => k.toLowerCase() === colName.toLowerCase());
+            if (foundKey) matchedVal = tempMap[foundKey];
+          }
+
+          if (isValidCellData(matchedVal, allKnownFieldNames)) {
+            strictRow[colName] = matchedVal;
+            validSelectedCount++;
+          }
+        });
+
+        if (validSelectedCount >= 2) {
+          return strictRow;
+        }
+        return null;
+      }
+
+      try {
+        // 來源 A：從 Supabase 客戶報表撈取
+        if (useSupabase) {
+          const targetAccounts = selectedCustomer === '__ALL__'
+            ? allAccountsList
+            : allAccountsList.filter(a => a.username === selectedCustomer);
+
+          for (const acc of targetAccounts) {
+            const res = await queryTableDataSafe(acc.username);
+            if (res.data && res.data.length > 0) {
+              res.data.forEach(rawRow => {
+                if (keyword && !JSON.stringify(rawRow).toLowerCase().includes(keyword)) {
+                  return;
+                }
+
+                const filtered = buildStrictFilteredRow(rawRow, {
+                  source: 'Supabase 客戶報表',
+                  customer: acc.username,
+                  fileOrTable: res.tableName
+                });
+
+                if (filtered) {
+                  combinedRows.push(filtered);
+                  supabaseCount++;
+                } else {
+                  droppedInvalidCount++;
+                }
+              });
+            }
+          }
+        }
+
+        // 來源 B：從 Google Drive 數據終端資料庫撈取（僅搜尋 EXCEL 與 CSV）
+        if (useGdriveFiles) {
+          try {
+            const gasRes = await callGasApi({
+              action: 'search_all_files',
+              secret: GAS_API_SECRET,
+              folderId: selectedFolderId || '',
+              columns: Array.from(expandedQueryColumns),
+              minValidFields: 2,
+              fileTypes: ALLOWED_BIGDATA_FILE_TYPES, // 限定只搜尋 EXCEL (.xlsx, .xls) 與 CSV (.csv)
+              keyword: keyword,
+              maxRows: 300
+            });
+
+            if (gasRes.success && Array.isArray(gasRes.rows)) {
+              if (gasRes.scannedFiles !== undefined) {
+                scanSummaryText = `，已掃描 ${gasRes.scannedFiles} 檔 / 有效解析 ${gasRes.parsedFiles || 0} 檔`;
+              }
+              if (Array.isArray(gasRes.warnings) && gasRes.warnings.length > 0) {
+                errorNotes.push(`部分檔案解析提示：${gasRes.warnings.slice(0, 3).join(' | ')}`);
+              }
+
+              gasRes.rows.forEach(fileRow => {
+                // 前端雙重保險：確保只處理 EXCEL 或 CSV 檔案
+                const fileNameLower = String(fileRow._sourceFile || '').toLowerCase();
+                const fileFmtLower = String(fileRow._fileFormat || '').toLowerCase();
+                const isAllowedExt = ALLOWED_BIGDATA_FILE_TYPES.some(ext =>
+                  fileNameLower.endsWith('.' + ext) || fileFmtLower.includes(ext) || fileFmtLower.includes('excel')
+                );
+                if (!isAllowedExt) return;
+
+                const pathParts = String(fileRow._sourcePath || '').split('/').filter(Boolean);
+                const inferredCustomer = pathParts.length >= 2 ? pathParts[1] : '數據終端資料庫';
+                const fmtLabel = fileRow._fileFormat ? ` (${fileRow._fileFormat})` : '';
+
+                const filtered = buildStrictFilteredRow(fileRow, {
+                  source: `數據終端資料庫${fmtLabel}`,
+                  customer: inferredCustomer,
+                  fileOrTable: fileRow._sourceFile || ''
+                });
+
+                if (filtered) {
+                  combinedRows.push(filtered);
+                  gdriveCount++;
+                } else {
+                  droppedInvalidCount++;
+                }
+              });
+            } else if (gasRes.error) {
+              errorNotes.push(`數據終端讀取錯誤：${gasRes.error}`);
+            }
+          } catch (gErr) {
+            errorNotes.push(`數據終端連線失敗：${gErr.message}（請確認 GAS 已更新並重新部署為新版本）`);
+          }
+        }
+
+        // 來源 C：手動選擇多檔案上傳加入（支援多個 EXCEL / CSV 檔案）
+        if (useManualFiles && bigDataManualFilesInput.files && bigDataManualFilesInput.files.length > 0) {
+          const uploadedFiles = Array.from(bigDataManualFilesInput.files);
+          for (const file of uploadedFiles) {
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (!ALLOWED_BIGDATA_FILE_TYPES.includes(ext)) {
+              errorNotes.push(`略過不支援的檔案格式：${file.name}（僅支援 EXCEL 與 CSV）`);
+              continue;
+            }
+
+            try {
+              const parsedSheetsRows = await parseManualExcelOrCsvFile(file);
+              const baseCustomer = file.name.includes('_') ? file.name.split('_')[0] : '手動匯入檔案';
+
+              parsedSheetsRows.forEach(item => {
+                if (keyword && !JSON.stringify(item.rowObj).toLowerCase().includes(keyword)) {
+                  return;
+                }
+
+                const filtered = buildStrictFilteredRow(item.rowObj, {
+                  source: `手動上傳 (${ext.toUpperCase()})`,
+                  customer: baseCustomer,
+                  fileOrTable: `${file.name} [${item.sheetName}]`
+                });
+
+                if (filtered) {
+                  combinedRows.push(filtered);
+                  manualUploadCount++;
+                } else {
+                  droppedInvalidCount++;
+                }
+              });
+            } catch (fErr) {
+              errorNotes.push(`解析手動檔案【${file.name}】失敗：${fErr.message}`);
+            }
+          }
+        }
+
+        bigDataRows = combinedRows.map((item, idx) => ({
+          _rowId: idx + 1,
+          _checked: true,
+          data: item
+        }));
+
+        renderBigDataTable();
+
+        let statusMsg = `✅ 嚴格撈取完成（僅限 EXCEL / CSV）！共取得 ${bigDataRows.length} 筆有效數據（Supabase：${supabaseCount} 筆，數據終端資料庫：${gdriveCount} 筆，手動上傳檔案：${manualUploadCount} 筆${scanSummaryText}；已自動過濾 ${droppedInvalidCount} 筆空值或不足 2 欄的無效資料）。`;
+        if (errorNotes.length > 0) {
+          statusMsg += ` ⚠️ ${errorNotes.join('；')}`;
+        }
+        bigDataFetchStatus.innerText = statusMsg;
+        bigDataFetchStatus.style.color = errorNotes.length > 0 ? '#fbbf24' : '#34d399';
+
+      } catch (err) {
+        bigDataFetchStatus.innerText = `❌ 撈取發生錯誤：${err.message}`;
+        bigDataFetchStatus.style.color = '#f87171';
+      } finally {
+        btnFetchBigData.disabled = false;
+        btnFetchBigData.innerText = '⚡ 撈取整合數據';
+      }
+    });
+
+    // 渲染大數據分析報表
+    function renderBigDataTable() {
+      const activeFields = bigDataFields.filter(f => f.checked);
+      updateBigDataRowCounters();
+
+      let headHtml = '<tr>';
+      headHtml += `
+        <th style="width: 44px; text-align: center;">
+          <input type="checkbox" id="bigDataMasterRowCheckbox" class="terminal-checkbox"
+                 ${bigDataRows.length > 0 && bigDataRows.every(r => r._checked) ? 'checked' : ''}
+                 title="全選 / 取消全選資料列" />
+        </th>
+      `;
+
+      if (activeFields.length === 0) {
+        headHtml += '<th>⚠️ 請至少勾選一個上方欄位以顯示報表內容</th>';
+      } else {
+        activeFields.forEach(field => {
+          const globalIdx = bigDataFields.findIndex(f => f.name === field.name);
+          headHtml += `
+            <th class="draggable-th" draggable="true" data-global-field-idx="${globalIdx}" title="按住表頭可左右拖曳調整欄位順序">
+              <span style="color: #64748b; margin-right: 4px;">⋮⋮</span>${escapeHtml(field.name)}
+            </th>
+          `;
+        });
+      }
+      headHtml += '</tr>';
+      bigDataTableHead.innerHTML = headHtml;
+
+      if (bigDataRows.length === 0) {
+        bigDataTableBody.innerHTML = `
+          <tr>
+            <td colspan="${activeFields.length + 1}" style="text-align: center; color: #94a3b8; padding: 32px;">
+              目前無符合條件的有效分析資料，請勾選所需欄位與資料來源後點擊「⚡ 撈取整合數據」
+            </td>
+          </tr>
+        `;
+        bindBigDataTableEvents();
+        return;
+      }
+
+      if (activeFields.length === 0) {
+        bigDataTableBody.innerHTML = `
+          <tr>
+            <td colspan="2" style="text-align: center; color: #fbbf24; padding: 24px;">
+              已載入 ${bigDataRows.length} 筆資料，請在上方勾選要顯示的欄位名稱。
+            </td>
+          </tr>
+        `;
+        bindBigDataTableEvents();
+        return;
+      }
+
+      let bodyHtml = '';
+      bigDataRows.forEach((rowObj, rIdx) => {
+        bodyHtml += `<tr class="${rowObj._checked ? '' : 'row-excluded'}">`;
+        bodyHtml += `
+          <td style="text-align: center;">
+            <input type="checkbox" class="terminal-checkbox bigdata-row-cb"
+                   data-row-idx="${rIdx}" ${rowObj._checked ? 'checked' : ''}
+                   title="勾選採用此列數據" />
+          </td>
+        `;
+
+        activeFields.forEach(field => {
+          const val = rowObj.data[field.name] !== undefined && rowObj.data[field.name] !== null
+            ? String(rowObj.data[field.name])
+            : '';
+
+          if (field.name === '判定結果' && val !== '') {
+            const up = val.toUpperCase();
+            const isPass = up.includes('PASS') || up.includes('合格') || up.includes('OK');
+            const isFail = up.includes('FAIL') || up.includes('不合格') || up.includes('NG');
+            const cls = isPass ? 'status-pass' : (isFail ? 'status-fail' : 'status-info');
+            bodyHtml += `<td><span class="badge-status ${cls}">${escapeHtml(val)}</span></td>`;
+          } else if (field.name === '資料來源') {
+            const isTerminal = val.includes('數據終端資料庫');
+            const isManual = val.includes('手動上傳');
+            const badgeCls = isManual ? 'format-cad' : (isTerminal ? 'format-excel' : 'format-doc');
+            bodyHtml += `<td><span class="format-badge ${badgeCls}">${escapeHtml(val)}</span></td>`;
+          } else {
+            bodyHtml += `<td>${escapeHtml(val)}</td>`;
+          }
+        });
+
+        bodyHtml += '</tr>';
+      });
+
+      bigDataTableBody.innerHTML = bodyHtml;
+      bindBigDataTableEvents();
+    }
+
+    function bindBigDataTableEvents() {
+      const masterCb = document.getElementById('bigDataMasterRowCheckbox');
+      if (masterCb) {
+        masterCb.onchange = (e) => {
+          const checked = e.target.checked;
+          bigDataRows.forEach(r => r._checked = checked);
+          renderBigDataTable();
+        };
+      }
+
+      bigDataTableBody.querySelectorAll('.bigdata-row-cb').forEach(cb => {
+        cb.onchange = (e) => {
+          const rIdx = parseInt(e.target.dataset.rowIdx, 10);
+          if (!isNaN(rIdx) && bigDataRows[rIdx]) {
+            bigDataRows[rIdx]._checked = e.target.checked;
+            const tr = cb.closest('tr');
+            if (tr) tr.classList.toggle('row-excluded', !e.target.checked);
+            updateBigDataRowCounters();
+            if (masterCb) {
+              masterCb.checked = bigDataRows.length > 0 && bigDataRows.every(r => r._checked);
+            }
+          }
+        };
+      });
+
+      let thDragFromIdx = null;
+      bigDataTableHead.querySelectorAll('.draggable-th').forEach(th => {
+        th.addEventListener('dragstart', (e) => {
+          thDragFromIdx = parseInt(th.dataset.globalFieldIdx, 10);
+          th.classList.add('dragging-item');
+          e.dataTransfer.effectAllowed = 'move';
+        });
+
+        th.addEventListener('dragend', () => {
+          th.classList.remove('dragging-item');
+          bigDataTableHead.querySelectorAll('.th-drag-over').forEach(el => el.classList.remove('th-drag-over'));
+        });
+
+        th.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          th.classList.add('th-drag-over');
+        });
+
+        th.addEventListener('dragleave', () => {
+          th.classList.remove('th-drag-over');
+        });
+
+        th.addEventListener('drop', (e) => {
+          e.preventDefault();
+          th.classList.remove('th-drag-over');
+          const thDragToIdx = parseInt(th.dataset.globalFieldIdx, 10);
+          reorderBigDataFields(thDragFromIdx, thDragToIdx);
+        });
+      });
+    }
+
+    function updateBigDataRowCounters() {
+      bigDataTotalRowCount.innerText = bigDataRows.length;
+      bigDataCheckedRowCount.innerText = bigDataRows.filter(r => r._checked).length;
+    }
+
+    btnBigDataCheckAllRows.addEventListener('click', () => {
+      bigDataRows.forEach(r => r._checked = true);
+      renderBigDataTable();
+    });
+
+    btnBigDataUncheckAllRows.addEventListener('click', () => {
+      bigDataRows.forEach(r => r._checked = false);
+      renderBigDataTable();
+    });
+
+    btnBigDataExport.addEventListener('click', () => {
+      const activeFields = bigDataFields.filter(f => f.checked);
+      if (activeFields.length === 0) {
+        alert('請至少勾選一個要匯出的欄位！');
+        return;
+      }
+
+      const selectedRows = bigDataRows.filter(r => r._checked);
+      if (selectedRows.length === 0) {
+        alert('目前沒有勾選任何採用的資料列可供匯出！');
+        return;
+      }
+
+      const exportData = selectedRows.map(rowObj => {
+        const out = {};
+        activeFields.forEach(f => {
+          out[f.name] = rowObj.data[f.name] !== undefined && rowObj.data[f.name] !== null
+            ? rowObj.data[f.name]
+            : '';
+        });
+        return out;
+      });
+
+      const worksheet = XLSX.utils.json_to_sheet(exportData, {
+        header: activeFields.map(f => f.name)
+      });
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, '大數據檢驗分析報表');
+
+      const format = bigDataExportFormat.value;
+      const dateStr = formatLocalDate(new Date());
+
+      if (format === 'csv') {
+        const csvStr = '\uFEFF' + XLSX.utils.sheet_to_csv(worksheet);
+        const blob = new Blob([csvStr], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `大數據檢驗分析報表_${dateStr}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      } else {
+        XLSX.writeFile(workbook, `大數據檢驗分析報表_${dateStr}.xlsx`);
+      }
+    });
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // =========================================================================
+    // 4. Google Apps Script 數據終端資料庫 API 通訊、拖曳與批次勾選管理
     // =========================================================================
     async function callGasApi(payload) {
       const response = await fetch(GAS_WEB_APP_URL, {
@@ -1416,7 +2634,6 @@
       return await response.json();
     }
 
-    // 載入與渲染完整 Google Drive 樹狀結構
     async function loadTerminalTree(preserveSelectedId = null) {
       if (currentUserRole !== 'admin') return;
 
@@ -1436,15 +2653,13 @@
         checkedTreeFolderIds.clear();
         updateTreeBatchToolbar();
 
-        // 渲染樹狀節點
         treeViewContainer.innerHTML = '';
         renderTreeNode(gdriveTreeData, treeViewContainer, '/', true);
         treeStatsText.innerText = `${folderNodeMap.size} 個資料夾`;
 
-        // 更新右側「批次移動目標資料夾」下拉選單
         populateBatchMoveDropdown();
+        populateBigDataFolderDropdown();
 
-        // 恢復原先選取的資料夾，若不存在則選取根節點
         if (prevSelectedId && folderNodeMap.has(prevSelectedId)) {
           selectFolderNode(prevSelectedId);
         } else {
@@ -1457,7 +2672,6 @@
       }
     }
 
-    // 填充「批次移動目標資料夾」下拉選單
     function populateBatchMoveDropdown() {
       let html = '<option value="">選擇移動目標資料夾...</option>';
       folderNodeMap.forEach((node, id) => {
@@ -1466,7 +2680,15 @@
       batchMoveTargetSelect.innerHTML = html;
     }
 
-    // 遞迴渲染目錄節點 (支援勾選框 + 拖曳來源 + 拖曳放置目標)
+    function populateBigDataFolderDropdown() {
+      if (!bigDataGdriveFolder) return;
+      let html = '<option value="">📁 全部資料夾目錄</option>';
+      folderNodeMap.forEach((node, id) => {
+        html += `<option value="${id}">📁 ${node.path}</option>`;
+      });
+      bigDataGdriveFolder.innerHTML = html;
+    }
+
     function renderTreeNode(node, container, path, isRoot = false) {
       folderNodeMap.set(node.id, { ...node, path: path, isRoot: isRoot });
 
@@ -1475,7 +2697,7 @@
       const nodeEl = document.createElement('div');
       nodeEl.className = 'tree-node';
       nodeEl.id = `tree_node_${node.id}`;
-      nodeEl.draggable = !isRoot; // 根目錄不可被拖走，但可作為放置目標
+      nodeEl.draggable = !isRoot;
 
       const checkboxHtml = isRoot
         ? `<span style="width: 15px; display: inline-block;"></span>`
@@ -1489,7 +2711,6 @@
         <span style="font-size: 10px; color: #94a3b8;">${(node.folders?.length || 0) + (node.files?.length || 0)}</span>
       `;
 
-      // 勾選框事件（阻止觸發選取目錄）
       const cb = nodeEl.querySelector('.tree-folder-cb');
       if (cb) {
         cb.onclick = (e) => e.stopPropagation();
@@ -1503,13 +2724,11 @@
         };
       }
 
-      // 點擊選取資料夾
       nodeEl.onclick = (e) => {
         e.stopPropagation();
         selectFolderNode(node.id);
       };
 
-      // 【拖曳來源事件】(針對資料夾節點)
       if (!isRoot) {
         nodeEl.addEventListener('dragstart', (e) => {
           e.stopPropagation();
@@ -1525,7 +2744,6 @@
         });
       }
 
-      // 【拖曳放置目標事件】(允許將檔案或資料夾丟入此目錄)
       nodeEl.addEventListener('dragover', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -1570,11 +2788,9 @@
       container.appendChild(nodeWrapper);
     }
 
-    // 執行拖曳放置後的移動 API 呼叫
     async function handleDropMoveToFolder(targetFolderId, targetFolderName) {
       if (!draggedPayloadItems || draggedPayloadItems.length === 0) return;
 
-      // 過濾掉目標資料夾本身
       const validItems = draggedPayloadItems.filter(item => item.id !== targetFolderId);
       if (validItems.length === 0) return;
 
@@ -1613,19 +2829,16 @@
       }
     }
 
-    // 更新左側樹狀圖「移除勾選目錄」按鈕狀態
     function updateTreeBatchToolbar() {
       const count = checkedTreeFolderIds.size;
       treeCheckedCount.innerText = count;
       btnTreeDeleteChecked.disabled = count === 0;
     }
 
-    // 左側樹狀圖「新增目錄」按鈕
     btnTreeAddFolder.addEventListener('click', () => {
       btnCreateSubFolder.click();
     });
 
-    // 左側樹狀圖「移除勾選目錄」按鈕
     btnTreeDeleteChecked.addEventListener('click', async () => {
       if (checkedTreeFolderIds.size === 0) return;
       if (!confirm(`⚠️ 確定要將勾選的 ${checkedTreeFolderIds.size} 個資料夾（包含內部所有檔案）移入垃圾桶嗎？`)) {
@@ -1655,7 +2868,6 @@
       }
     });
 
-    // 選取特定資料夾節點並更新清單
     function selectFolderNode(folderId) {
       const node = folderNodeMap.get(folderId);
       if (!node) return;
@@ -1673,7 +2885,6 @@
       renderTerminalContent(node);
     }
 
-    // 渲染所選資料夾的內容清單 (支援勾選框 + 拖曳移動)
     function renderTerminalContent(node) {
       const files = node.files || [];
       const subFolders = node.folders || [];
@@ -1687,7 +2898,6 @@
 
       let html = '';
 
-      // 1. 渲染子資料夾 (可勾選、可被拖曳、也可作為放置目標)
       subFolders.forEach(f => {
         const safeName = f.name.replace(/'/g, "\\'");
         html += `
@@ -1711,7 +2921,6 @@
         `;
       });
 
-      // 2. 渲染檔案 (可勾選、可被拖曳)
       files.forEach(file => {
         const formatMeta = getFileFormatMeta(file.name);
         const sizeKB = (file.size ? (file.size / 1024).toFixed(1) : '0.0') + ' KB';
@@ -1745,9 +2954,7 @@
       bindContentRowInteractions();
     }
 
-    // 綁定右側表格列的勾選與拖曳事件
     function bindContentRowInteractions() {
-      // 勾選框事件
       document.querySelectorAll('.content-item-cb').forEach(cb => {
         cb.onchange = (e) => {
           const id = e.target.dataset.id;
@@ -1762,7 +2969,6 @@
         };
       });
 
-      // 拖曳來源事件 (若拖曳的項目在已勾選清單中，則整批一起拖曳移動)
       document.querySelectorAll('#terminalFileListBody tr[draggable="true"]').forEach(row => {
         row.addEventListener('dragstart', (e) => {
           row.classList.add('dragging-item');
@@ -1785,7 +2991,6 @@
         });
       });
 
-      // 右側清單中的「子資料夾列」也可作為拖曳放置目標
       document.querySelectorAll('#terminalFileListBody tr.terminal-drop-folder').forEach(folderRow => {
         folderRow.addEventListener('dragover', (e) => {
           e.preventDefault();
@@ -1807,7 +3012,6 @@
       });
     }
 
-    // 更新右側勾選批次操作列狀態
     function updateContentBatchToolbar() {
       const count = checkedContentItems.size;
       contentCheckedCount.innerText = count;
@@ -1818,12 +3022,10 @@
       }
     }
 
-    // 全選 / 取消全選右側清單
     terminalSelectAllCheckbox.addEventListener('change', (e) => {
       const isChecked = e.target.checked;
       checkedContentItems.clear();
       document.querySelectorAll('.content-item-cb').forEach(cb => {
-        // 僅勾選目前可見（未被搜尋過濾隱藏）的列
         if (cb.closest('tr').style.display !== 'none') {
           cb.checked = isChecked;
           if (isChecked) {
@@ -1845,7 +3047,6 @@
       updateContentBatchToolbar();
     });
 
-    // 批次移動按鈕事件
     btnBatchMove.addEventListener('click', async () => {
       const targetId = batchMoveTargetSelect.value;
       if (!targetId) {
@@ -1879,7 +3080,6 @@
       }
     });
 
-    // 批次刪除按鈕事件
     btnBatchDelete.addEventListener('click', async () => {
       if (checkedContentItems.size === 0) return;
       if (!confirm(`⚠️ 確定要將勾選的 ${checkedContentItems.size} 個項目移入垃圾桶嗎？`)) {
@@ -1909,12 +3109,10 @@
       }
     });
 
-    // 快捷觸發「新增檔案至此目錄」
     btnTriggerManualUpload.addEventListener('click', () => {
       terminalUploadInput.click();
     });
 
-    // 檔案轉 Base64 輔助 Promise
     function readFileAsBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -1933,7 +3131,6 @@
       return `${y}-${m}-${day}`;
     }
 
-    // 【智慧自動分類歸檔上傳按鈕事件】
     smartUploadBtn.addEventListener('click', async () => {
       if (currentUserRole !== 'admin') {
         alert('權限不足：只有管理員可使用智慧自動歸檔功能！');
@@ -1998,7 +3195,6 @@
       await loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null);
     });
 
-    // 建立新分類資料夾
     btnCreateSubFolder.addEventListener('click', async () => {
       if (!selectedFolderNode) {
         alert('請先在左側選取要建立子分類的目標節點！');
@@ -2033,7 +3229,6 @@
       }
     });
 
-    // 手動上傳檔案至當前選取的節點（支援多檔）
     terminalUploadBtn.addEventListener('click', async () => {
       if (!selectedFolderNode) {
         alert('請先在左側選取要存放檔案的資料夾！');
@@ -2090,7 +3285,6 @@
       terminalUploadBtn.disabled = false;
     });
 
-    // 刪除單筆檔案或資料夾
     window.deleteTerminalItem = async function(itemId, itemType, itemName) {
       const typeLabel = itemType === 'folder' ? '目錄(含內部檔案)' : '檔案';
       if (!confirm(`確定要將 ${typeLabel}【${itemName}】移入垃圾桶嗎？`)) {
@@ -2116,7 +3310,6 @@
       }
     };
 
-    // 數據終端搜尋過濾
     terminalSearchInput.addEventListener('input', (e) => {
       const q = e.target.value.toLowerCase().trim();
       const rows = terminalFileListBody.querySelectorAll('.terminal-file-row');
@@ -2128,11 +3321,11 @@
     refreshTerminalTreeBtn.addEventListener('click', () => loadTerminalTree(selectedFolderNode ? selectedFolderNode.id : null));
 
     btnAiCopilotPrompt.addEventListener('click', () => {
-      alert("🤖【AI 數據終端助手】架構預告：\n\n系統已完成數據庫樹狀結構標準化（日期 / 廠商 / 檔案類別）！未來進入此功能後，AI 將直接根據您建立的階層標籤與檔案名稱進行檢索問答！");
+      alert("🤖【AI 數據終端助手】架構預告：\n\n系統已完成數據庫樹狀結構標準化（客戶 / 日期 / 類別）！未來進入此功能後，AI 將直接根據您建立的階層標籤與檔案名稱進行檢索問答！");
     });
 
     // =========================================================================
-    // 3. 管理員總覽核心：客戶、機台與報表
+    // 5. 管理員總覽核心：客戶、機台與報表
     // =========================================================================
     async function initAdminFeatures() {
       await loadAllConfiguredAccounts();
@@ -2197,14 +3390,17 @@
       statCustomerCount.innerText = allAccountsList.length;
 
       let optHtml = '';
-      let smartOptHtml = '<option value="">🔍 自動依檔名萃取廠商前綴 (預設)</option>';
+      let smartOptHtml = '<option value="">🔍 自動依檔名萃取客戶前綴 (預設)</option>';
+      let bigDataCustHtml = '<option value="__ALL__">🌐 全部客戶資料表</option>';
 
       allAccountsList.forEach(acc => {
         optHtml += `<option value="${acc.username}">${acc.username}</option>`;
         smartOptHtml += `<option value="${acc.username}">🏢 指定歸類至：${acc.username}</option>`;
+        bigDataCustHtml += `<option value="${acc.username}">🏢 ${acc.username}</option>`;
       });
       customerSelectDropdown.innerHTML = optHtml;
       smartVendorSelect.innerHTML = smartOptHtml;
+      if (bigDataSupabaseCustomer) bigDataSupabaseCustomer.innerHTML = bigDataCustHtml;
 
       if (!targetViewCustomer || targetViewCustomer === 'admin') {
         targetViewCustomer = allAccountsList[0]?.username || 'chin-yuh';
@@ -2380,9 +3576,12 @@
       }
 
       const ignoredColumns = ['id', 'assigned_user_id', 'created_at', 'updated_at'];
-      const dynamicHeaders = Object.keys(finalData[0])
-        .filter(col => !ignoredColumns.includes(col))
-        .map(col => ({ key: col, label: col }));
+      const rawCols = Object.keys(finalData[0]).filter(col => !ignoredColumns.includes(col));
+      const dynamicHeaders = rawCols.map(col => ({ key: col, label: col }));
+
+      if (currentUserRole === 'admin') {
+        mergeDiscoveredFieldNames(rawCols);
+      }
 
       renderDynamicInspectionTable(dynamicHeaders, finalData);
     }
