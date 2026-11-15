@@ -1321,7 +1321,7 @@
             <option value="">📁 全部資料夾目錄</option>
           </select>
 
-          <!-- 新增：手動選擇多檔案上傳加入 -->
+          <!-- 手動選擇多檔案上傳加入 -->
           <div class="bigdata-manual-upload-group">
             <label style="display: inline-flex; align-items: center; gap: 6px; margin: 0; cursor: pointer; font-size: 12px; color: #38bdf8; font-weight: 600;">
               <input type="checkbox" id="srcCheckManualFiles" class="terminal-checkbox" />
@@ -1337,7 +1337,7 @@
         </div>
 
         <div id="bigDataFetchStatus" style="font-size: 12px; color: #94a3b8; margin-bottom: 14px;">
-          嚴格偵錯規則已啟用：僅搜尋 <strong>EXCEL (.xlsx/.xls) 與 CSV (.csv)</strong> 檔案；僅撈取下方「已勾選欄位」之相關資料；單筆資料需同時具備 <strong>2 個以上</strong>有效欄位數值方判定為需求數據。
+          智慧解析規則已啟用：同時支援 <strong>Renishaw CARTO 原始量測 CSV (ISO 230-2 自動計算)</strong> 與一般 EXCEL/CSV 報表；單筆資料具備 <strong>1 個以上</strong>有效已勾選欄位數值即保留顯示。
         </div>
 
         <!-- 區塊 2：欄位勾選、常用模板、新增、刪除、拖曳排序配置面板 -->
@@ -1370,7 +1370,7 @@
         <div class="bigdata-toolbar">
           <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
             <span style="font-size: 13px; font-weight: 600; color: #cbd5e1;">
-              📋 有效分析明細：共 <strong id="bigDataTotalRowCount" style="color: #38bdf8;">0</strong> 筆（已過濾空值與不足 2 欄之雜訊），已勾選採用 <strong id="bigDataCheckedRowCount" style="color: #34d399;">0</strong> 筆
+              📋 有效分析明細：共 <strong id="bigDataTotalRowCount" style="color: #38bdf8;">0</strong> 筆（已過濾全空雜訊），已勾選採用 <strong id="bigDataCheckedRowCount" style="color: #34d399;">0</strong> 筆
             </span>
             <button id="btnBigDataCheckAllRows" class="btn-refresh" style="padding: 3px 9px; font-size: 11px;">☑️ 全部採用</button>
             <button id="btnBigDataUncheckAllRows" class="btn-refresh" style="padding: 3px 9px; font-size: 11px;">⬜ 全部取消</button>
@@ -1591,7 +1591,6 @@
     let bigDataRows = [];
     let draggedFieldIndex = null;
 
-    // 儲存「最後一次使用欄位勾選設定」
     function saveLastUsedFieldsState() {
       try {
         const snapshot = bigDataFields.map(f => ({
@@ -1604,7 +1603,6 @@
       }
     }
 
-    // 讀取「最後一次使用欄位勾選設定」
     function loadLastUsedFieldsState() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY_LAST_USED_FIELDS);
@@ -1616,7 +1614,6 @@
       }
     }
 
-    // 設定目前欄位配置為「常用欄位」
     function saveFavoriteFieldsState() {
       try {
         const snapshot = bigDataFields.map(f => ({
@@ -1632,7 +1629,6 @@
       }
     }
 
-    // 恢復「上一次常用欄位」（優先讀取已儲存的常用欄位，若無則讀取最後一次使用欄位勾選設定）
     function restoreFavoriteFieldsState() {
       try {
         let raw = localStorage.getItem(STORAGE_KEY_FAVORITE_FIELDS);
@@ -1711,7 +1707,6 @@
       renderBigDataTable();
     }
 
-    // 手動上傳多檔選取狀態連動
     if (bigDataManualFilesInput) {
       bigDataManualFilesInput.addEventListener('change', (e) => {
         const files = e.target.files;
@@ -1888,7 +1883,7 @@
     });
 
     // =========================================================================
-    // 2. 大數據檢驗分析報表：欄位管理與偵錯驗證邏輯
+    // 2. 大數據檢驗分析報表：欄位管理、Renishaw CSV 引擎與偵錯驗證邏輯
     // =========================================================================
     function renderBigDataFieldChips() {
       const checkedCount = bigDataFields.filter(f => f.checked).length;
@@ -2057,7 +2052,6 @@
       }
     }
 
-    // 前端數值有效性驗證（排除空值、佔位符、以及誤抓到的欄位標題）
     function isValidCellData(val, allFieldNames) {
       if (val === null || val === undefined) return false;
       const str = String(val).trim();
@@ -2067,71 +2061,268 @@
       return true;
     }
 
-    // 解析手動上傳的 EXCEL / CSV 多檔案為原始列陣列
+    function formatRenishawCsvDateStr(dateStr) {
+      try {
+        const parts = String(dateStr).trim().split(/\s+/);
+        const datePart = parts[0];
+        let hourMin = '';
+
+        if (parts.length >= 3) {
+          const ampm = parts[1];
+          const timeParts = parts[2].split(':');
+          let hour = parseInt(timeParts[0], 10);
+          const min = timeParts[1];
+
+          if (ampm.includes('下午') && hour < 12) hour += 12;
+          if (ampm.includes('上午') && hour === 12) hour = 0;
+
+          hourMin = ` ${String(hour).padStart(2, '0')}:${min}`;
+        }
+        return `${datePart}${hourMin}`;
+      } catch (e) {
+        return String(dateStr);
+      }
+    }
+
+    // 專屬：解析 Renishaw CARTO 原始量測 CSV 矩陣並依 ISO 230-2:1997 計算全指標
+    function tryParseRenishawMatrix(matrix) {
+      if (!Array.isArray(matrix) || matrix.length < 5) return null;
+
+      const targetRowIdx = matrix.findIndex(row => {
+        const rowStr = (row || []).map(c => String(c ?? '')).join(',');
+        return rowStr.includes('Targets (mm)') && rowStr.includes('Error');
+      });
+
+      if (targetRowIdx === -1) return null;
+
+      const record = {};
+      for (let r = 0; r < targetRowIdx; r++) {
+        const row = matrix[r] || [];
+        if (row.length >= 2) {
+          const k = String(row[0] ?? '').trim().toLowerCase();
+          const v = String(row[1] ?? '').trim();
+          if (!v) continue;
+
+          if (k === 'name' && !record['機器名稱']) {
+            record['機器名稱'] = v;
+            record['機台名稱'] = v;
+            record['工件 / 機台編號'] = v;
+          } else if (k === 'serial number' && !record['序號']) {
+            record['序號'] = v;
+          } else if (k === 'axis under test' && !record['受測軸']) {
+            record['受測軸'] = v;
+            record['軸向'] = v;
+          } else if (k === 'date' && !record['測試日期']) {
+            const fmtDate = formatRenishawCsvDateStr(v);
+            record['測試日期'] = fmtDate;
+            record['檢驗日期'] = fmtDate;
+            record['日期'] = fmtDate;
+          } else if (k === 'number of runs' && !record['執行次數']) {
+            record['執行次數'] = v;
+          }
+        }
+      }
+
+      const headerRow = (matrix[targetRowIdx] || []).map(c => String(c ?? ''));
+      const plusErrCols = [];
+      const minusErrCols = [];
+
+      headerRow.forEach((col, idx) => {
+        if (col.includes('(+) Error')) plusErrCols.push(idx);
+        if (col.includes('(-) Error')) minusErrCols.push(idx);
+      });
+
+      const plusErrors = [];
+      const minusErrors = [];
+
+      for (let r = targetRowIdx + 1; r < matrix.length; r++) {
+        const rowVals = matrix[r] || [];
+        if (rowVals.length < 5 || isNaN(parseFloat(rowVals[1]))) break;
+
+        plusErrors.push(plusErrCols.map(c => parseFloat(rowVals[c]) || 0));
+        minusErrors.push(minusErrCols.map(c => parseFloat(rowVals[c]) || 0));
+      }
+
+      if (plusErrors.length > 0 && minusErrors.length > 0) {
+        const nRuns = plusErrors[0].length;
+        if (!record['執行次數']) record['執行次數'] = String(nRuns);
+        const mTargets = plusErrors.length;
+
+        const xMeanPlus = [];
+        const xMeanMinus = [];
+        const xMeanBidir = [];
+        const sPlus = [];
+        const sMinus = [];
+        const Bi = [];
+
+        for (let i = 0; i < mTargets; i++) {
+          const pArr = plusErrors[i];
+          const mArr = minusErrors[i];
+
+          const pMean = pArr.reduce((a, b) => a + b, 0) / nRuns;
+          const mMean = mArr.reduce((a, b) => a + b, 0) / nRuns;
+          xMeanPlus.push(pMean);
+          xMeanMinus.push(mMean);
+          xMeanBidir.push((pMean + mMean) / 2);
+
+          const pStd = nRuns > 1 ? Math.sqrt(pArr.reduce((sum, v) => sum + Math.pow(v - pMean, 2), 0) / (nRuns - 1)) : 0;
+          const mStd = nRuns > 1 ? Math.sqrt(mArr.reduce((sum, v) => sum + Math.pow(v - mMean, 2), 0) / (nRuns - 1)) : 0;
+          sPlus.push(pStd);
+          sMinus.push(mStd);
+
+          Bi.push(pMean - mMean);
+        }
+
+        const maxB = Math.max(...Bi.map(v => Math.abs(v)));
+        const meanB = Bi.reduce((a, b) => a + b, 0) / mTargets;
+        record['反向差 (B)'] = maxB.toFixed(1);
+        record['Reversal B'] = maxB.toFixed(1);
+        record['平均反向差值 (B Mean)'] = meanB.toFixed(1);
+
+        const sysDevE = Math.max(...xMeanBidir) - Math.min(...xMeanBidir);
+        record['系統開發 (E)'] = sysDevE.toFixed(1);
+        record['Sys.Dev.E'] = sysDevE.toFixed(1);
+
+        const meanDevM = Math.max(...xMeanBidir.map(v => Math.abs(v)));
+        record['Mean Dev.M'] = meanDevM.toFixed(1);
+        record['平均差異 (M)'] = meanDevM.toFixed(1);
+
+        const rPlus = Math.max(...sPlus.map(s => 4 * s));
+        const rMinus = Math.max(...sMinus.map(s => 4 * s));
+        record['Repeat.R+'] = rPlus.toFixed(1);
+        record['Repeat.R-'] = rMinus.toFixed(1);
+
+        let maxR = 0;
+        for (let i = 0; i < mTargets; i++) {
+          const rBidir = (2 * sPlus[i]) + (2 * sMinus[i]) + Math.abs(Bi[i]);
+          const targetR = Math.max(rBidir, 4 * sPlus[i], 4 * sMinus[i]);
+          if (targetR > maxR) maxR = targetR;
+        }
+        record['重複性 (R)'] = maxR.toFixed(1);
+
+        const accAPlus = Math.max(...xMeanPlus.map((m, i) => m + 2 * sPlus[i])) - Math.min(...xMeanPlus.map((m, i) => m - 2 * sPlus[i]));
+        const accAMinus = Math.max(...xMeanMinus.map((m, i) => m + 2 * sMinus[i])) - Math.min(...xMeanMinus.map((m, i) => m - 2 * sMinus[i]));
+        record['Accuracy A+'] = accAPlus.toFixed(1);
+        record['Accuracy A-'] = accAMinus.toFixed(1);
+
+        const upperBand = [];
+        const lowerBand = [];
+        for (let i = 0; i < mTargets; i++) {
+          upperBand.push(xMeanPlus[i] + (2 * sPlus[i]));
+          upperBand.push(xMeanMinus[i] + (2 * sMinus[i]));
+          lowerBand.push(xMeanPlus[i] - (2 * sPlus[i]));
+          lowerBand.push(xMeanMinus[i] - (2 * sMinus[i]));
+        }
+        const accA = Math.max(...upperBand) - Math.min(...lowerBand);
+        record['精度 (A)'] = accA.toFixed(1);
+        record['Accuracy A'] = accA.toFixed(1);
+      }
+
+      return Object.keys(record).length > 0 ? record : null;
+    }
+
     function parseManualExcelOrCsvFile(file) {
       return new Promise((resolve, reject) => {
+        const isCsv = file.name.toLowerCase().endsWith('.csv');
         const reader = new FileReader();
+
         reader.onload = (evt) => {
           try {
-            const data = new Uint8Array(evt.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
-            const extractedRows = [];
-
-            workbook.SheetNames.forEach(sheetName => {
-              const worksheet = workbook.Sheets[sheetName];
-              const matrix = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
-              if (!matrix || matrix.length === 0) return;
-
-              // 尋找最佳標題列（非空儲存格最多且主要為文字的前 15 列內）
-              let headerRowIdx = 0;
-              let bestScore = -1;
-              const scanLimit = Math.min(matrix.length, 15);
-              for (let r = 0; r < scanLimit; r++) {
-                const rowCells = matrix[r] || [];
-                const nonEmptyTexts = rowCells.filter(c => {
-                  const s = String(c ?? '').trim();
-                  return s !== '' && isNaN(Number(s));
-                });
-                if (nonEmptyTexts.length > bestScore && nonEmptyTexts.length >= 2) {
-                  bestScore = nonEmptyTexts.length;
-                  headerRowIdx = r;
-                }
+            let workbook;
+            if (isCsv) {
+              let text = evt.target.result;
+              if (text.includes('\uFFFD')) {
+                const big5Reader = new FileReader();
+                big5Reader.onload = (e2) => {
+                  const wbBig5 = XLSX.read(e2.target.result, { type: 'string' });
+                  resolve(extractRowsFromWorkbook(wbBig5));
+                };
+                big5Reader.onerror = (err) => reject(err);
+                big5Reader.readAsText(file, 'Big5');
+                return;
               }
+              workbook = XLSX.read(text, { type: 'string' });
+            } else {
+              const data = new Uint8Array(evt.target.result);
+              workbook = XLSX.read(data, { type: 'array' });
+            }
 
-              const headers = (matrix[headerRowIdx] || []).map(h => String(h ?? '').trim());
-              for (let r = headerRowIdx + 1; r < matrix.length; r++) {
-                const rowVals = matrix[r] || [];
-                const obj = {};
-                let hasAnyVal = false;
-                headers.forEach((hName, cIdx) => {
-                  if (!hName) return;
-                  const cellVal = rowVals[cIdx];
-                  if (cellVal !== undefined && cellVal !== null && String(cellVal).trim() !== '') {
-                    obj[hName] = String(cellVal).trim();
-                    hasAnyVal = true;
-                  }
-                });
-                if (hasAnyVal) {
-                  extractedRows.push({
-                    sheetName: sheetName,
-                    rowObj: obj
-                  });
-                }
-              }
-            });
-
-            resolve(extractedRows);
+            resolve(extractRowsFromWorkbook(workbook));
           } catch (err) {
             reject(err);
           }
         };
+
         reader.onerror = (err) => reject(err);
-        reader.readAsArrayBuffer(file);
+        if (isCsv) {
+          reader.readAsText(file, 'UTF-8');
+        } else {
+          reader.readAsArrayBuffer(file);
+        }
       });
     }
 
+    function extractRowsFromWorkbook(workbook) {
+      const extractedRows = [];
+
+      workbook.SheetNames.forEach(sheetName => {
+        const worksheet = workbook.Sheets[sheetName];
+        const matrix = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
+        if (!matrix || matrix.length === 0) return;
+
+        // 1. 優先偵測是否為 Renishaw CARTO 原始量測報表
+        const renishawRecord = tryParseRenishawMatrix(matrix);
+        if (renishawRecord) {
+          extractedRows.push({
+            sheetName: `${sheetName} (ISO 230-2 解析)`,
+            rowObj: renishawRecord
+          });
+          return;
+        }
+
+        // 2. 一般橫向二維資料庫表格解析
+        let headerRowIdx = 0;
+        let bestScore = -1;
+        const scanLimit = Math.min(matrix.length, 15);
+        for (let r = 0; r < scanLimit; r++) {
+          const rowCells = matrix[r] || [];
+          const nonEmptyTexts = rowCells.filter(c => {
+            const s = String(c ?? '').trim();
+            return s !== '' && isNaN(Number(s));
+          });
+          if (nonEmptyTexts.length > bestScore && nonEmptyTexts.length >= 2) {
+            bestScore = nonEmptyTexts.length;
+            headerRowIdx = r;
+          }
+        }
+
+        const headers = (matrix[headerRowIdx] || []).map(h => String(h ?? '').trim());
+        for (let r = headerRowIdx + 1; r < matrix.length; r++) {
+          const rowVals = matrix[r] || [];
+          const obj = {};
+          let hasAnyVal = false;
+          headers.forEach((hName, cIdx) => {
+            if (!hName) return;
+            const cellVal = rowVals[cIdx];
+            if (cellVal !== undefined && cellVal !== null && String(cellVal).trim() !== '') {
+              obj[hName] = String(cellVal).trim();
+              hasAnyVal = true;
+            }
+          });
+          if (hasAnyVal) {
+            extractedRows.push({
+              sheetName: sheetName,
+              rowObj: obj
+            });
+          }
+        }
+      });
+
+      return extractedRows;
+    }
+
     // =========================================================================
-    // 3. 大數據檢驗分析報表：嚴格只撈取已勾選欄位，且有效欄位 >= 2 才保留
+    // 3. 大數據檢驗分析報表：撈取整合數據（放寬為至少 1 個有效欄位即可保留）
     // =========================================================================
     btnFetchBigData.addEventListener('click', async () => {
       if (currentUserRole !== 'admin') return;
@@ -2151,17 +2342,15 @@
         return;
       }
 
-      // 儲存本次使用的欄位勾選設定
       saveLastUsedFieldsState();
       updateFieldPresetStatusBadge('💾 已記錄本次欄位勾選設定');
 
-      // 取得目前使用者勾選的「數據欄位」（扣除系統來源 Meta 欄位）
       const selectedDataColumns = bigDataFields
         .filter(f => f.checked && !SYSTEM_META_FIELDS.includes(f.name))
         .map(f => f.name);
 
-      if (selectedDataColumns.length < 2) {
-        alert('請至少勾選 2 個以上的數據欄位名稱（例如：軸向、日期、機器名稱、Accuracy A 等），系統才能判定有效數據列！');
+      if (selectedDataColumns.length < 1) {
+        alert('請至少勾選 1 個以上的數據欄位名稱（例如：軸向、機器名稱、精度 (A)、Accuracy A 等）！');
         return;
       }
 
@@ -2171,8 +2360,8 @@
       const keyword = bigDataKeywordFilter.value.trim().toLowerCase();
 
       btnFetchBigData.disabled = true;
-      btnFetchBigData.innerText = '⏳ 正在嚴格比對撈取...';
-      bigDataFetchStatus.innerText = `正在針對已勾選的 ${selectedDataColumns.length} 個欄位進行撈取與偵錯驗證（僅搜尋 EXCEL 與 CSV；僅保留同時具備 2 個以上有效數值的資料）...`;
+      btnFetchBigData.innerText = '⏳ 正在比對撈取...';
+      bigDataFetchStatus.innerText = `正在針對已勾選的 ${selectedDataColumns.length} 個欄位進行撈取與解析（支援 Renishaw 原始 CSV 與一般 EXCEL/CSV）...`;
       bigDataFetchStatus.style.color = '#38bdf8';
 
       const combinedRows = [];
@@ -2183,10 +2372,10 @@
       let scanSummaryText = '';
       let errorNotes = [];
 
-      // 中英文同義欄位雙向自動互補對照表
       const aliasPairs = [
         ['日期', '測試日期'],
         ['日期', '檢驗日期'],
+        ['測試日期', '檢驗日期'],
         ['機器名稱', '工件 / 機台編號'],
         ['機器名稱', '機台名稱'],
         ['軸向', '受測軸'],
@@ -2197,7 +2386,6 @@
         ['平均差異 (M)', 'Mean Dev.M']
       ];
 
-      // 擴展查詢欄位池：若勾選了中文欄位，同步把對應英文同義詞一併送給後端搜尋，再映射回來
       const expandedQueryColumns = new Set(selectedDataColumns);
       selectedDataColumns.forEach(col => {
         aliasPairs.forEach(([a, b]) => {
@@ -2206,7 +2394,7 @@
         });
       });
 
-      function buildStrictFilteredRow(rawSourceObj, metaInfo) {
+      function buildFilteredRow(rawSourceObj, metaInfo) {
         const tempMap = {};
         Object.keys(rawSourceObj).forEach(k => {
           if (!k.startsWith('_') && isValidCellData(rawSourceObj[k], allKnownFieldNames)) {
@@ -2214,10 +2402,12 @@
           }
         });
 
-        aliasPairs.forEach(([colA, colB]) => {
-          if (!tempMap[colA] && tempMap[colB]) tempMap[colA] = tempMap[colB];
-          if (!tempMap[colB] && tempMap[colA]) tempMap[colB] = tempMap[colA];
-        });
+        for (let pass = 0; pass < 2; pass++) {
+          aliasPairs.forEach(([colA, colB]) => {
+            if (!tempMap[colA] && tempMap[colB]) tempMap[colA] = tempMap[colB];
+            if (!tempMap[colB] && tempMap[colA]) tempMap[colB] = tempMap[colA];
+          });
+        }
 
         const strictRow = {
           '資料來源': metaInfo.source,
@@ -2239,7 +2429,8 @@
           }
         });
 
-        if (validSelectedCount >= 2) {
+        // 放寬門檻：只要具備 1 個以上已勾選欄位的有效數值即保留
+        if (validSelectedCount >= 1) {
           return strictRow;
         }
         return null;
@@ -2260,7 +2451,7 @@
                   return;
                 }
 
-                const filtered = buildStrictFilteredRow(rawRow, {
+                const filtered = buildFilteredRow(rawRow, {
                   source: 'Supabase 客戶報表',
                   customer: acc.username,
                   fileOrTable: res.tableName
@@ -2277,7 +2468,7 @@
           }
         }
 
-        // 來源 B：從 Google Drive 數據終端資料庫撈取（僅搜尋 EXCEL 與 CSV）
+        // 來源 B：從 Google Drive 數據終端資料庫撈取
         if (useGdriveFiles) {
           try {
             const gasRes = await callGasApi({
@@ -2285,10 +2476,10 @@
               secret: GAS_API_SECRET,
               folderId: selectedFolderId || '',
               columns: Array.from(expandedQueryColumns),
-              minValidFields: 2,
-              fileTypes: ALLOWED_BIGDATA_FILE_TYPES, // 限定只搜尋 EXCEL (.xlsx, .xls) 與 CSV (.csv)
+              minValidFields: 1,
+              fileTypes: ALLOWED_BIGDATA_FILE_TYPES,
               keyword: keyword,
-              maxRows: 300
+              maxRows: 500
             });
 
             if (gasRes.success && Array.isArray(gasRes.rows)) {
@@ -2300,7 +2491,6 @@
               }
 
               gasRes.rows.forEach(fileRow => {
-                // 前端雙重保險：確保只處理 EXCEL 或 CSV 檔案
                 const fileNameLower = String(fileRow._sourceFile || '').toLowerCase();
                 const fileFmtLower = String(fileRow._fileFormat || '').toLowerCase();
                 const isAllowedExt = ALLOWED_BIGDATA_FILE_TYPES.some(ext =>
@@ -2312,7 +2502,7 @@
                 const inferredCustomer = pathParts.length >= 2 ? pathParts[1] : '數據終端資料庫';
                 const fmtLabel = fileRow._fileFormat ? ` (${fileRow._fileFormat})` : '';
 
-                const filtered = buildStrictFilteredRow(fileRow, {
+                const filtered = buildFilteredRow(fileRow, {
                   source: `數據終端資料庫${fmtLabel}`,
                   customer: inferredCustomer,
                   fileOrTable: fileRow._sourceFile || ''
@@ -2329,11 +2519,11 @@
               errorNotes.push(`數據終端讀取錯誤：${gasRes.error}`);
             }
           } catch (gErr) {
-            errorNotes.push(`數據終端連線失敗：${gErr.message}（請確認 GAS 已更新並重新部署為新版本）`);
+            errorNotes.push(`數據終端連線失敗：${gErr.message}`);
           }
         }
 
-        // 來源 C：手動選擇多檔案上傳加入（支援多個 EXCEL / CSV 檔案）
+        // 來源 C：手動選擇多檔案上傳加入
         if (useManualFiles && bigDataManualFilesInput.files && bigDataManualFilesInput.files.length > 0) {
           const uploadedFiles = Array.from(bigDataManualFilesInput.files);
           for (const file of uploadedFiles) {
@@ -2352,7 +2542,7 @@
                   return;
                 }
 
-                const filtered = buildStrictFilteredRow(item.rowObj, {
+                const filtered = buildFilteredRow(item.rowObj, {
                   source: `手動上傳 (${ext.toUpperCase()})`,
                   customer: baseCustomer,
                   fileOrTable: `${file.name} [${item.sheetName}]`
@@ -2379,7 +2569,7 @@
 
         renderBigDataTable();
 
-        let statusMsg = `✅ 嚴格撈取完成（僅限 EXCEL / CSV）！共取得 ${bigDataRows.length} 筆有效數據（Supabase：${supabaseCount} 筆，數據終端資料庫：${gdriveCount} 筆，手動上傳檔案：${manualUploadCount} 筆${scanSummaryText}；已自動過濾 ${droppedInvalidCount} 筆空值或不足 2 欄的無效資料）。`;
+        let statusMsg = `✅ 撈取完成！共取得 ${bigDataRows.length} 筆有效數據（Supabase：${supabaseCount} 筆，數據終端資料庫：${gdriveCount} 筆，手動上傳檔案：${manualUploadCount} 筆${scanSummaryText}；已自動過濾 ${droppedInvalidCount} 筆全空無效資料）。`;
         if (errorNotes.length > 0) {
           statusMsg += ` ⚠️ ${errorNotes.join('；')}`;
         }
